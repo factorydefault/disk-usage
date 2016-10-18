@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("disk-usage")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Hyder Consulting Ltd")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("disk-usage")]
-[assembly: AssemblyCopyright("Copyright © Hyder Consulting Ltd 2016")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
