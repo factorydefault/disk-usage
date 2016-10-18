@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Weavers>
   <Costura>
-    <IncludeAssemblies>
-      disk-usage
-      Newtonsoft.Json
-    </IncludeAssemblies>
   </Costura>
   
 </Weavers>
