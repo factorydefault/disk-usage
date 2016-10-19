@@ -73,10 +73,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddPathDialog.cs">
+    <Compile Include="Forms\AddPathDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddPathDialog.Designer.cs">
+    <Compile Include="Forms\AddPathDialog.Designer.cs">
       <DependentUpon>AddPathDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="DiskTile.cs">
@@ -85,21 +85,21 @@
     <Compile Include="DiskTile.Designer.cs">
       <DependentUpon>DiskTile.cs</DependentUpon>
     </Compile>
-    <Compile Include="NotificationAreaForm.cs">
+    <Compile Include="Forms\NotificationAreaForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NotificationAreaForm.Designer.cs">
+    <Compile Include="Forms\NotificationAreaForm.Designer.cs">
       <DependentUpon>NotificationAreaForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="AddPathDialog.resx">
+    <EmbeddedResource Include="Forms\AddPathDialog.resx">
       <DependentUpon>AddPathDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DiskTile.resx">
       <DependentUpon>DiskTile.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NotificationAreaForm.resx">
+    <EmbeddedResource Include="Forms\NotificationAreaForm.resx">
       <DependentUpon>NotificationAreaForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

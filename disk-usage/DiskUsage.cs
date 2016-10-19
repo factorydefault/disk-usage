@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json;
 
@@ -16,7 +12,6 @@ namespace disk_usage
 
         public bool SettingsFileWasGenerated { get; private set; } = false;
 
-
         public ComputerCollection Collection { get; private set; }
 
         public DiskUsage()
@@ -24,7 +19,6 @@ namespace disk_usage
             Collection = new ComputerCollection();
             Refresh();
         }
-
 
         public string SettingsFileLocation
         {

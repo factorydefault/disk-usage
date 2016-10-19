@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace disk_usage
 {
@@ -59,7 +55,7 @@ namespace disk_usage
         }
 
 
-        public static DiskSpaceInformation GetInfoForPath(string path = @"\\mycomputer\myfolder")
+        public static DiskSpaceInformation GetInfoForPath(string path)
         {
             DiskSpaceInformation result;
 
@@ -74,8 +70,6 @@ namespace disk_usage
 
             return result;
         }
-
-
     }
 
     internal static class DiskExtensions
