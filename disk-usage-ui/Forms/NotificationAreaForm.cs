@@ -267,5 +267,24 @@ namespace disk_usage_ui
             }
             RebuildUserInterface();
         }
+
+        private void viewChartButton_Click(object sender, EventArgs e)
+        {
+            Forms.ChartDialogForm chartDialog = new Forms.ChartDialogForm(SortCollection(core.Collection.PCs));
+            chartDialog.Show();
+        }
+
+        private void taskbarContext_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                viewChartButton.Enabled = core.Collection.PCs.Count > 0;
+            }
+            catch (Exception)
+            {
+                viewChartButton.Enabled = false;
+            }
+            
+        }
     }
 }
