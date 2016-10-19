@@ -21,6 +21,7 @@ namespace disk_usage_ui
             InitializeComponent();
             NewComputer = new disk_usage.Computer();
             updateUserInterface();
+            DialogResult = DialogResult.Cancel;
         }
 
         

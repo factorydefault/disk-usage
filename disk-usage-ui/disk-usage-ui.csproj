@@ -129,6 +129,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -153,6 +154,13 @@
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
     <Content Include="networkDrive.ico" />
+    <None Include="Resources\KPI_16xLG.png" />
+    <None Include="Resources\Bubble_16xLG.png" />
+    <None Include="Resources\OpenFolder_16x.png" />
+    <None Include="Resources\resource_16xLG.png" />
+    <None Include="Resources\filter_16xLG.png" />
+    <None Include="Resources\action_Cancel_16xLG.png" />
+    <None Include="Resources\action_add_16xLG.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
