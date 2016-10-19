@@ -68,9 +68,9 @@ namespace disk_usage
                                   out result.TotalNumberOfBytes,
                                   out result.TotalNumberOfFreeBytes);
             if (!success)
-                throw new System.ComponentModel.Win32Exception();
-
-            //result.WriteToConsole();
+            {
+                result = new DiskSpaceInformation(1, 1, 0);
+            }
 
             return result;
         }

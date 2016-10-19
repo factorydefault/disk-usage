@@ -92,6 +92,11 @@ namespace disk_usage
             {
                 Collection = JsonConvert.DeserializeObject<ComputerCollection>(File.ReadAllText(SettingsFileLocation));
             }
+            catch (JsonReaderException ex)
+            {
+                Debug.Print($"Unable to read settings file: {ex.Message}");
+                Collection = new ComputerCollection();
+            }
             catch (Exception)
             {
                 throw;

@@ -74,6 +74,11 @@ namespace disk_usage_ui
 
             detailLabel.Text = $"{computer.FreeSpace} GB free of {computer.TotalSpace} GB";
 
+            if (computer.TotalSpace < 0.0001) //edge case where path has not been found
+            {
+                SetAsNotFound();
+            }
+
         }
 
         public DiskTile(disk_usage.Computer computer) : this()
@@ -81,7 +86,7 @@ namespace disk_usage_ui
             VariablesFromComputer(computer);
         }
 
-        private void DiskTile_DoubleClick(object sender, EventArgs e)
+        void DiskTile_DoubleClick(object sender, EventArgs e)
         {
             OpenFolder();
         }
@@ -96,7 +101,7 @@ namespace disk_usage_ui
             AddNewPath?.Invoke(this, new EventArgs());
         }
 
-        private void openFolderButton_Click(object sender, EventArgs e)
+        void openFolderButton_Click(object sender, EventArgs e)
         {
             OpenFolder();
         }
