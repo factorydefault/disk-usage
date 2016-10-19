@@ -220,12 +220,18 @@ namespace disk_usage_ui
             try
             {
                 var tile = (DiskTile)sender;
+
+                var dr = MessageBox.Show($"Are you sure you would like to remove \"{tile.path}\"?","Remove Path",MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
                 Debug.Print(tile.path);
 
-                core.Collection.RemoveComputerWithPath(tile.path);
+                if (dr == DialogResult.Yes)
+                {
+                    core.Collection.RemoveComputerWithPath(tile.path);
 
-                tile.Visible = false;
-                saveChanges();
+                    tile.Visible = false;
+                    saveChanges();
+                }
+ 
             }
             catch (Exception ex)
             {
