@@ -30,29 +30,17 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DiskTile));
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.nameLabel = new System.Windows.Forms.Label();
             this.detailLabel = new System.Windows.Forms.Label();
             this.usageBar = new System.Windows.Forms.ProgressBar();
             this.tileContext = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.removeItemButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.tileAddPathButton = new System.Windows.Forms.ToolStripMenuItem();
             this.openFolderButton = new System.Windows.Forms.ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.tileAddPathButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeItemButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tileContext.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
-            this.pictureBox1.MaximumSize = new System.Drawing.Size(64, 64);
-            this.pictureBox1.MinimumSize = new System.Drawing.Size(64, 64);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(64, 64);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
             // 
             // nameLabel
             // 
@@ -90,29 +78,45 @@
             this.tileContext.Name = "tileContext";
             this.tileContext.Size = new System.Drawing.Size(171, 101);
             // 
-            // removeItemButton
+            // openFolderButton
             // 
-            this.removeItemButton.Name = "removeItemButton";
-            this.removeItemButton.Size = new System.Drawing.Size(170, 24);
-            this.removeItemButton.Text = "Remove";
-            this.removeItemButton.Click += new System.EventHandler(this.removeItemButton_Click);
+            this.openFolderButton.Font = new System.Drawing.Font("Segoe UI", 9.163636F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.openFolderButton.Image = global::disk_usage_ui.Properties.Resources.OpenFolder_16x;
+            this.openFolderButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.openFolderButton.Name = "openFolderButton";
+            this.openFolderButton.Size = new System.Drawing.Size(170, 24);
+            this.openFolderButton.Text = "&Open Folder";
+            this.openFolderButton.Click += new System.EventHandler(this.openFolderButton_Click);
             // 
             // tileAddPathButton
             // 
+            this.tileAddPathButton.Image = global::disk_usage_ui.Properties.Resources.action_add_16xLG;
+            this.tileAddPathButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tileAddPathButton.Name = "tileAddPathButton";
             this.tileAddPathButton.Size = new System.Drawing.Size(170, 24);
-            this.tileAddPathButton.Text = "Add New Path";
+            this.tileAddPathButton.Text = "&Add New Path";
             this.tileAddPathButton.Click += new System.EventHandler(this.tileAddPathButton_Click);
             // 
-            // openFolderButton
+            // removeItemButton
             // 
-            this.openFolderButton.Enabled = false;
-            this.openFolderButton.Font = new System.Drawing.Font("Segoe UI", 9.163636F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.openFolderButton.Name = "openFolderButton";
-            this.openFolderButton.Size = new System.Drawing.Size(170, 24);
-            this.openFolderButton.Text = "Open Folder";
-            this.openFolderButton.Visible = false;
-            this.openFolderButton.Click += new System.EventHandler(this.openFolderButton_Click);
+            this.removeItemButton.Image = global::disk_usage_ui.Properties.Resources.action_Cancel_16xLG;
+            this.removeItemButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.removeItemButton.Name = "removeItemButton";
+            this.removeItemButton.Size = new System.Drawing.Size(170, 24);
+            this.removeItemButton.Text = "&Remove";
+            this.removeItemButton.Click += new System.EventHandler(this.removeItemButton_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
+            this.pictureBox1.MaximumSize = new System.Drawing.Size(64, 64);
+            this.pictureBox1.MinimumSize = new System.Drawing.Size(64, 64);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(64, 64);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
             // DiskTile
             // 
@@ -128,8 +132,8 @@
             this.Name = "DiskTile";
             this.Size = new System.Drawing.Size(237, 64);
             this.DoubleClick += new System.EventHandler(this.DiskTile_DoubleClick);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tileContext.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -220,12 +220,18 @@ namespace disk_usage_ui
             try
             {
                 var tile = (DiskTile)sender;
+
+                var dr = MessageBox.Show($"Are you sure you would like to remove \"{tile.path}\"?","Remove Path",MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
                 Debug.Print(tile.path);
 
-                core.Collection.RemoveComputerWithPath(tile.path);
+                if (dr == DialogResult.Yes)
+                {
+                    core.Collection.RemoveComputerWithPath(tile.path);
 
-                tile.Visible = false;
-                saveChanges();
+                    tile.Visible = false;
+                    saveChanges();
+                }
+ 
             }
             catch (Exception ex)
             {
@@ -266,6 +272,25 @@ namespace disk_usage_ui
                 throw;
             }
             RebuildUserInterface();
+        }
+
+        private void viewChartButton_Click(object sender, EventArgs e)
+        {
+            Forms.ChartDialogForm chartDialog = new Forms.ChartDialogForm(SortCollection(core.Collection.PCs));
+            chartDialog.Show();
+        }
+
+        private void taskbarContext_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                viewChartButton.Enabled = core.Collection.PCs.Count > 0;
+            }
+            catch (Exception)
+            {
+                viewChartButton.Enabled = false;
+            }
+            
         }
     }
 }
