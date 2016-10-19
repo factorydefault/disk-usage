@@ -31,10 +31,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChartDialogForm));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.diskChart = new disk_usage_ui.UserControls.DiskChart();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -46,7 +46,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(532, 27);
+            this.menuStrip.Size = new System.Drawing.Size(407, 27);
             this.menuStrip.TabIndex = 1;
             this.menuStrip.Text = "menuStrip";
             // 
@@ -59,16 +59,6 @@
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(41, 23);
             this.fileToolStripMenuItem.Text = "&File";
-            // 
-            // saveImageToolStripMenuItem
-            // 
-            this.saveImageToolStripMenuItem.Image = global::disk_usage_ui.Properties.Resources.resource_16xLG;
-            this.saveImageToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.saveImageToolStripMenuItem.Name = "saveImageToolStripMenuItem";
-            this.saveImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveImageToolStripMenuItem.Size = new System.Drawing.Size(228, 24);
-            this.saveImageToolStripMenuItem.Text = "&Save As Image...";
-            this.saveImageToolStripMenuItem.Click += new System.EventHandler(this.saveImageToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -89,23 +79,34 @@
             this.saveFileDialog.Filter = "PNG Image|*.png";
             this.saveFileDialog.Title = "Save Image";
             // 
+            // saveImageToolStripMenuItem
+            // 
+            this.saveImageToolStripMenuItem.Image = global::disk_usage_ui.Properties.Resources.resource_16xLG;
+            this.saveImageToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.saveImageToolStripMenuItem.Name = "saveImageToolStripMenuItem";
+            this.saveImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveImageToolStripMenuItem.Size = new System.Drawing.Size(228, 24);
+            this.saveImageToolStripMenuItem.Text = "&Save As Image...";
+            this.saveImageToolStripMenuItem.Click += new System.EventHandler(this.saveImageToolStripMenuItem_Click);
+            // 
             // diskChart
             // 
             this.diskChart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.diskChart.Location = new System.Drawing.Point(0, 27);
             this.diskChart.Name = "diskChart";
-            this.diskChart.Size = new System.Drawing.Size(532, 291);
+            this.diskChart.Size = new System.Drawing.Size(407, 230);
             this.diskChart.TabIndex = 0;
             // 
             // ChartDialogForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(532, 318);
+            this.ClientSize = new System.Drawing.Size(407, 257);
             this.Controls.Add(this.diskChart);
             this.Controls.Add(this.menuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
+            this.MinimumSize = new System.Drawing.Size(425, 300);
             this.Name = "ChartDialogForm";
             this.Text = "Disk Usage Chart";
             this.menuStrip.ResumeLayout(false);
