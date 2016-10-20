@@ -2,6 +2,8 @@
 
 Desktop utility to keep track of how full your :cd:'s are getting. Supports Windows with either local drives and network shares.
 
+![Disk Usage Screenshot](/screenshots/mainscreen.png?raw=true "Disk Usage Popup Window")
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
