@@ -13,7 +13,8 @@ namespace disk_usage_ui
         const int PADDING_BOTTOM = 10;
         const int PADDING_RIGHT = 23;
         const int BALLOON_TIMEOUT_DEFAULT = 4000;
-
+        const int FORM_WIDTH = 275;
+        const int MAX_ITEM_HEIGHT = 7;
         DiskUsage core;
 
         public NotificationAreaForm()
@@ -93,11 +94,21 @@ namespace disk_usage_ui
 
             List<PathRecord> sortedCollection = core.SortedList(SelectedSorting);
 
-            SuspendLayout();            
+            SuspendLayout();
+
+            int diskCount = (sortedCollection.Count < MAX_ITEM_HEIGHT) ? sortedCollection.Count : MAX_ITEM_HEIGHT;
+
+            int height = 64 * (diskCount +1); //extra 64px for the combo box area and padding etc
+
+            SetFixedFormSize(FORM_WIDTH, height);
+
+            PositionForm();
 
             foreach (var pc in sortedCollection)
             {
                 DiskTile newTile = new DiskTile(pc);
+
+                newTile.Padding = new Padding(0);
 
                 //subscribe to the events
                 newTile.RemoveRequested += RemovePathUsingTileObject;
@@ -109,6 +120,13 @@ namespace disk_usage_ui
             ResumeLayout(true);
         }
 
+        public void SetFixedFormSize(int width, int height)
+        {
+            var newSize = new Size(width, height);
+            MinimumSize = newSize;
+            MaximumSize = newSize;
+            Size = newSize;
+        }
 
         public void HideForm(bool notify = false)
         {
@@ -207,6 +225,7 @@ namespace disk_usage_ui
 
                     tile.Visible = false;
                     saveChanges();
+                    RebuildUserInterface();
                 }
  
             }
