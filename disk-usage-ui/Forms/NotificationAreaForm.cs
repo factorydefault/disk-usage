@@ -285,5 +285,11 @@ namespace disk_usage_ui
             }
             
         }
+
+        void aboutButton_Click(object sender, EventArgs e)
+        {
+            Forms.AboutForm about = new Forms.AboutForm();
+            about.ShowDialog();
+        }
     }
 }

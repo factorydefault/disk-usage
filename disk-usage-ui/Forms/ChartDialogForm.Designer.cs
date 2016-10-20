@@ -31,10 +31,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChartDialogForm));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.diskChart = new disk_usage_ui.UserControls.DiskChart();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -60,6 +60,16 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(41, 23);
             this.fileToolStripMenuItem.Text = "&File";
             // 
+            // saveImageToolStripMenuItem
+            // 
+            this.saveImageToolStripMenuItem.Image = global::disk_usage_ui.Properties.Resources.resource_16xLG;
+            this.saveImageToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.saveImageToolStripMenuItem.Name = "saveImageToolStripMenuItem";
+            this.saveImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveImageToolStripMenuItem.Size = new System.Drawing.Size(228, 24);
+            this.saveImageToolStripMenuItem.Text = "&Save As Image...";
+            this.saveImageToolStripMenuItem.Click += new System.EventHandler(this.saveImageToolStripMenuItem_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -78,16 +88,6 @@
             this.saveFileDialog.DefaultExt = "png";
             this.saveFileDialog.Filter = "PNG Image|*.png";
             this.saveFileDialog.Title = "Save Image";
-            // 
-            // saveImageToolStripMenuItem
-            // 
-            this.saveImageToolStripMenuItem.Image = global::disk_usage_ui.Properties.Resources.resource_16xLG;
-            this.saveImageToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.saveImageToolStripMenuItem.Name = "saveImageToolStripMenuItem";
-            this.saveImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveImageToolStripMenuItem.Size = new System.Drawing.Size(228, 24);
-            this.saveImageToolStripMenuItem.Text = "&Save As Image...";
-            this.saveImageToolStripMenuItem.Click += new System.EventHandler(this.saveImageToolStripMenuItem_Click);
             // 
             // diskChart
             // 

@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums.cs" />
+    <Compile Include="Links.cs" />
     <Compile Include="PathRecord.cs" />
     <Compile Include="Disk.cs" />
     <Compile Include="DiskUsage.cs" />
