@@ -13,17 +13,17 @@ namespace disk_usage
         Alphabetical,
         [Description("Sort by Name (Z-A)")]
         AlphabeticalDescending,
-        [Description("Sort by Free Space")]
+        [Description("Sort by Free Space (Low to High)")]
         FreeSpace,
-        [Description("Sort by Free Space (Descending)")]
+        [Description("Sort by Free Space (High To Low)")]
         FreeSpaceDescending,
-        [Description("Sort by Percentage Fill")]
+        [Description("Sort by Percentage Fill (Low to High)")]
         FillPercentage,
-        [Description("Sort by Percentage Fill (Descending)")]
+        [Description("Sort by Percentage Fill (High To Low)")]
         FillPercentageDescending,
-        [Description("Sort by Volume Size")]
+        [Description("Sort by Volume Size (Low to High)")]
         Capacity,
-        [Description("Sort by Volume Size (Descending)")]
+        [Description("Sort by Volume Size (High To Low)")]
         CapacityDescending
     }
 
