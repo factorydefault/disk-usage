@@ -41,9 +41,9 @@
             this.diskStack = new System.Windows.Forms.FlowLayoutPanel();
             this.emptySpaceContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.emptySpaceAddPathButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.diskTile5 = new disk_usage_ui.DiskTile();
             this.tableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.orderByCombo = new System.Windows.Forms.ComboBox();
+            this.diskTile5 = new disk_usage_ui.DiskTile();
             this.taskbarContext.SuspendLayout();
             this.diskStack.SuspendLayout();
             this.emptySpaceContext.SuspendLayout();
@@ -158,18 +158,6 @@
             this.emptySpaceAddPathButton.Text = "Add New Path";
             this.emptySpaceAddPathButton.Click += new System.EventHandler(this.AddNewPath);
             // 
-            // diskTile5
-            // 
-            this.diskTile5.AutoSize = true;
-            this.diskTile5.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.diskTile5.BackColor = System.Drawing.Color.White;
-            this.diskTile5.Location = new System.Drawing.Point(3, 3);
-            this.diskTile5.Margin = new System.Windows.Forms.Padding(0);
-            this.diskTile5.Name = "diskTile5";
-            this.diskTile5.Size = new System.Drawing.Size(223, 64);
-            this.diskTile5.TabIndex = 5;
-            this.diskTile5.RemoveRequested += new System.EventHandler<System.EventArgs>(this.RemovePathUsingTileObject);
-            // 
             // tableLayout
             // 
             this.tableLayout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
@@ -200,6 +188,18 @@
             this.orderByCombo.Size = new System.Drawing.Size(251, 21);
             this.orderByCombo.TabIndex = 4;
             this.orderByCombo.SelectedIndexChanged += new System.EventHandler(this.orderByCombo_SelectedIndexChanged);
+            // 
+            // diskTile5
+            // 
+            this.diskTile5.AutoSize = true;
+            this.diskTile5.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.diskTile5.BackColor = System.Drawing.Color.White;
+            this.diskTile5.Location = new System.Drawing.Point(3, 3);
+            this.diskTile5.Margin = new System.Windows.Forms.Padding(0);
+            this.diskTile5.Name = "diskTile5";
+            this.diskTile5.Size = new System.Drawing.Size(223, 64);
+            this.diskTile5.TabIndex = 5;
+            this.diskTile5.RemoveRequested += new System.EventHandler<System.EventArgs>(this.RemovePathUsingTileObject);
             // 
             // NotificationAreaForm
             // 
