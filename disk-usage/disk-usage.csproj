@@ -44,8 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Computer.cs" />
-    <Compile Include="ComputerCollection.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="PathRecord.cs" />
     <Compile Include="Disk.cs" />
     <Compile Include="DiskUsage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

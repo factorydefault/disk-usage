@@ -14,12 +14,12 @@ namespace disk_usage_ui
     {
         public string InitialPath { get; set; } = "C:\\";
 
-        public disk_usage.Computer NewComputer { get; private set; }
+        public disk_usage.PathRecord NewComputer { get; private set; }
 
         public AddPathDialog()
         {
             InitializeComponent();
-            NewComputer = new disk_usage.Computer();
+            NewComputer = new disk_usage.PathRecord();
             updateUserInterface();
             DialogResult = DialogResult.Cancel;
         }

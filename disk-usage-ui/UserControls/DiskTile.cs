@@ -53,7 +53,7 @@ namespace disk_usage_ui
             detailLabel.Text = "Path not found";
         }
 
-        public void VariablesFromComputer(disk_usage.Computer computer)
+        public void VariablesFromComputer(disk_usage.PathRecord computer)
         {
             nameLabel.Text = $"{computer.FriendlyName}";
 
@@ -74,7 +74,7 @@ namespace disk_usage_ui
 
         }
 
-        public DiskTile(disk_usage.Computer computer) : this()
+        public DiskTile(disk_usage.PathRecord computer) : this()
         {
             VariablesFromComputer(computer);
         }

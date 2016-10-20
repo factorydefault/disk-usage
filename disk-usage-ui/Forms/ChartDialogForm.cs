@@ -12,7 +12,7 @@ namespace disk_usage_ui.Forms
             InitializeComponent();
         }
 
-        public ChartDialogForm(List<disk_usage.Computer> collection)
+        public ChartDialogForm(List<disk_usage.PathRecord> collection)
         {
             InitializeComponent();
 

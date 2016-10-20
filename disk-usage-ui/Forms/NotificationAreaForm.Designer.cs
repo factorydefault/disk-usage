@@ -147,7 +147,7 @@
             this.emptySpaceContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.emptySpaceAddPathButton});
             this.emptySpaceContext.Name = "contextMenuStrip1";
-            this.emptySpaceContext.Size = new System.Drawing.Size(171, 53);
+            this.emptySpaceContext.Size = new System.Drawing.Size(171, 28);
             // 
             // emptySpaceAddPathButton
             // 
@@ -194,14 +194,7 @@
             this.orderByCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.orderByCombo.FormattingEnabled = true;
             this.orderByCombo.Items.AddRange(new object[] {
-            "Sort by Name (A-Z)",
-            "Sort by Name (Z-A)",
-            "Sort by Free Space",
-            "Sort by Free Space (Descending)",
-            "Sort by Percentage Fill",
-            "Sort by Percentage Fill (Descending)",
-            "Sort by Volume Size",
-            "Sort by Volume Size (Descending)"});
+            "Sort by Name (A-Z)"});
             this.orderByCombo.Location = new System.Drawing.Point(3, 468);
             this.orderByCombo.Name = "orderByCombo";
             this.orderByCombo.Size = new System.Drawing.Size(251, 21);

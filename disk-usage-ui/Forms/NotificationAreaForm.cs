@@ -4,7 +4,6 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using disk_usage;
 using System.Collections.Generic;
-using System.Linq;
 using UISettings = disk_usage_ui.Properties.Settings;
 
 namespace disk_usage_ui
@@ -17,7 +16,6 @@ namespace disk_usage_ui
 
         DiskUsage core;
 
-
         public NotificationAreaForm()
         {
             InitializeComponent();
@@ -28,6 +26,13 @@ namespace disk_usage_ui
 
             try
             {
+                orderByCombo.Items.Clear();
+                                
+                foreach (SortingOption option in Enum.GetValues(typeof(SortingOption)))
+                {
+                    orderByCombo.Items.Add(option.GetDescription());
+                }
+
                 int index = UISettings.Default.ComboIndex;
 
                 orderByCombo.SelectedIndex = index;
@@ -36,7 +41,7 @@ namespace disk_usage_ui
             {
                 orderByCombo.SelectedIndex = 0;
             }
-
+            
         }
 
 
@@ -60,7 +65,7 @@ namespace disk_usage_ui
 
         void ShowForm()
         {
-            if (core.Collection.PCs.Count == 0)
+            if (core.Paths.Count == 0)
             {
                 AddNewPath(this, new EventArgs());
             }
@@ -76,45 +81,17 @@ namespace disk_usage_ui
 
         void debugprint()
         {
-            foreach(var pc in core.Collection.PCs)
+            foreach(var path in core.Paths)
             {
-                Debug.Print($"{pc.FriendlyName}: {pc.PercentageFilled}");
+                Debug.Print($"{path.FriendlyName}: {path.PercentageFilled}");
             }
-        }
-
-
-        List<Computer> SortCollection(List<Computer> input)
-        {
-            switch (orderByCombo.SelectedIndex)
-            {
-                case 0:
-                    return input.OrderBy(o => o.FriendlyName).ToList();
-                case 1:
-                    return input.OrderByDescending(o => o.FriendlyName).ToList();
-                case 2:
-                    return input.OrderBy(o => o.FreeSpace).ToList();
-                case 3:
-                    return input.OrderByDescending(o => o.FreeSpace).ToList();
-                case 4:
-                    return input.OrderBy(o => o.FillLevel).ToList();
-                case 5:
-                    return input.OrderByDescending(o => o.FillLevel).ToList();
-                case 6:
-                    return input.OrderBy(o => o.TotalSpace).ToList();
-                case 7:
-                    return input.OrderByDescending(o => o.TotalSpace).ToList();
-                default:
-                    Debug.Print("ComboBox index not recognised");
-                    return input; // input.OrderByDescending(o => o.FillLevel).ToList();
-            }
-
         }
 
         void RebuildUserInterface()
         {
             diskStack.Controls.Clear();
 
-            List<Computer> sortedCollection = SortCollection(core.Collection.PCs);
+            List<PathRecord> sortedCollection = core.SortedList(SelectedSorting);
 
             SuspendLayout();            
 
@@ -194,7 +171,7 @@ namespace disk_usage_ui
             PositionForm();
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             
         }
@@ -207,7 +184,7 @@ namespace disk_usage_ui
 
             if (result == DialogResult.OK)
             {
-                core.Collection.AddComputer(dialog.NewComputer);
+                core.AddPathToList(dialog.NewComputer);
                 RebuildUserInterface();
                 saveChanges();
             }
@@ -215,7 +192,7 @@ namespace disk_usage_ui
 
         }
 
-        private void RemovePathUsingTileObject(object sender, EventArgs e)
+        void RemovePathUsingTileObject(object sender, EventArgs e)
         {
             try
             {
@@ -226,7 +203,7 @@ namespace disk_usage_ui
 
                 if (dr == DialogResult.Yes)
                 {
-                    core.Collection.RemoveComputerWithPath(tile.path);
+                    core.RemovePathFromList(tile.path);
 
                     tile.Visible = false;
                     saveChanges();
@@ -274,17 +251,33 @@ namespace disk_usage_ui
             RebuildUserInterface();
         }
 
-        private void viewChartButton_Click(object sender, EventArgs e)
+        public SortingOption SelectedSorting
         {
-            Forms.ChartDialogForm chartDialog = new Forms.ChartDialogForm(SortCollection(core.Collection.PCs));
+            get
+            {
+                try
+                {
+                    return (SortingOption)orderByCombo.SelectedIndex;
+                }
+                catch
+                {
+                    return 0;
+                }
+                
+            }
+        }
+
+        void viewChartButton_Click(object sender, EventArgs e)
+        {
+            Forms.ChartDialogForm chartDialog = new Forms.ChartDialogForm(core.SortedList(SelectedSorting));
             chartDialog.Show();
         }
 
-        private void taskbarContext_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        void taskbarContext_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             try
             {
-                viewChartButton.Enabled = core.Collection.PCs.Count > 0;
+                viewChartButton.Enabled = core.Paths.Count > 0;
             }
             catch (Exception)
             {

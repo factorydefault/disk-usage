@@ -23,7 +23,7 @@ namespace disk_usage_ui.UserControls
             Chart.SaveImage(imageFileName, format);
         }
 
-        public void SetData(List<disk_usage.Computer> data)
+        public void SetData(List<disk_usage.PathRecord> data)
         {
             var usedSeries = Chart.Series["UsedSpace"];
             var freeSeries = Chart.Series["FreeSpace"];

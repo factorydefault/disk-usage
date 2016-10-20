@@ -4,9 +4,9 @@ using Newtonsoft.Json;
 namespace disk_usage
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public class Computer
+    public class PathRecord
     {
-        public Computer()
+        public PathRecord()
         {
             FriendlyName = "";
             disk = new Disk();
@@ -68,9 +68,9 @@ namespace disk_usage
 
         public int FillLevel => (int) Math.Round(disk.Info().PercentageFilled,0);
 
-        public static Computer Create(string path, string name = "")
+        public static PathRecord Create(string path, string name = "")
         {
-            return new Computer { Path = path, FriendlyName = name };
+            return new PathRecord { Path = path, FriendlyName = name };
         }
 
     }

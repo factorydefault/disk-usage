@@ -2,22 +2,23 @@
 using System.Diagnostics;
 using System.IO;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace disk_usage
 {
     public class DiskUsage
     {
-        const string SETTINGS_FILE = "\\disk_usage_data\\computers.txt";
+        const string DATA_FOLDER = "disk_usage_data";
+        const string PATHS_FILE = "paths.json";
         Formatting SETTINGS_FORMAT = Formatting.Indented;
 
         public bool SettingsFileWasGenerated { get; private set; } = false;
 
-        public ComputerCollection Collection { get; private set; }
-
         public DiskUsage()
         {
-            Collection = new ComputerCollection();
-            Refresh();
+            Paths = new List<PathRecord>();
+            Refresh(); 
         }
 
         public string SettingsFileLocation
@@ -25,7 +26,7 @@ namespace disk_usage
             get
             {
                 string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-                return $"{localAppData}{SETTINGS_FILE}";
+                return $"{localAppData}\\{DATA_FOLDER}\\{PATHS_FILE}";
             }
         }
 
@@ -49,9 +50,9 @@ namespace disk_usage
 
         void CreateNewSettingsFile()
         {
-            Collection.PCs.Clear();
+            Paths.Clear();
             Debug.Print("Creating json settings file with defaults");
-            Collection.AddComputer(WindowsInstallDirectory, $"OSDisk ({WindowsInstallDirectory})");
+            AddPathToList(WindowsInstallDirectory, $"OSDisk ({WindowsInstallDirectory})");
 
             Directory.CreateDirectory(SettingsDirectory);
 
@@ -69,7 +70,7 @@ namespace disk_usage
                 {
                     JsonSerializer serializer = new JsonSerializer();
                     serializer.Formatting = SETTINGS_FORMAT;
-                    serializer.Serialize(file, Collection);
+                    serializer.Serialize(file, Paths);
                 }
                 Debug.Print("saved!");
             }
@@ -84,12 +85,12 @@ namespace disk_usage
         {
             try
             {
-                Collection = JsonConvert.DeserializeObject<ComputerCollection>(File.ReadAllText(SettingsFileLocation));
+                Paths = JsonConvert.DeserializeObject<List<PathRecord>>(File.ReadAllText(SettingsFileLocation));
             }
             catch (JsonReaderException ex)
             {
                 Debug.Print($"Unable to read settings file: {ex.Message}");
-                Collection = new ComputerCollection();
+                Paths = new List<PathRecord>();
             }
             catch (Exception)
             {
@@ -97,6 +98,67 @@ namespace disk_usage
             }
         }
 
+        List<PathRecord> _pathList;
+
+        public void AddPathToList(PathRecord computer)
+        {
+            _pathList.Add(computer);
+        }
+
+        public void AddPathToList(string path, string friendlyName = "")
+        {
+            AddPathToList(PathRecord.Create(path, friendlyName));
+        }
+
+        public List<PathRecord> Paths
+        {
+            get
+            {
+                return _pathList;
+            }
+            private set
+            {
+                _pathList = value;
+            }
+        }
+        
+        public List<PathRecord> SortedList(SortingOption sorting)
+        {
+            switch (sorting)
+            {
+                case SortingOption.Alphabetical:
+                    return Paths.OrderBy(o => o.FriendlyName).ToList();
+                case SortingOption.AlphabeticalDescending:
+                    return Paths.OrderByDescending(o => o.FriendlyName).ToList();
+                case SortingOption.FreeSpace:
+                    return Paths.OrderBy(o => o.FreeSpace).ToList();
+                case SortingOption.FreeSpaceDescending:
+                    return Paths.OrderByDescending(o => o.FreeSpace).ToList();
+                case SortingOption.FillPercentage:
+                    return Paths.OrderBy(o => o.FillLevel).ToList();
+                case SortingOption.FillPercentageDescending:
+                    return Paths.OrderByDescending(o => o.FillLevel).ToList();
+                case SortingOption.Capacity:
+                    return Paths.OrderBy(o => o.TotalSpace).ToList();
+                case SortingOption.CapacityDescending:
+                    return Paths.OrderByDescending(o => o.TotalSpace).ToList();
+                default:
+                    Debug.Print("not recognised");
+                    return Paths;
+            }
+        }
+
+        public void RemovePathFromList(string path)
+        {
+            foreach (var paths in _pathList)
+            {
+                if (paths.Path == path)
+                {
+                    _pathList.Remove(paths);
+                    break;
+                }
+            }
+        }
 
     }
 
