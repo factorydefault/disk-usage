@@ -6,6 +6,14 @@ using System.Reflection;
 
 namespace disk_usage
 {
+    public enum OSVersion
+    {
+        Windows10,
+        Windows8,
+        Windows7,
+        Other
+    }
+
 
     public enum SortingOption
     {

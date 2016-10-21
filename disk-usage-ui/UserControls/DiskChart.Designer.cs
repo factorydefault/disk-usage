@@ -67,7 +67,7 @@
             this.Chart.Name = "Chart";
             series1.ChartArea = "ChartArea";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StackedBar;
-            series1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(214)))), ((int)(((byte)(42)))));
+            series1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             series1.Legend = "Legend1";
             series1.LegendText = "Used";
             series1.Name = "UsedSpace";
