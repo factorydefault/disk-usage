@@ -14,6 +14,13 @@ namespace disk_usage
         Other
     }
 
+    public enum PathLocation
+    {
+        Local,
+        Remote,
+        OS,
+    }
+
 
     public enum SortingOption
     {

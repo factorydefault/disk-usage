@@ -168,6 +168,12 @@
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
     <Content Include="networkDrive.ico" />
+    <None Include="Resources\osdisk7.png" />
+    <None Include="Resources\notfound7.png" />
+    <None Include="Resources\localdrive7.png" />
+    <None Include="Resources\networkdrive7.png" />
+    <None Include="Resources\localdrive10.png" />
+    <None Include="Resources\7networkdrive.PNG" />
     <None Include="Resources\GitHub.png" />
     <None Include="Resources\KPI_16xLG.png" />
     <None Include="Resources\Bubble_16xLG.png" />

@@ -46,13 +46,12 @@ namespace disk_usage
             }
         }
 
-        public string WindowsInstallDirectory => Path.GetPathRoot(Environment.SystemDirectory);
 
         void CreateNewSettingsFile()
         {
             Paths.Clear();
             Debug.Print("Creating json settings file with defaults");
-            AddPathToList(WindowsInstallDirectory, $"OSDisk ({WindowsInstallDirectory})");
+            AddPathToList(Windows.InstallDirectory, $"OSDisk ({Windows.InstallDirectory})");
 
             Directory.CreateDirectory(SettingsDirectory);
 

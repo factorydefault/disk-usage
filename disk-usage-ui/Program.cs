@@ -25,7 +25,7 @@ namespace disk_usage_ui
 
 #if THEME
             // OVERRIDE
-            Theme = Theming.ForVersion(OSVersion.Windows10);
+            Theme = Theming.ForVersion(OSVersion.Windows7);
 #endif
 
             Application.Run(new NotificationAreaForm());

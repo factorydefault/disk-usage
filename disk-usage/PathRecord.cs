@@ -1,5 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace disk_usage
 {
@@ -71,6 +72,33 @@ namespace disk_usage
         public static PathRecord Create(string path, string name = "")
         {
             return new PathRecord { Path = path, FriendlyName = name };
+        }
+
+
+        public static Regex LocalRegex => new Regex(@"([a-zA-Z]):");
+
+        public static Regex UNCNamedRegex => new Regex(@"^\\\\.*\\.*\\");
+
+        //public Regex UNCIPRegex => new Regex(@"");
+
+
+        public PathLocation Location()
+        {
+
+            var match = LocalRegex.Match(Path);
+
+            if (match.Success)
+            {
+                string drive = $"{match.Groups[1].Value}:\\";
+                Console.WriteLine(drive);
+                return (drive == Windows.InstallDirectory) ? PathLocation.OS : PathLocation.Local;
+            }
+            return PathLocation.Remote;
+
+
+            
+
+
         }
 
     }

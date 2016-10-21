@@ -22,5 +22,7 @@ namespace disk_usage
                     return OSVersion.Other;
             }
         }
+
+        public static string InstallDirectory => System.IO.Path.GetPathRoot(Environment.SystemDirectory);
     }
 }

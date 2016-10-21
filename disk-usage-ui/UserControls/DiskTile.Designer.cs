@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DiskTile));
             this.nameLabel = new System.Windows.Forms.Label();
             this.detailLabel = new System.Windows.Forms.Label();
             this.usageBar = new System.Windows.Forms.ProgressBar();
@@ -37,9 +36,9 @@
             this.openFolderButton = new System.Windows.Forms.ToolStripMenuItem();
             this.tileAddPathButton = new System.Windows.Forms.ToolStripMenuItem();
             this.removeItemButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox = new System.Windows.Forms.PictureBox();
             this.tileContext.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // nameLabel
@@ -76,7 +75,7 @@
             this.tileAddPathButton,
             this.removeItemButton});
             this.tileContext.Name = "tileContext";
-            this.tileContext.Size = new System.Drawing.Size(171, 101);
+            this.tileContext.Size = new System.Drawing.Size(171, 76);
             // 
             // openFolderButton
             // 
@@ -106,17 +105,18 @@
             this.removeItemButton.Text = "&Remove";
             this.removeItemButton.Click += new System.EventHandler(this.removeItemButton_Click);
             // 
-            // pictureBox1
+            // pictureBox
             // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
-            this.pictureBox1.MaximumSize = new System.Drawing.Size(64, 64);
-            this.pictureBox1.MinimumSize = new System.Drawing.Size(64, 64);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(64, 64);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.pictureBox.Image = global::disk_usage_ui.Properties.Resources.networkdrive7;
+            this.pictureBox.Location = new System.Drawing.Point(13, 2);
+            this.pictureBox.Margin = new System.Windows.Forms.Padding(0);
+            this.pictureBox.MaximumSize = new System.Drawing.Size(64, 64);
+            this.pictureBox.MinimumSize = new System.Drawing.Size(48, 48);
+            this.pictureBox.Name = "pictureBox";
+            this.pictureBox.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox.TabIndex = 0;
+            this.pictureBox.TabStop = false;
             // 
             // DiskTile
             // 
@@ -127,13 +127,13 @@
             this.Controls.Add(this.usageBar);
             this.Controls.Add(this.detailLabel);
             this.Controls.Add(this.nameLabel);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.pictureBox);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "DiskTile";
             this.Size = new System.Drawing.Size(237, 64);
             this.DoubleClick += new System.EventHandler(this.DiskTile_DoubleClick);
             this.tileContext.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -141,7 +141,7 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.Label nameLabel;
         private System.Windows.Forms.Label detailLabel;
         private System.Windows.Forms.ProgressBar usageBar;

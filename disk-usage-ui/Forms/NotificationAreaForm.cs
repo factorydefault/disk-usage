@@ -197,7 +197,7 @@ namespace disk_usage_ui
         void AddNewPath(object sender, EventArgs e)
         {
             AddPathDialog dialog = new AddPathDialog();
-            dialog.InitialPath = core.WindowsInstallDirectory;
+            dialog.InitialPath = Windows.InstallDirectory;
             var result = dialog.ShowDialog();
 
             if (result == DialogResult.OK)

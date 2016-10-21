@@ -37,13 +37,40 @@ namespace disk_usage_ui
             updateUserInterface();    
         }
 
+
+        static bool PathHasValidForm(string path)
+        {
+            try
+            {
+                if (disk_usage.PathRecord.LocalRegex.IsMatch(path)) 
+                {
+                    return true;
+                }
+                if (disk_usage.PathRecord.UNCNamedRegex.IsMatch(path))
+                {
+                    return true;
+                }
+
+                //specified by ip?
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"PathExists error: {ex.Message}");
+            }
+            return false;
+
+
+        }
+
+
         void updateUserInterface()
         {
             NewComputer.FriendlyName = labelTextBox.Text;
             NewComputer.Path = pathTextBox.Text;
             
 
-            if (System.IO.Directory.Exists(pathTextBox.Text))
+            if (PathHasValidForm(pathTextBox.Text))
             {
                 exampleTile.VariablesFromComputer(NewComputer);
                 acceptButton.Enabled = true;

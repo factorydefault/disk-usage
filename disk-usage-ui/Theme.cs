@@ -5,11 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
 namespace disk_usage_ui
 {
     public interface Theme
     {
         Color ChartUsedSpace { get; }
+        Image NetworkDiskImage { get; }
+        Image LocalDiskImage { get; }
+
+        Image OSDiskImage { get; }
+        Image NotFoundImage { get; }
     }
 
     public static class Theming
@@ -33,16 +40,39 @@ namespace disk_usage_ui
     {
         public Color ChartUsedSpace => Color.FromArgb(5, 214, 42);
 
+        public Image NetworkDiskImage => Properties.Resources.networkdrive7;
+
+        public Image LocalDiskImage => Properties.Resources.localdrive7;
+
+        public Image OSDiskImage => Properties.Resources.osdisk7;
+
+        public Image NotFoundImage => Properties.Resources.notfound7;
+
+
     }
 
     public class Windows10Theme: Theme
     {
         public Color ChartUsedSpace => Color.FromArgb(36, 158, 215);
+        public Image NetworkDiskImage => Properties.Resources.localdrive10;
+
+        public Image LocalDiskImage => NetworkDiskImage;
+
+        public Image OSDiskImage => NetworkDiskImage;
+
+        public Image NotFoundImage => Properties.Resources.notfound7;
     }
 
     public class Windows8Theme : Theme
     {
         public Color ChartUsedSpace => Color.Blue;
+        public Image NetworkDiskImage => Properties.Resources.networkdrive7;
+
+        public Image LocalDiskImage => NetworkDiskImage;
+
+        public Image OSDiskImage => NetworkDiskImage;
+
+        public Image NotFoundImage => Properties.Resources.notfound7;
     }
 
 }
