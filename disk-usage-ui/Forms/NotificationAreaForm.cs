@@ -77,6 +77,7 @@ namespace disk_usage_ui
                 allowshowdisplay = true;
                 Visible = true;
             }
+            core.RequestUpdateFromAll();
 
         }
 

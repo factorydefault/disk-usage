@@ -28,7 +28,7 @@ namespace disk_usage_ui
                 case disk_usage.OSVersion.Windows10:
                     return new Windows10Theme();
                 case disk_usage.OSVersion.Windows8:
-                    return new Windows8Theme();
+                    return new Windows10Theme(); //lazy, not making an additional theme for win 8 at the moment
                 default:
                     return new Windows7Theme();
             }
@@ -54,13 +54,13 @@ namespace disk_usage_ui
     public class Windows10Theme: Theme
     {
         public Color ChartUsedSpace => Color.FromArgb(36, 158, 215);
-        public Image NetworkDiskImage => Properties.Resources.localdrive10;
+        public Image NetworkDiskImage => Properties.Resources.networkdrive10;
 
-        public Image LocalDiskImage => NetworkDiskImage;
+        public Image LocalDiskImage => Properties.Resources.localdrive10;
 
-        public Image OSDiskImage => NetworkDiskImage;
+        public Image OSDiskImage => Properties.Resources.osdrive10;
 
-        public Image NotFoundImage => Properties.Resources.notfound7;
+        public Image NotFoundImage => Properties.Resources.notfound10;
     }
 
     public class Windows8Theme : Theme

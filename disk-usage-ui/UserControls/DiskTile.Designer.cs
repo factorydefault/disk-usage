@@ -37,6 +37,7 @@
             this.tileAddPathButton = new System.Windows.Forms.ToolStripMenuItem();
             this.removeItemButton = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.clipboardButton = new System.Windows.Forms.ToolStripMenuItem();
             this.tileContext.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
@@ -44,6 +45,7 @@
             // nameLabel
             // 
             this.nameLabel.AutoEllipsis = true;
+            this.nameLabel.Font = new System.Drawing.Font("Segoe UI", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nameLabel.Location = new System.Drawing.Point(70, 4);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(150, 13);
@@ -53,12 +55,13 @@
             // detailLabel
             // 
             this.detailLabel.AutoSize = true;
+            this.detailLabel.Font = new System.Drawing.Font("Segoe UI", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.detailLabel.ForeColor = System.Drawing.SystemColors.GrayText;
             this.detailLabel.Location = new System.Drawing.Point(71, 41);
             this.detailLabel.Name = "detailLabel";
-            this.detailLabel.Size = new System.Drawing.Size(118, 13);
+            this.detailLabel.Size = new System.Drawing.Size(58, 13);
             this.detailLabel.TabIndex = 2;
-            this.detailLabel.Text = "25.8 GB free of 599 GB";
+            this.detailLabel.Text = "Loading...";
             // 
             // usageBar
             // 
@@ -72,10 +75,11 @@
             this.tileContext.ImageScalingSize = new System.Drawing.Size(18, 18);
             this.tileContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openFolderButton,
+            this.clipboardButton,
             this.tileAddPathButton,
             this.removeItemButton});
             this.tileContext.Name = "tileContext";
-            this.tileContext.Size = new System.Drawing.Size(171, 76);
+            this.tileContext.Size = new System.Drawing.Size(227, 100);
             // 
             // openFolderButton
             // 
@@ -83,7 +87,7 @@
             this.openFolderButton.Image = global::disk_usage_ui.Properties.Resources.OpenFolder_16x;
             this.openFolderButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.openFolderButton.Name = "openFolderButton";
-            this.openFolderButton.Size = new System.Drawing.Size(170, 24);
+            this.openFolderButton.Size = new System.Drawing.Size(226, 24);
             this.openFolderButton.Text = "&Open Folder";
             this.openFolderButton.Click += new System.EventHandler(this.openFolderButton_Click);
             // 
@@ -92,7 +96,7 @@
             this.tileAddPathButton.Image = global::disk_usage_ui.Properties.Resources.action_add_16xLG;
             this.tileAddPathButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tileAddPathButton.Name = "tileAddPathButton";
-            this.tileAddPathButton.Size = new System.Drawing.Size(170, 24);
+            this.tileAddPathButton.Size = new System.Drawing.Size(226, 24);
             this.tileAddPathButton.Text = "&Add New Path";
             this.tileAddPathButton.Click += new System.EventHandler(this.tileAddPathButton_Click);
             // 
@@ -101,7 +105,7 @@
             this.removeItemButton.Image = global::disk_usage_ui.Properties.Resources.action_Cancel_16xLG;
             this.removeItemButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.removeItemButton.Name = "removeItemButton";
-            this.removeItemButton.Size = new System.Drawing.Size(170, 24);
+            this.removeItemButton.Size = new System.Drawing.Size(226, 24);
             this.removeItemButton.Text = "&Remove";
             this.removeItemButton.Click += new System.EventHandler(this.removeItemButton_Click);
             // 
@@ -117,6 +121,13 @@
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
+            // 
+            // clipboardButton
+            // 
+            this.clipboardButton.Name = "clipboardButton";
+            this.clipboardButton.Size = new System.Drawing.Size(226, 24);
+            this.clipboardButton.Text = "&Copy Path to Clipboard";
+            this.clipboardButton.Click += new System.EventHandler(this.clipboardButton_Click);
             // 
             // DiskTile
             // 
@@ -149,5 +160,6 @@
         private System.Windows.Forms.ToolStripMenuItem removeItemButton;
         private System.Windows.Forms.ToolStripMenuItem tileAddPathButton;
         private System.Windows.Forms.ToolStripMenuItem openFolderButton;
+        private System.Windows.Forms.ToolStripMenuItem clipboardButton;
     }
 }

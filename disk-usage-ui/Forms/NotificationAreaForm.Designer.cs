@@ -186,6 +186,7 @@
             this.orderByCombo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
             this.orderByCombo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.orderByCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.orderByCombo.Font = new System.Drawing.Font("Segoe UI", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.orderByCombo.FormattingEnabled = true;
             this.orderByCombo.Items.AddRange(new object[] {
             "Sort by Name (A-Z)"});
@@ -203,6 +204,7 @@
             this.ClientSize = new System.Drawing.Size(257, 497);
             this.ControlBox = false;
             this.Controls.Add(this.tableLayout);
+            this.Font = new System.Drawing.Font("Segoe UI", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(275, 515);
             this.MinimumSize = new System.Drawing.Size(275, 515);

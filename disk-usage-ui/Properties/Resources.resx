@@ -154,4 +154,13 @@
   <data name="osdisk7" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\osdisk7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="networkdrive10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\networkdrive10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="notfound10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\notfound10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="osdrive10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\osdrive10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

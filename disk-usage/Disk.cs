@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace disk_usage
 {
-    struct DiskSpaceInformation
+    public struct DiskSpaceInformation
     {
         public ulong FreeBytesAvailable;
         public ulong TotalNumberOfBytes;
@@ -44,39 +45,78 @@ namespace disk_usage
 
         public const double GBConversion = 1073741824.0;
 
+        public event EventHandler<EventArgs> DiskInfoUpdated;
 
         public string Path { get; set; }
 
-        public DiskSpaceInformation Info()
-        {
-            if (string.IsNullOrWhiteSpace(Path)) throw new ArgumentException("Set path first");
+        //public DiskSpaceInformation Info()
+        //{
+        //    if (string.IsNullOrWhiteSpace(Path)) throw new ArgumentException("Set path first");
 
-            return GetInfoForPath(Path);
+        //    return GetInfoForPath(Path);
+        //}
+
+        
+
+        //public static DiskSpaceInformation GetInfoForPath(string path)
+        //{
+        //    DiskSpaceInformation result;
+
+        //    bool success = GetDiskFreeSpaceEx(path,
+        //                          out result.FreeBytesAvailable,
+        //                          out result.TotalNumberOfBytes,
+        //                          out result.TotalNumberOfFreeBytes);
+        //    if (!success)
+        //    {
+        //        result = new DiskSpaceInformation(1, 1, 0);
+        //    }
+
+        //    return result;
+        //}
+
+        public DiskSpaceInformation DSI { get; set; } = new DiskSpaceInformation(1, 1, 0);
+
+
+
+        public async Task RequestDiskInfo()
+        {
+            await GetInfoAsync();
+            Console.WriteLine($"Async done, {Path} has {DSI.FreeSpaceInGB} GB free space.");
+            DiskInfoUpdated?.Invoke(this, new EventArgs());
         }
 
 
-        public static DiskSpaceInformation GetInfoForPath(string path)
+        public Task GetInfoAsync()
         {
-            DiskSpaceInformation result;
-
-            bool success = GetDiskFreeSpaceEx(path,
-                                  out result.FreeBytesAvailable,
-                                  out result.TotalNumberOfBytes,
-                                  out result.TotalNumberOfFreeBytes);
-            if (!success)
+            return Task.Run( () =>
             {
-                result = new DiskSpaceInformation(1, 1, 0);
-            }
+                ulong ulFreeBytes;
+                ulong ulTotalBytes;
+                ulong ulTotalFreeBytes;
 
-            return result;
+                bool success = GetDiskFreeSpaceEx(Path,
+                                      out ulFreeBytes,
+                                      out ulTotalBytes,
+                                      out ulTotalFreeBytes);
+                if (success)
+                {
+                    DSI = new DiskSpaceInformation(ulFreeBytes, ulTotalBytes, ulTotalFreeBytes);
+                }
+                else
+                {
+                    DSI = new DiskSpaceInformation(1, 1, 0);
+                }
+            });
+
         }
+
     }
 
     internal static class DiskExtensions
     {
-        public static DiskSpaceInformation GetDiskInformation(this System.IO.DirectoryInfo dir)
-        {
-            return Disk.GetInfoForPath(dir.FullName);
-        }
+        //public static DiskSpaceInformation GetDiskInformation(this System.IO.DirectoryInfo dir)
+        //{
+        //    return Disk.GetInfoForPath(dir.FullName);
+        //}
     }
 }

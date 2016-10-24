@@ -81,8 +81,6 @@ namespace disk_usage_ui
                     break;
             }
 
-            
-
 
             usageBar.Minimum = 0;
             usageBar.Maximum = 100;
@@ -90,7 +88,7 @@ namespace disk_usage_ui
 
             usageBar.SetState((usageBar.Value > 80) ? 2 : 1);
 
-            detailLabel.Text = $"{pathRecord.FreeSpace} GB free of {pathRecord.TotalSpace} GB";
+            detailLabel.Text = $"{pathRecord.FreeSpace} GB free of {Math.Round(pathRecord.TotalSpace,0,MidpointRounding.AwayFromZero)} GB";
 
             if (pathRecord.TotalSpace < 0.0001) //edge case where path has not been found
             {
@@ -99,9 +97,19 @@ namespace disk_usage_ui
 
         }
 
-        public DiskTile(disk_usage.PathRecord computer) : this()
+        disk_usage.PathRecord _recordReference;
+
+        public DiskTile(disk_usage.PathRecord pr) : this()
         {
-            VariablesFromComputer(computer);
+            _recordReference = pr;
+            _recordReference.DiskInfoUpdated += Pr_DiskInfoUpdated;
+
+            VariablesFromComputer(_recordReference);
+        }
+
+        private void Pr_DiskInfoUpdated(object sender, EventArgs e)
+        {
+            VariablesFromComputer(_recordReference);
         }
 
         void DiskTile_DoubleClick(object sender, EventArgs e)
@@ -132,6 +140,18 @@ namespace disk_usage_ui
             }
         }
 
+        private void clipboardButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Clipboard.SetText(path);
+            }
+            catch (Exception ex)
+            { 
+
+                Console.Write(ex.Message);
+            }
+        }
     }
 
     public static class ModifyProgressBarColor

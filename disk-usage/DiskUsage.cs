@@ -80,6 +80,14 @@ namespace disk_usage
 
         }
 
+        public void RequestUpdateFromAll()
+        {
+            foreach(var pr in Paths)
+            {
+                pr.RequestDiskInfo();
+            }
+        }
+
         void ReadSettingsFile()
         {
             try

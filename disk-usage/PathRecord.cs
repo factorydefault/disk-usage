@@ -11,7 +11,21 @@ namespace disk_usage
         {
             FriendlyName = "";
             disk = new Disk();
+            disk.DiskInfoUpdated += Disk_DiskInfoUpdated;
         }
+
+        public event EventHandler<EventArgs> DiskInfoUpdated;
+
+        void Disk_DiskInfoUpdated(object sender, EventArgs e)
+        {
+            DiskInfoUpdated?.Invoke(this, new EventArgs()); //pass on event
+        }
+
+        public void RequestDiskInfo()
+        {
+            disk.RequestDiskInfo();
+        }
+
 
         Disk disk;
 
@@ -47,7 +61,8 @@ namespace disk_usage
         {
             get
             {
-                return Math.Round(disk.Info().FreeSpaceInGB, 2);
+                return Math.Round(disk.DSI.FreeSpaceInGB, 2);
+                //return Math.Round(disk.Info().FreeSpaceInGB, 2);
             }
         }
 
@@ -55,7 +70,8 @@ namespace disk_usage
         {
             get
             {
-                return Math.Round(disk.Info().TotalSpaceInGB, 2);
+                return Math.Round(disk.DSI.TotalSpaceInGB, 2);
+                //return Math.Round(disk.Info().TotalSpaceInGB, 2);
             }
         }
 
@@ -63,11 +79,13 @@ namespace disk_usage
         {
             get
             {
-                return $"{Math.Round(disk.Info().PercentageFilled, 2)} %";
+                return $"{Math.Round(disk.DSI.PercentageFilled, 2)} %";
+                //return $"{Math.Round(disk.Info().PercentageFilled, 2)} %";
             }
         }
 
-        public int FillLevel => (int) Math.Round(disk.Info().PercentageFilled,0);
+        //public int FillLevel => (int) Math.Round(disk.Info().PercentageFilled,0);
+        public int FillLevel => (int)Math.Round(disk.DSI.PercentageFilled, 0);
 
         public static PathRecord Create(string path, string name = "")
         {
@@ -90,7 +108,7 @@ namespace disk_usage
             if (match.Success)
             {
                 string drive = $"{match.Groups[1].Value}:\\";
-                Console.WriteLine(drive);
+                //Console.WriteLine(drive);
                 return (drive == Windows.InstallDirectory) ? PathLocation.OS : PathLocation.Local;
             }
             return PathLocation.Remote;
