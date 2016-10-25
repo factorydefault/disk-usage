@@ -38,6 +38,11 @@ namespace disk_usage_ui
         public DiskTile()
         {
             InitializeComponent();
+
+            if (Program.Theme != null)
+            {
+                pictureBox.Image = Program.Theme.NetworkDiskImage;
+            }
         }
 
         public void SetAsNotFound(string label = "")
@@ -46,6 +51,8 @@ namespace disk_usage_ui
             {
                 nameLabel.Text = label;
             }
+
+            pictureBox.Image = Program.Theme.NotFoundImage;
                         
             usageBar.Minimum = 0;
             usageBar.Maximum = 100;
@@ -53,30 +60,56 @@ namespace disk_usage_ui
             detailLabel.Text = "Path not found";
         }
 
-        public void VariablesFromComputer(disk_usage.PathRecord computer)
+        public void VariablesFromComputer(disk_usage.PathRecord pathRecord)
         {
-            nameLabel.Text = $"{computer.FriendlyName}";
+            nameLabel.Text = $"{pathRecord.FriendlyName}";
 
-            path = computer.Path;
+            path = pathRecord.Path;
+
+            pictureBox.Visible = true;
+
+            switch (pathRecord.Location())
+            {
+                case disk_usage.PathLocation.Local:
+                    pictureBox.Image = Program.Theme.LocalDiskImage;
+                    break;
+                case disk_usage.PathLocation.OS:
+                    pictureBox.Image = Program.Theme.OSDiskImage;
+                    break;
+                default:
+                    pictureBox.Image = Program.Theme.NetworkDiskImage;
+                    break;
+            }
+
 
             usageBar.Minimum = 0;
             usageBar.Maximum = 100;
-            usageBar.Value = computer.FillLevel;
+            usageBar.Value = pathRecord.FillLevel;
 
             usageBar.SetState((usageBar.Value > 80) ? 2 : 1);
 
-            detailLabel.Text = $"{computer.FreeSpace} GB free of {computer.TotalSpace} GB";
+            detailLabel.Text = $"{pathRecord.FreeSpace} GB free of {Math.Round(pathRecord.TotalSpace,0,MidpointRounding.AwayFromZero)} GB";
 
-            if (computer.TotalSpace < 0.0001) //edge case where path has not been found
+            if (pathRecord.TotalSpace < 0.0001) //edge case where path has not been found
             {
                 SetAsNotFound();
             }
 
         }
 
-        public DiskTile(disk_usage.PathRecord computer) : this()
+        disk_usage.PathRecord _recordReference;
+
+        public DiskTile(disk_usage.PathRecord pr) : this()
         {
-            VariablesFromComputer(computer);
+            _recordReference = pr;
+            _recordReference.DiskInfoUpdated += Pr_DiskInfoUpdated;
+
+            VariablesFromComputer(_recordReference);
+        }
+
+        private void Pr_DiskInfoUpdated(object sender, EventArgs e)
+        {
+            VariablesFromComputer(_recordReference);
         }
 
         void DiskTile_DoubleClick(object sender, EventArgs e)
@@ -107,6 +140,18 @@ namespace disk_usage_ui
             }
         }
 
+        private void clipboardButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Clipboard.SetText(path);
+            }
+            catch (Exception ex)
+            { 
+
+                Console.Write(ex.Message);
+            }
+        }
     }
 
     public static class ModifyProgressBarColor

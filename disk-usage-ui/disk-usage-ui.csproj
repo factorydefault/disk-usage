@@ -36,7 +36,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;THEME</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -53,7 +53,10 @@
     <StartupObject>disk_usage_ui.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>networkDrive.ico</ApplicationIcon>
+    <ApplicationIcon>storage.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -92,6 +95,7 @@
     <Compile Include="Forms\ChartDialogForm.Designer.cs">
       <DependentUpon>ChartDialogForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Theme.cs" />
     <Compile Include="UserControls\DiskChart.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -140,6 +144,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -162,7 +167,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
-    <Content Include="networkDrive.ico" />
+    <Content Include="storage.ico" />
+    <None Include="Resources\notfound10.png" />
+    <None Include="Resources\osdrive10.png" />
+    <None Include="Resources\networkdrive10.png" />
+    <None Include="Resources\localdrive10.png" />
+    <None Include="Resources\osdisk7.png" />
+    <None Include="Resources\notfound7.png" />
+    <None Include="Resources\localdrive7.png" />
+    <None Include="Resources\networkdrive7.png" />
+    <None Include="Resources\7networkdrive.PNG" />
     <None Include="Resources\GitHub.png" />
     <None Include="Resources\KPI_16xLG.png" />
     <None Include="Resources\Bubble_16xLG.png" />

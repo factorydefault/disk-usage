@@ -46,13 +46,12 @@ namespace disk_usage
             }
         }
 
-        public string WindowsInstallDirectory => Path.GetPathRoot(Environment.SystemDirectory);
 
         void CreateNewSettingsFile()
         {
             Paths.Clear();
             Debug.Print("Creating json settings file with defaults");
-            AddPathToList(WindowsInstallDirectory, $"OSDisk ({WindowsInstallDirectory})");
+            AddPathToList(Windows.InstallDirectory, $"OSDisk ({Windows.InstallDirectory})");
 
             Directory.CreateDirectory(SettingsDirectory);
 
@@ -79,6 +78,14 @@ namespace disk_usage
                 Debug.Print($"could not save: {ex.Message}");
             }
 
+        }
+
+        public void RequestUpdateFromAll()
+        {
+            foreach(var pr in Paths)
+            {
+                pr.RequestDiskInfo();
+            }
         }
 
         void ReadSettingsFile()
@@ -127,9 +134,9 @@ namespace disk_usage
             switch (sorting)
             {
                 case SortingOption.Alphabetical:
-                    return Paths.OrderBy(o => o.FriendlyName).ToList();
+                    return Paths.OrderBy(o => o.FriendlyName.Replace("\\","")).ToList();
                 case SortingOption.AlphabeticalDescending:
-                    return Paths.OrderByDescending(o => o.FriendlyName).ToList();
+                    return Paths.OrderByDescending(o => o.FriendlyName.Replace("\\", "")).ToList();
                 case SortingOption.FreeSpace:
                     return Paths.OrderBy(o => o.FreeSpace).ToList();
                 case SortingOption.FreeSpaceDescending:
@@ -142,8 +149,12 @@ namespace disk_usage
                     return Paths.OrderBy(o => o.TotalSpace).ToList();
                 case SortingOption.CapacityDescending:
                     return Paths.OrderByDescending(o => o.TotalSpace).ToList();
+                case SortingOption.UsedSpace:
+                    return Paths.OrderBy(o => o.TotalSpace-o.FreeSpace).ToList();
+                case SortingOption.UsedSpaceDescending:
+                    return Paths.OrderByDescending(o => o.TotalSpace - o.FreeSpace).ToList();
                 default:
-                    Debug.Print("not recognised");
+                    Debug.Print("sorting not recognised");
                     return Paths;
             }
         }
@@ -160,6 +171,18 @@ namespace disk_usage
             }
         }
 
+    }
+    
+    static class TaskExtensions
+    {
+        /// <summary>
+        /// Consumes a task and doesn't do anything with it. Useful for fire-and-forget calls to asynchronous methods within asynchronous methods.
+        /// https://msdn.microsoft.com/en-us/library/microsoft.visualstudio.threading.tplextensions.forget.aspx
+        /// </summary>
+        /// <param name="task"></param>
+        public static void Forget(this System.Threading.Tasks.Task task)
+        {
+        }
     }
 
 }

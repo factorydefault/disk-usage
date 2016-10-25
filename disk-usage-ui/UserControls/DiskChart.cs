@@ -16,8 +16,14 @@ namespace disk_usage_ui.UserControls
         public DiskChart()
         {
             InitializeComponent();
+
+            if (Program.Theme != null)
+            {
+                Chart.Series["UsedSpace"].Color = Program.Theme.ChartUsedSpace;
+            }
         }
 
+                
         public void SaveImage(string imageFileName,ChartImageFormat format)
         {
             Chart.SaveImage(imageFileName, format);

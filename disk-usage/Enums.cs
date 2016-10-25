@@ -6,12 +6,27 @@ using System.Reflection;
 
 namespace disk_usage
 {
+    public enum OSVersion
+    {
+        Windows10,
+        Windows8,
+        Windows7,
+        Other
+    }
+
+    public enum PathLocation
+    {
+        Local,
+        Remote,
+        OS,
+    }
+
 
     public enum SortingOption
     {
-        [Description("Sort by Name (A-Z)")]
+        [Description("Sort Alphabetical by Label (A-Z)")]
         Alphabetical,
-        [Description("Sort by Name (Z-A)")]
+        [Description("Sort Alphabetical by Label (Z-A)")]
         AlphabeticalDescending,
         [Description("Sort by Free Space (Low to High)")]
         FreeSpace,
@@ -24,7 +39,11 @@ namespace disk_usage
         [Description("Sort by Volume Size (Low to High)")]
         Capacity,
         [Description("Sort by Volume Size (High To Low)")]
-        CapacityDescending
+        CapacityDescending,
+        [Description("Sort by Used Space (Low to High)")]
+        UsedSpace,
+        [Description("Sort by Used Space (High to Low)")]
+        UsedSpaceDescending,
     }
 
     public static class Enums
