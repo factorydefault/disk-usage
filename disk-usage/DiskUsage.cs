@@ -134,9 +134,9 @@ namespace disk_usage
             switch (sorting)
             {
                 case SortingOption.Alphabetical:
-                    return Paths.OrderBy(o => o.FriendlyName).ToList();
+                    return Paths.OrderBy(o => o.FriendlyName.Replace("\\","")).ToList();
                 case SortingOption.AlphabeticalDescending:
-                    return Paths.OrderByDescending(o => o.FriendlyName).ToList();
+                    return Paths.OrderByDescending(o => o.FriendlyName.Replace("\\", "")).ToList();
                 case SortingOption.FreeSpace:
                     return Paths.OrderBy(o => o.FreeSpace).ToList();
                 case SortingOption.FreeSpaceDescending:
@@ -149,8 +149,12 @@ namespace disk_usage
                     return Paths.OrderBy(o => o.TotalSpace).ToList();
                 case SortingOption.CapacityDescending:
                     return Paths.OrderByDescending(o => o.TotalSpace).ToList();
+                case SortingOption.UsedSpace:
+                    return Paths.OrderBy(o => o.TotalSpace-o.FreeSpace).ToList();
+                case SortingOption.UsedSpaceDescending:
+                    return Paths.OrderByDescending(o => o.TotalSpace - o.FreeSpace).ToList();
                 default:
-                    Debug.Print("not recognised");
+                    Debug.Print("sorting not recognised");
                     return Paths;
             }
         }
