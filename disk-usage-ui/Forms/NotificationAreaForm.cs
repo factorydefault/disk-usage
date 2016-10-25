@@ -42,7 +42,10 @@ namespace disk_usage_ui
             {
                 orderByCombo.SelectedIndex = 0;
             }
-            
+
+            //do an update now
+            core.RequestUpdateFromAll();
+
         }
 
 
@@ -90,13 +93,33 @@ namespace disk_usage_ui
             }
         }
 
+
+        void ClearStackControls()
+        {
+            if (diskStack.Controls.Count > 0)
+            {
+                for (int index = diskStack.Controls.Count - 1; index >= 0; index--)
+                {
+                    DiskTile c = (DiskTile)diskStack.Controls[index];
+                    c.UnsubscribeToEvents();
+                    c.RemoveRequested -= RemovePathUsingTileObject;
+                    c.AddNewPath -= AddNewPath;
+                    diskStack.Controls.Remove(c);
+                    c.Dispose();
+                }
+            }
+                        
+
+        }
+
+
         void RebuildUserInterface()
         {
-            diskStack.Controls.Clear();
+            SuspendLayout();
+
+            ClearStackControls();
 
             List<PathRecord> sortedCollection = core.SortedList(SelectedSorting);
-
-            SuspendLayout();
 
             int diskCount = (sortedCollection.Count < MAX_ITEM_HEIGHT) ? sortedCollection.Count : MAX_ITEM_HEIGHT;
 

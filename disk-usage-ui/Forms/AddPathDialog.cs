@@ -72,7 +72,7 @@ namespace disk_usage_ui
 
             if (PathHasValidForm(pathTextBox.Text))
             {
-                exampleTile.VariablesFromComputer(NewComputer);
+                exampleTile.UpdateUserInterface(); //NewComputer);
                 acceptButton.Enabled = true;
             }
             else

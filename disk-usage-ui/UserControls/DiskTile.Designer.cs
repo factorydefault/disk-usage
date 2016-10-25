@@ -34,10 +34,10 @@
             this.usageBar = new System.Windows.Forms.ProgressBar();
             this.tileContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openFolderButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.clipboardButton = new System.Windows.Forms.ToolStripMenuItem();
             this.tileAddPathButton = new System.Windows.Forms.ToolStripMenuItem();
             this.removeItemButton = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox = new System.Windows.Forms.PictureBox();
-            this.clipboardButton = new System.Windows.Forms.ToolStripMenuItem();
             this.tileContext.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
@@ -45,21 +45,22 @@
             // nameLabel
             // 
             this.nameLabel.AutoEllipsis = true;
-            this.nameLabel.Font = new System.Drawing.Font("Segoe UI", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nameLabel.Location = new System.Drawing.Point(70, 4);
+            this.nameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nameLabel.Location = new System.Drawing.Point(70, 3);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(150, 13);
+            this.nameLabel.Size = new System.Drawing.Size(150, 16);
             this.nameLabel.TabIndex = 1;
             this.nameLabel.Text = "Admin";
+            this.nameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // detailLabel
             // 
             this.detailLabel.AutoSize = true;
-            this.detailLabel.Font = new System.Drawing.Font("Segoe UI", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.detailLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.detailLabel.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.detailLabel.Location = new System.Drawing.Point(71, 41);
+            this.detailLabel.Location = new System.Drawing.Point(71, 38);
             this.detailLabel.Name = "detailLabel";
-            this.detailLabel.Size = new System.Drawing.Size(58, 13);
+            this.detailLabel.Size = new System.Drawing.Size(54, 13);
             this.detailLabel.TabIndex = 2;
             this.detailLabel.Text = "Loading...";
             // 
@@ -91,6 +92,13 @@
             this.openFolderButton.Text = "&Open Folder";
             this.openFolderButton.Click += new System.EventHandler(this.openFolderButton_Click);
             // 
+            // clipboardButton
+            // 
+            this.clipboardButton.Name = "clipboardButton";
+            this.clipboardButton.Size = new System.Drawing.Size(226, 24);
+            this.clipboardButton.Text = "&Copy Path to Clipboard";
+            this.clipboardButton.Click += new System.EventHandler(this.clipboardButton_Click);
+            // 
             // tileAddPathButton
             // 
             this.tileAddPathButton.Image = global::disk_usage_ui.Properties.Resources.action_add_16xLG;
@@ -121,13 +129,6 @@
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
-            // 
-            // clipboardButton
-            // 
-            this.clipboardButton.Name = "clipboardButton";
-            this.clipboardButton.Size = new System.Drawing.Size(226, 24);
-            this.clipboardButton.Text = "&Copy Path to Clipboard";
-            this.clipboardButton.Click += new System.EventHandler(this.clipboardButton_Click);
             // 
             // DiskTile
             // 

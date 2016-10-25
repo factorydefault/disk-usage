@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
-
+using ProgressBarState = disk_usage.ProgressBarState;
 namespace disk_usage_ui
 {
     public partial class DiskTile : UserControl
@@ -53,15 +53,19 @@ namespace disk_usage_ui
             }
 
             pictureBox.Image = Program.Theme.NotFoundImage;
-                        
+
+            //usageBar.Visible = false;     
             usageBar.Minimum = 0;
             usageBar.Maximum = 100;
-            usageBar.Value = 0;
-            detailLabel.Text = "Path not found";
+            usageBar.Value = 1;
+            usageBar.SetState(ProgressBarState.Error);
+            detailLabel.Text = "";
         }
 
-        public void VariablesFromComputer(disk_usage.PathRecord pathRecord)
+        public void UpdateUserInterface() //disk_usage.PathRecord pathRecord)
         {
+            disk_usage.PathRecord pathRecord = _recordReference;
+
             nameLabel.Text = $"{pathRecord.FriendlyName}";
 
             path = pathRecord.Path;
@@ -81,12 +85,16 @@ namespace disk_usage_ui
                     break;
             }
 
+            //usageBar.Visible = true;
 
             usageBar.Minimum = 0;
             usageBar.Maximum = 100;
+
+            Console.WriteLine($"Setting progress bar for {path} to {pathRecord.FillLevel}");
+
             usageBar.Value = pathRecord.FillLevel;
 
-            usageBar.SetState((usageBar.Value > 80) ? 2 : 1);
+            usageBar.SetState((usageBar.Value > 80) ? ProgressBarState.Error : ProgressBarState.Normal);
 
             detailLabel.Text = $"{pathRecord.FreeSpace} GB free of {Math.Round(pathRecord.TotalSpace,0,MidpointRounding.AwayFromZero)} GB";
 
@@ -94,7 +102,6 @@ namespace disk_usage_ui
             {
                 SetAsNotFound();
             }
-
         }
 
         disk_usage.PathRecord _recordReference;
@@ -104,12 +111,17 @@ namespace disk_usage_ui
             _recordReference = pr;
             _recordReference.DiskInfoUpdated += Pr_DiskInfoUpdated;
 
-            VariablesFromComputer(_recordReference);
+            UpdateUserInterface(); 
         }
 
         private void Pr_DiskInfoUpdated(object sender, EventArgs e)
         {
-            VariablesFromComputer(_recordReference);
+            UpdateUserInterface();
+        }
+
+        public void UnsubscribeToEvents()
+        {
+            _recordReference.DiskInfoUpdated -= Pr_DiskInfoUpdated;
         }
 
         void DiskTile_DoubleClick(object sender, EventArgs e)
@@ -158,9 +170,15 @@ namespace disk_usage_ui
     {
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
         static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr w, IntPtr l);
-        public static void SetState(this ProgressBar pBar, int state)
+        static void SetState(this ProgressBar pBar, int state)
         {
             SendMessage(pBar.Handle, 1040, (IntPtr)state, IntPtr.Zero);
+        }
+
+
+        public static void SetState(this ProgressBar pBar, disk_usage.ProgressBarState state)
+        {
+            pBar.SetState((int)state);
         }
     }
 }

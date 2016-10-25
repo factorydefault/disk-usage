@@ -21,6 +21,14 @@ namespace disk_usage
         OS,
     }
 
+    public enum ProgressBarState
+    {
+        //1 = normal (green); 2 = error (red); 3 = warning (yellow).
+        Normal = 1,
+        Error = 2,
+        Warning = 3
+    }
+
 
     public enum SortingOption
     {
