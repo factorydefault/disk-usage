@@ -46,7 +46,7 @@
             // 
             this.nameLabel.AutoEllipsis = true;
             this.nameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nameLabel.Location = new System.Drawing.Point(70, 3);
+            this.nameLabel.Location = new System.Drawing.Point(69, 3);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(150, 16);
             this.nameLabel.TabIndex = 1;
@@ -58,7 +58,7 @@
             this.detailLabel.AutoSize = true;
             this.detailLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.detailLabel.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.detailLabel.Location = new System.Drawing.Point(71, 38);
+            this.detailLabel.Location = new System.Drawing.Point(68, 40);
             this.detailLabel.Name = "detailLabel";
             this.detailLabel.Size = new System.Drawing.Size(54, 13);
             this.detailLabel.TabIndex = 2;
@@ -66,7 +66,7 @@
             // 
             // usageBar
             // 
-            this.usageBar.Location = new System.Drawing.Point(70, 20);
+            this.usageBar.Location = new System.Drawing.Point(70, 21);
             this.usageBar.Name = "usageBar";
             this.usageBar.Size = new System.Drawing.Size(150, 16);
             this.usageBar.TabIndex = 3;
