@@ -17,8 +17,10 @@ namespace disk_usage_ui.UserControls
         {
             InitializeComponent();
 
-            Chart.Series["UsedSpace"].Color = Program.Theme.ChartUsedSpace;
-
+            if (Program.Theme != null)
+            {
+                Chart.Series["UsedSpace"].Color = Program.Theme.ChartUsedSpace;
+            }
         }
 
                 
