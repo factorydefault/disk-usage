@@ -172,5 +172,17 @@ namespace disk_usage
         }
 
     }
+    
+    static class TaskExtensions
+    {
+        /// <summary>
+        /// Consumes a task and doesn't do anything with it. Useful for fire-and-forget calls to asynchronous methods within asynchronous methods.
+        /// https://msdn.microsoft.com/en-us/library/microsoft.visualstudio.threading.tplextensions.forget.aspx
+        /// </summary>
+        /// <param name="task"></param>
+        public static void Forget(this System.Threading.Tasks.Task task)
+        {
+        }
+    }
 
 }

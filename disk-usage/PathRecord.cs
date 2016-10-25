@@ -23,7 +23,7 @@ namespace disk_usage
 
         public void RequestDiskInfo()
         {
-            disk.RequestDiskInfo();
+            disk.RequestDiskInfo().Forget();
         }
 
 
