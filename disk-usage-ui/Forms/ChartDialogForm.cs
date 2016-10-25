@@ -16,7 +16,10 @@ namespace disk_usage_ui.Forms
         {
             InitializeComponent();
 
-            diskChart.SetData(collection);
+            if (collection != null)
+            {
+                diskChart.SetData(collection);
+            }    
         }
 
         void exitToolStripMenuItem_Click(object sender, EventArgs e)

@@ -44,9 +44,13 @@
             this.emptySpaceAddPathButton = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.orderByCombo = new System.Windows.Forms.ComboBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.chartButton = new System.Windows.Forms.Button();
+            this.toolTipProvider = new System.Windows.Forms.ToolTip(this.components);
             this.taskbarContext.SuspendLayout();
             this.emptySpaceContext.SuspendLayout();
             this.tableLayout.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // taskbarIcon
@@ -170,7 +174,7 @@
             this.tableLayout.ColumnCount = 1;
             this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayout.Controls.Add(this.diskStack, 0, 0);
-            this.tableLayout.Controls.Add(this.orderByCombo, 0, 1);
+            this.tableLayout.Controls.Add(this.panel1, 0, 1);
             this.tableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayout.Location = new System.Drawing.Point(0, 0);
             this.tableLayout.Margin = new System.Windows.Forms.Padding(0);
@@ -184,17 +188,39 @@
             // orderByCombo
             // 
             this.orderByCombo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
-            this.orderByCombo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.orderByCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.orderByCombo.Font = new System.Drawing.Font("Segoe UI", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.orderByCombo.FormattingEnabled = true;
             this.orderByCombo.Items.AddRange(new object[] {
             "Sort by Name (A-Z)"});
-            this.orderByCombo.Location = new System.Drawing.Point(3, 468);
+            this.orderByCombo.Location = new System.Drawing.Point(3, 5);
             this.orderByCombo.Name = "orderByCombo";
-            this.orderByCombo.Size = new System.Drawing.Size(251, 21);
+            this.orderByCombo.Size = new System.Drawing.Size(206, 21);
             this.orderByCombo.TabIndex = 4;
+            this.toolTipProvider.SetToolTip(this.orderByCombo, "Select Sorting Method");
             this.orderByCombo.SelectedIndexChanged += new System.EventHandler(this.orderByCombo_SelectedIndexChanged);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.chartButton);
+            this.panel1.Controls.Add(this.orderByCombo);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 465);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(257, 32);
+            this.panel1.TabIndex = 5;
+            // 
+            // chartButton
+            // 
+            this.chartButton.Image = global::disk_usage_ui.Properties.Resources.KPI_16xLG;
+            this.chartButton.Location = new System.Drawing.Point(213, 4);
+            this.chartButton.Name = "chartButton";
+            this.chartButton.Size = new System.Drawing.Size(39, 23);
+            this.chartButton.TabIndex = 5;
+            this.toolTipProvider.SetToolTip(this.chartButton, "View list as a Chart");
+            this.chartButton.UseVisualStyleBackColor = true;
+            this.chartButton.Click += new System.EventHandler(this.chartButton_Click);
             // 
             // NotificationAreaForm
             // 
@@ -218,6 +244,7 @@
             this.taskbarContext.ResumeLayout(false);
             this.emptySpaceContext.ResumeLayout(false);
             this.tableLayout.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -239,6 +266,9 @@
         private System.Windows.Forms.ComboBox orderByCombo;
         private System.Windows.Forms.ToolStripMenuItem viewChartButton;
         private System.Windows.Forms.ToolStripMenuItem aboutButton;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button chartButton;
+        private System.Windows.Forms.ToolTip toolTipProvider;
     }
 }
 

@@ -53,7 +53,7 @@
     <StartupObject>disk_usage_ui.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>networkDrive.ico</ApplicationIcon>
+    <ApplicationIcon>storage.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -167,7 +167,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
-    <Content Include="networkDrive.ico" />
+    <Content Include="storage.ico" />
     <None Include="Resources\notfound10.png" />
     <None Include="Resources\osdrive10.png" />
     <None Include="Resources\networkdrive10.png" />

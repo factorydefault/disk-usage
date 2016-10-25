@@ -77,6 +77,7 @@ namespace disk_usage_ui
                 allowshowdisplay = true;
                 Visible = true;
             }
+            setAvailabilityOfChartMenuItems();
             core.RequestUpdateFromAll();
 
         }
@@ -289,27 +290,44 @@ namespace disk_usage_ui
 
         void viewChartButton_Click(object sender, EventArgs e)
         {
+            spawnChart();
+        }
+
+        void spawnChart()
+        {
             Forms.ChartDialogForm chartDialog = new Forms.ChartDialogForm(core.SortedList(SelectedSorting));
             chartDialog.Show();
         }
-
-        void taskbarContext_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        
+        void setAvailabilityOfChartMenuItems()
         {
             try
             {
-                viewChartButton.Enabled = core.Paths.Count > 0;
+                bool availability = core.Paths.Count > 0;
+                viewChartButton.Enabled = availability;
+                chartButton.Enabled = availability;
             }
             catch (Exception)
             {
                 viewChartButton.Enabled = false;
+                chartButton.Enabled = false;
             }
-            
+        }
+
+        void taskbarContext_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            setAvailabilityOfChartMenuItems();
         }
 
         void aboutButton_Click(object sender, EventArgs e)
         {
             Forms.AboutForm about = new Forms.AboutForm();
             about.ShowDialog();
+        }
+
+        void chartButton_Click(object sender, EventArgs e)
+        {
+            spawnChart();
         }
     }
 }
