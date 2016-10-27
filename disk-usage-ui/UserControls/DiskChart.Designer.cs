@@ -66,6 +66,7 @@
             this.Chart.Dock = System.Windows.Forms.DockStyle.Fill;
             legend1.Alignment = System.Drawing.StringAlignment.Center;
             legend1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
+            legend1.Enabled = false;
             legend1.Font = new System.Drawing.Font("Segoe UI", 7.854546F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             legend1.IsTextAutoFit = false;
             legend1.Name = "Legend1";

@@ -49,31 +49,6 @@ namespace disk_usage
 
         public string Path { get; set; }
 
-        //public DiskSpaceInformation Info()
-        //{
-        //    if (string.IsNullOrWhiteSpace(Path)) throw new ArgumentException("Set path first");
-
-        //    return GetInfoForPath(Path);
-        //}
-
-        
-
-        //public static DiskSpaceInformation GetInfoForPath(string path)
-        //{
-        //    DiskSpaceInformation result;
-
-        //    bool success = GetDiskFreeSpaceEx(path,
-        //                          out result.FreeBytesAvailable,
-        //                          out result.TotalNumberOfBytes,
-        //                          out result.TotalNumberOfFreeBytes);
-        //    if (!success)
-        //    {
-        //        result = new DiskSpaceInformation(1, 1, 0);
-        //    }
-
-        //    return result;
-        //}
-
         public DiskSpaceInformation DSI { get; set; } = new DiskSpaceInformation(1, 1, 0);
 
 

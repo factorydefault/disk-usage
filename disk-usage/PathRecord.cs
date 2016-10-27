@@ -84,9 +84,13 @@ namespace disk_usage
             }
         }
 
-        //public int FillLevel => (int) Math.Round(disk.Info().PercentageFilled,0);
         public int FillLevel => (int)Math.Round(disk.DSI.PercentageFilled, 0);
 
+        /// <summary>
+        /// As per https://blogs.msdn.microsoft.com/oldnewthing/20101117-00/?p=12263/
+        /// </summary>
+        public bool HasLowDiskSpace => FillLevel > 90;
+        
         public static PathRecord Create(string path, string name = "")
         {
             return new PathRecord { Path = path, FriendlyName = name };

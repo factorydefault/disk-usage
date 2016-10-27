@@ -13,6 +13,9 @@ namespace disk_usage_ui.UserControls
 {
     public partial class DiskChart : UserControl
     {
+
+        Color lowDiskSpaceColor => Color.Red;
+
         public DiskChart()
         {
             InitializeComponent();
@@ -48,8 +51,10 @@ namespace disk_usage_ui.UserControls
                 //usedPoint.SetValueY(pc.TotalSpace - pc.FreeSpace);
                 usedPoint.AxisLabel = pc.FriendlyName;
 
+                if (pc.HasLowDiskSpace) usedPoint.Color = lowDiskSpaceColor;
+
                 usedSeries.Points.Add(usedPoint);
-                
+
                 DataPoint freePoint = new DataPoint();
 
                 freePoint.SetValueXY(index, pc.FreeSpace);

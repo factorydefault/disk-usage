@@ -94,7 +94,7 @@ namespace disk_usage_ui
 
             usageBar.Value = pathRecord.FillLevel;
 
-            usageBar.SetState((usageBar.Value > 80) ? ProgressBarState.Error : ProgressBarState.Normal);
+            usageBar.SetState(pathRecord.HasLowDiskSpace ? ProgressBarState.Error : ProgressBarState.Normal);
 
             detailLabel.Text = $"{pathRecord.FreeSpace} GB free of {Math.Round(pathRecord.TotalSpace,0,MidpointRounding.AwayFromZero)} GB";
 
