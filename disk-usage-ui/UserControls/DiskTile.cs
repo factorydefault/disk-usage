@@ -12,6 +12,7 @@ namespace disk_usage_ui
 
         public event EventHandler<EventArgs> AddNewPath;
 
+        public event EventHandler<EventArgs> PropertiesChanged;
 
         public new event EventHandler DoubleClick
         {
@@ -175,7 +176,23 @@ namespace disk_usage_ui
         {
             try
             {
-                disk_usage.Windows.ShowFileProperties(path);
+                //disk_usage.Windows.ShowFileProperties(path);
+                var propertiesForm = new Forms.PropertiesForm();
+                propertiesForm.ProvideData(_recordReference);
+
+                
+                var dr = propertiesForm.ShowDialog();
+
+                switch (dr)
+                {
+                    case DialogResult.OK:
+                        _recordReference.FriendlyName = propertiesForm.DiskLabel;
+                        PropertiesChanged?.Invoke(this, new EventArgs());
+                        break;
+                    default:
+                        break;
+                }
+
             }
             catch (Exception)
             {
