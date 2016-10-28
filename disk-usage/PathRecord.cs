@@ -43,6 +43,19 @@ namespace disk_usage
         }
         string _friendlyName;
 
+        public string ShortcutName
+        {
+            get
+            {
+                string filename = FriendlyName;
+
+                foreach (var c in System.IO.Path.GetInvalidFileNameChars())
+                {
+                    filename.Replace(c, '-');
+                }
+                return filename;
+            }
+        }
 
         [JsonProperty]
         public string Path

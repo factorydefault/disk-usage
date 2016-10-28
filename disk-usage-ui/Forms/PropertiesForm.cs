@@ -58,35 +58,42 @@ namespace disk_usage_ui.Forms
             driveLabelTextBox.Text = _record.FriendlyName;
             locationLabel.Text = _record.Path;
 
-            var typeString = string.Empty;
+            diskTypeLabel.Text = DiskTypeString;
 
-            switch (_record.Location())
+            updatePieChart(_record.FillLevel);
+        }
+                
+        string DiskTypeString
+        {
+            get
             {
-                case PathLocation.Local:
-                    typeString = "Local / Mapped Drive";
-                    break;
-                case PathLocation.Remote:
-                    typeString = "Network Drive";
-                    break;
-                case PathLocation.OS:
-                    typeString = "OS Drive";
-                    break;
+                switch (_record.Location())
+                {
+                    case PathLocation.Local:
+                        return "Local / Mapped Drive";
+                    case PathLocation.Remote:
+                        return "Network Drive";
+                    case PathLocation.OS:
+                        return "OS Drive";
+                    default:
+                        return "Unknown";
+                }
             }
+        }
 
-            diskTypeLabel.Text = typeString;
-
+        void updatePieChart(int usedPercentage)
+        {
             try
             {
-                pieChart.Series.FirstOrDefault().Points[0].SetValueY(_record.FillLevel);
-                pieChart.Series.FirstOrDefault().Points[1].SetValueY(100 - _record.FillLevel);
+                pieChart.Series.FirstOrDefault().Points[0].SetValueY(usedPercentage);
+                pieChart.Series.FirstOrDefault().Points[1].SetValueY(100 - usedPercentage);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
-            
-
         }
+
 
         public string DiskLabel
         {

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using IWshRuntimeLibrary;
+using Shell32;
+using System;
 using System.Runtime.InteropServices;
 
 namespace disk_usage
@@ -23,6 +25,8 @@ namespace disk_usage
                     return OSVersion.Other;
             }
         }
+
+        public static string Desktop => Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
         public static string InstallDirectory => System.IO.Path.GetPathRoot(Environment.SystemDirectory);
 
@@ -64,6 +68,52 @@ namespace disk_usage
             info.fMask = 12;
             return ShellExecuteEx(ref info);
         }
+
+        //http://stackoverflow.com/questions/13019189/creating-a-shortcut-to-a-folder-in-c-sharp
+
+        /// <summary>
+        /// Create Windows Shorcut
+        /// </summary>
+        /// <param name="SourceFile">A file you want to make shortcut to</param>
+        /// <param name="ShortcutFile">Path and shorcut file name including file extension (.lnk)</param>
+        public static void CreateShortcut(string SourceFile, string ShortcutFile)
+        {
+            CreateShortcut(SourceFile, ShortcutFile, null, null, null, null);
+        }
+
+        /// <summary>
+        /// Create Windows Shorcut
+        /// </summary>
+        /// <param name="SourceFile">A file you want to make shortcut to</param>
+        /// <param name="ShortcutFile">Path and shorcut file name including file extension (.lnk)</param>
+        /// <param name="Description">Shortcut description</param>
+        /// <param name="Arguments">Command line arguments</param>
+        /// <param name="HotKey">Shortcut hot key as a string, for example "Ctrl+F"</param>
+        /// <param name="WorkingDirectory">"Start in" shorcut parameter</param>
+        public static void CreateShortcut(string TargetPath, string ShortcutFile, string Description,
+           string Arguments, string HotKey, string WorkingDirectory)
+        {
+            if (string.IsNullOrEmpty(TargetPath))
+                throw new ArgumentNullException(nameof(TargetPath));
+            if (string.IsNullOrEmpty(ShortcutFile))
+                throw new ArgumentNullException(nameof(ShortcutFile));
+
+            var wshShell = new WshShell();
+
+            IWshShortcut shorcut = (IWshShortcut)wshShell.CreateShortcut(ShortcutFile);
+
+            shorcut.TargetPath = TargetPath;
+            shorcut.Description = Description;
+            if (!string.IsNullOrEmpty(Arguments))
+                shorcut.Arguments = Arguments;
+            if (!string.IsNullOrEmpty(HotKey))
+                shorcut.Hotkey = HotKey;
+            if (!string.IsNullOrEmpty(WorkingDirectory))
+                shorcut.WorkingDirectory = WorkingDirectory;
+
+            shorcut.Save();
+        }
+
 
     }
 }

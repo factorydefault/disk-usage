@@ -35,12 +35,13 @@
             this.tileContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openFolderButton = new System.Windows.Forms.ToolStripMenuItem();
             this.clipboardButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tileAddPathButton = new System.Windows.Forms.ToolStripMenuItem();
             this.removeItemButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBox = new System.Windows.Forms.PictureBox();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.propertiesButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.shortcutButton = new System.Windows.Forms.ToolStripMenuItem();
             this.tileContext.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
@@ -80,13 +81,14 @@
             this.tileContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openFolderButton,
             this.clipboardButton,
+            this.shortcutButton,
             this.toolStripSeparator2,
             this.tileAddPathButton,
             this.removeItemButton,
             this.toolStripSeparator1,
             this.propertiesButton});
             this.tileContext.Name = "tileContext";
-            this.tileContext.Size = new System.Drawing.Size(227, 161);
+            this.tileContext.Size = new System.Drawing.Size(224, 185);
             // 
             // openFolderButton
             // 
@@ -101,17 +103,22 @@
             // clipboardButton
             // 
             this.clipboardButton.Name = "clipboardButton";
-            this.clipboardButton.Size = new System.Drawing.Size(226, 24);
-            this.clipboardButton.Text = "&Copy Path to Clipboard";
+            this.clipboardButton.Size = new System.Drawing.Size(223, 24);
+            this.clipboardButton.Text = "&Copy path to clipboard";
             this.clipboardButton.Click += new System.EventHandler(this.clipboardButton_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(223, 6);
             // 
             // tileAddPathButton
             // 
             this.tileAddPathButton.Image = global::disk_usage_ui.Properties.Resources.action_add_16xLG;
             this.tileAddPathButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tileAddPathButton.Name = "tileAddPathButton";
-            this.tileAddPathButton.Size = new System.Drawing.Size(226, 24);
-            this.tileAddPathButton.Text = "&Add New Path";
+            this.tileAddPathButton.Size = new System.Drawing.Size(223, 24);
+            this.tileAddPathButton.Text = "&Add new path";
             this.tileAddPathButton.Click += new System.EventHandler(this.tileAddPathButton_Click);
             // 
             // removeItemButton
@@ -122,6 +129,18 @@
             this.removeItemButton.Size = new System.Drawing.Size(226, 24);
             this.removeItemButton.Text = "&Remove";
             this.removeItemButton.Click += new System.EventHandler(this.removeItemButton_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(223, 6);
+            // 
+            // propertiesButton
+            // 
+            this.propertiesButton.Name = "propertiesButton";
+            this.propertiesButton.Size = new System.Drawing.Size(226, 24);
+            this.propertiesButton.Text = "Properties";
+            this.propertiesButton.Click += new System.EventHandler(this.propertiesButton_Click);
             // 
             // pictureBox
             // 
@@ -136,22 +155,12 @@
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
             // 
-            // toolStripSeparator1
+            // shortcutButton
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(223, 6);
-            // 
-            // propertiesButton
-            // 
-            this.propertiesButton.Name = "propertiesButton";
-            this.propertiesButton.Size = new System.Drawing.Size(226, 24);
-            this.propertiesButton.Text = "Properties";
-            this.propertiesButton.Click += new System.EventHandler(this.propertiesButton_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(223, 6);
+            this.shortcutButton.Name = "shortcutButton";
+            this.shortcutButton.Size = new System.Drawing.Size(226, 24);
+            this.shortcutButton.Text = "Create &shortcut";
+            this.shortcutButton.Click += new System.EventHandler(this.shortcutButton_Click);
             // 
             // DiskTile
             // 
@@ -188,5 +197,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem propertiesButton;
+        private System.Windows.Forms.ToolStripMenuItem shortcutButton;
     }
 }

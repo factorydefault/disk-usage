@@ -199,6 +199,23 @@ namespace disk_usage_ui
                 throw;
             }
         }
+
+        void shortcutButton_Click(object sender, EventArgs e)
+        {
+            //create shortcut
+
+            try
+            {
+                string shortcutLocation = $"{disk_usage.Windows.Desktop}\\{_recordReference.ShortcutName} - Shortcut.lnk";
+
+                disk_usage.Windows.CreateShortcut(_recordReference.Path, shortcutLocation);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 
     public static class ModifyProgressBarColor

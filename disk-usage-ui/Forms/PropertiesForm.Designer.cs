@@ -95,11 +95,11 @@
             this.panel1.Controls.Add(this.locationLabel);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.divider2);
-            this.panel1.Controls.Add(this.pieChart);
             this.panel1.Controls.Add(this.divider3);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.pieChart);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(1, 1);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
@@ -148,6 +148,7 @@
             // 
             // driveLabelTextBox
             // 
+            this.driveLabelTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.driveLabelTextBox.Location = new System.Drawing.Point(78, 17);
             this.driveLabelTextBox.MaxLength = 22;
             this.driveLabelTextBox.Name = "driveLabelTextBox";
@@ -294,9 +295,13 @@
             // 
             // pieChart
             // 
+            chartArea1.Area3DStyle.Enable3D = true;
+            chartArea1.Area3DStyle.Inclination = 62;
+            chartArea1.Area3DStyle.Rotation = 180;
+            chartArea1.BackColor = System.Drawing.Color.White;
             chartArea1.Name = "ChartArea1";
             this.pieChart.ChartAreas.Add(chartArea1);
-            this.pieChart.Location = new System.Drawing.Point(17, 202);
+            this.pieChart.Location = new System.Drawing.Point(17, 175);
             this.pieChart.Name = "pieChart";
             series1.BorderColor = System.Drawing.SystemColors.ControlText;
             series1.ChartArea = "ChartArea1";
@@ -309,7 +314,7 @@
             series1.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             series1.ShadowOffset = 5;
             this.pieChart.Series.Add(series1);
-            this.pieChart.Size = new System.Drawing.Size(292, 94);
+            this.pieChart.Size = new System.Drawing.Size(292, 139);
             this.pieChart.TabIndex = 0;
             this.pieChart.Text = "chart1";
             this.pieChart.Click += new System.EventHandler(this.chart1_Click);
@@ -383,11 +388,11 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 5.890909F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.label9.Location = new System.Drawing.Point(74, 40);
+            this.label9.Location = new System.Drawing.Point(76, 40);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(235, 13);
+            this.label9.Size = new System.Drawing.Size(218, 13);
             this.label9.TabIndex = 25;
-            this.label9.Text = "This label only applies to the Disk Usage program";
+            this.label9.Text = "Label only applies to the Disk Usage program";
             // 
             // tabControl1
             // 

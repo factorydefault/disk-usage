@@ -43,9 +43,9 @@
             this.emptySpaceContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.emptySpaceAddPathButton = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.orderByCombo = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.chartButton = new System.Windows.Forms.Button();
+            this.orderByCombo = new System.Windows.Forms.ComboBox();
             this.toolTipProvider = new System.Windows.Forms.ToolTip(this.components);
             this.taskbarContext.SuspendLayout();
             this.emptySpaceContext.SuspendLayout();
@@ -157,15 +157,15 @@
             this.emptySpaceContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.emptySpaceAddPathButton});
             this.emptySpaceContext.Name = "contextMenuStrip1";
-            this.emptySpaceContext.Size = new System.Drawing.Size(171, 28);
+            this.emptySpaceContext.Size = new System.Drawing.Size(170, 53);
             // 
             // emptySpaceAddPathButton
             // 
             this.emptySpaceAddPathButton.Image = global::disk_usage_ui.Properties.Resources.action_add_16xLG;
             this.emptySpaceAddPathButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.emptySpaceAddPathButton.Name = "emptySpaceAddPathButton";
-            this.emptySpaceAddPathButton.Size = new System.Drawing.Size(170, 24);
-            this.emptySpaceAddPathButton.Text = "Add New Path";
+            this.emptySpaceAddPathButton.Size = new System.Drawing.Size(169, 24);
+            this.emptySpaceAddPathButton.Text = "Add new path";
             this.emptySpaceAddPathButton.Click += new System.EventHandler(this.AddNewPath);
             // 
             // tableLayout
@@ -184,21 +184,6 @@
             this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.tableLayout.Size = new System.Drawing.Size(257, 497);
             this.tableLayout.TabIndex = 4;
-            // 
-            // orderByCombo
-            // 
-            this.orderByCombo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
-            this.orderByCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.orderByCombo.Font = new System.Drawing.Font("Segoe UI", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.orderByCombo.FormattingEnabled = true;
-            this.orderByCombo.Items.AddRange(new object[] {
-            "Sort by Name (A-Z)"});
-            this.orderByCombo.Location = new System.Drawing.Point(3, 5);
-            this.orderByCombo.Name = "orderByCombo";
-            this.orderByCombo.Size = new System.Drawing.Size(206, 21);
-            this.orderByCombo.TabIndex = 4;
-            this.toolTipProvider.SetToolTip(this.orderByCombo, "Select Sorting Method");
-            this.orderByCombo.SelectedIndexChanged += new System.EventHandler(this.orderByCombo_SelectedIndexChanged);
             // 
             // panel1
             // 
@@ -221,6 +206,21 @@
             this.toolTipProvider.SetToolTip(this.chartButton, "View list as a Chart");
             this.chartButton.UseVisualStyleBackColor = true;
             this.chartButton.Click += new System.EventHandler(this.chartButton_Click);
+            // 
+            // orderByCombo
+            // 
+            this.orderByCombo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
+            this.orderByCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.orderByCombo.Font = new System.Drawing.Font("Segoe UI", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.orderByCombo.FormattingEnabled = true;
+            this.orderByCombo.Items.AddRange(new object[] {
+            "Sort by Name (A-Z)"});
+            this.orderByCombo.Location = new System.Drawing.Point(3, 5);
+            this.orderByCombo.Name = "orderByCombo";
+            this.orderByCombo.Size = new System.Drawing.Size(206, 21);
+            this.orderByCombo.TabIndex = 4;
+            this.toolTipProvider.SetToolTip(this.orderByCombo, "Select Sorting Method");
+            this.orderByCombo.SelectedIndexChanged += new System.EventHandler(this.orderByCombo_SelectedIndexChanged);
             // 
             // NotificationAreaForm
             // 
