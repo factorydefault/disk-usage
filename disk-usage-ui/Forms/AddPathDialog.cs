@@ -22,9 +22,13 @@ namespace disk_usage_ui
             NewComputer = new disk_usage.PathRecord();
             updateUserInterface();
             DialogResult = DialogResult.Cancel;
+            NewComputer.DiskInfoUpdated += NewComputer_DiskInfoUpdated;
         }
 
-        
+        private void NewComputer_DiskInfoUpdated(object sender, EventArgs e)
+        {
+            exampleTile.UpdateUserInterface(NewComputer);
+        }
 
         void cancelButton_Click(object sender, EventArgs e)
         {
@@ -72,7 +76,8 @@ namespace disk_usage_ui
 
             if (PathHasValidForm(pathTextBox.Text))
             {
-                exampleTile.UpdateUserInterface(); //NewComputer);
+                //exampleTile.UpdateUserInterface(); //NewComputer);
+                NewComputer.RequestDiskInfo();
                 acceptButton.Enabled = true;
             }
             else

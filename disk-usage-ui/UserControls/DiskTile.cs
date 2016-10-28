@@ -62,6 +62,12 @@ namespace disk_usage_ui
             detailLabel.Text = "";
         }
 
+        public void UpdateUserInterface(disk_usage.PathRecord pathRecord)
+        {
+            _recordReference = pathRecord;
+            UpdateUserInterface();
+        }
+
         public void UpdateUserInterface() //disk_usage.PathRecord pathRecord)
         {
             disk_usage.PathRecord pathRecord = _recordReference;

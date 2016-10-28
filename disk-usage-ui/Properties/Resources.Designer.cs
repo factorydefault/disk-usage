@@ -203,6 +203,16 @@ namespace disk_usage_ui.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap properties_16xLG {
+            get {
+                object obj = ResourceManager.GetObject("properties_16xLG", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap resource_16xLG {
             get {
                 object obj = ResourceManager.GetObject("resource_16xLG", resourceCulture);
