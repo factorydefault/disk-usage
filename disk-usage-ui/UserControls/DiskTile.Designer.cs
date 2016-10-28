@@ -38,6 +38,9 @@
             this.tileAddPathButton = new System.Windows.Forms.ToolStripMenuItem();
             this.removeItemButton = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.propertiesButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tileContext.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
@@ -77,10 +80,13 @@
             this.tileContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openFolderButton,
             this.clipboardButton,
+            this.toolStripSeparator2,
             this.tileAddPathButton,
-            this.removeItemButton});
+            this.removeItemButton,
+            this.toolStripSeparator1,
+            this.propertiesButton});
             this.tileContext.Name = "tileContext";
-            this.tileContext.Size = new System.Drawing.Size(227, 100);
+            this.tileContext.Size = new System.Drawing.Size(227, 161);
             // 
             // openFolderButton
             // 
@@ -89,7 +95,7 @@
             this.openFolderButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.openFolderButton.Name = "openFolderButton";
             this.openFolderButton.Size = new System.Drawing.Size(226, 24);
-            this.openFolderButton.Text = "&Open Folder";
+            this.openFolderButton.Text = "&Open";
             this.openFolderButton.Click += new System.EventHandler(this.openFolderButton_Click);
             // 
             // clipboardButton
@@ -130,6 +136,23 @@
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(223, 6);
+            // 
+            // propertiesButton
+            // 
+            this.propertiesButton.Name = "propertiesButton";
+            this.propertiesButton.Size = new System.Drawing.Size(226, 24);
+            this.propertiesButton.Text = "Properties";
+            this.propertiesButton.Click += new System.EventHandler(this.propertiesButton_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(223, 6);
+            // 
             // DiskTile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -162,5 +185,8 @@
         private System.Windows.Forms.ToolStripMenuItem tileAddPathButton;
         private System.Windows.Forms.ToolStripMenuItem openFolderButton;
         private System.Windows.Forms.ToolStripMenuItem clipboardButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem propertiesButton;
     }
 }

@@ -164,6 +164,18 @@ namespace disk_usage_ui
                 Console.Write(ex.Message);
             }
         }
+
+        void propertiesButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                disk_usage.Windows.ShowFileProperties(path);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 
     public static class ModifyProgressBarColor
