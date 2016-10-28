@@ -49,8 +49,8 @@
             chartArea1.AxisX.LineColor = System.Drawing.Color.DimGray;
             chartArea1.AxisX.MajorGrid.Enabled = false;
             chartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.DimGray;
-            chartArea1.AxisX.MajorTickMark.Enabled = false;
             chartArea1.AxisX.MajorTickMark.LineColor = System.Drawing.Color.DimGray;
+            chartArea1.AxisX.MajorTickMark.LineWidth = 0;
             chartArea1.AxisX.TitleFont = new System.Drawing.Font("Segoe UI", 7.854546F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             chartArea1.AxisY.IsLabelAutoFit = false;
             chartArea1.AxisY.LabelStyle.Font = new System.Drawing.Font("Segoe UI", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
