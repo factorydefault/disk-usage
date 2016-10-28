@@ -210,9 +210,12 @@ namespace disk_usage_ui
 
                 disk_usage.Windows.CreateShortcut(_recordReference.Path, shortcutLocation);
             }
+            catch (System.IO.FileNotFoundException)
+            {
+                MessageBox.Show("The directory could not be found, a shortcut cannot be created.", "Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+            }
             catch (Exception)
             {
-
                 throw;
             }
         }
