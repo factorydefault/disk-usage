@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
+﻿using System.Drawing;
 
 namespace disk_usage_ui
 {
     public interface Theme
     {
         Color ChartUsedSpace { get; }
+        Color ChartUsedSpaceSecondary { get; }
+
         Image NetworkDiskImage { get; }
         Image LocalDiskImage { get; }
 
@@ -39,6 +34,7 @@ namespace disk_usage_ui
     public class Windows7Theme : Theme
     {
         public Color ChartUsedSpace => Color.FromArgb(5, 214, 42);
+        public Color ChartUsedSpaceSecondary => Color.FromArgb(192, 255, 192);
 
         public Image NetworkDiskImage => Properties.Resources.networkdrive7;
 
@@ -54,6 +50,7 @@ namespace disk_usage_ui
     public class Windows10Theme: Theme
     {
         public Color ChartUsedSpace => Color.FromArgb(36, 158, 215);
+        public Color ChartUsedSpaceSecondary => Color.FromArgb(86, 181, 226);
         public Image NetworkDiskImage => Properties.Resources.networkdrive10;
 
         public Image LocalDiskImage => Properties.Resources.localdrive10;
@@ -66,6 +63,7 @@ namespace disk_usage_ui
     public class Windows8Theme : Theme
     {
         public Color ChartUsedSpace => Color.Blue;
+        public Color ChartUsedSpaceSecondary => Color.Blue;
         public Image NetworkDiskImage => Properties.Resources.networkdrive7;
 
         public Image LocalDiskImage => NetworkDiskImage;

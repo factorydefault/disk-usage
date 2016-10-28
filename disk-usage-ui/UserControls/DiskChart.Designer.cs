@@ -73,10 +73,12 @@
             this.Chart.Legends.Add(legend1);
             this.Chart.Location = new System.Drawing.Point(0, 0);
             this.Chart.Name = "Chart";
+            series1.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.HorizontalCenter;
+            series1.BackSecondaryColor = System.Drawing.Color.FromArgb(((int)(((byte)(86)))), ((int)(((byte)(181)))), ((int)(((byte)(226)))));
             series1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             series1.ChartArea = "ChartArea";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StackedBar;
-            series1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            series1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(158)))), ((int)(((byte)(215)))));
             series1.Font = new System.Drawing.Font("Segoe UI", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             series1.LabelFormat = "#####0.#GB";
             series1.Legend = "Legend1";

@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -15,6 +9,7 @@ namespace disk_usage_ui.UserControls
     {
 
         Color lowDiskSpaceColor => Color.Red;
+        Color lowDiskSpaceColorSecondary => Color.FromArgb(255, 128, 128);
 
         public DiskChart()
         {
@@ -23,6 +18,7 @@ namespace disk_usage_ui.UserControls
             if (Program.Theme != null)
             {
                 Chart.Series["UsedSpace"].Color = Program.Theme.ChartUsedSpace;
+                Chart.Series["UsedSpace"].BackSecondaryColor = Program.Theme.ChartUsedSpaceSecondary;
             }
         }
 
@@ -51,7 +47,11 @@ namespace disk_usage_ui.UserControls
                 //usedPoint.SetValueY(pc.TotalSpace - pc.FreeSpace);
                 usedPoint.AxisLabel = pc.FriendlyName;
 
-                if (pc.HasLowDiskSpace) usedPoint.Color = lowDiskSpaceColor;
+                if (pc.HasLowDiskSpace)
+                {
+                    usedPoint.Color = lowDiskSpaceColor;
+                    usedPoint.BackSecondaryColor = lowDiskSpaceColorSecondary;
+                }
 
                 usedSeries.Points.Add(usedPoint);
 
