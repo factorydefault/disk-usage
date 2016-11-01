@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using System.Diagnostics;
 
 using ProgressBarState = disk_usage.ProgressBarState;
 using disk_usage;
@@ -51,16 +50,26 @@ namespace disk_usage_ui
             }
         }
 
-        //bool _interactive = true;
-
         public bool Interactive { get; set; } = true;
 
+        public bool ShowPathOnHover { get; set; } = false;
 
-        public void SetAsNotFound(string label = "")
+        public void SetAsNotFound(string overrideLabel = "")
         {
-            if(!string.IsNullOrWhiteSpace(label))
+            if(string.IsNullOrWhiteSpace(overrideLabel))
             {
-                nameLabel.Text = label;
+                if (_recordReference != null && ! string.IsNullOrWhiteSpace(_recordReference.FriendlyName))
+                {
+                    nameLabel.Text = $"{_recordReference.FriendlyName}";
+                }
+                else
+                {
+                    nameLabel.Text = "Specify a Path";
+                }
+            }
+            else
+            {
+                nameLabel.Text = overrideLabel;
             }
 
             pictureBox.Image = Program.Theme.NotFoundImage;
@@ -243,7 +252,48 @@ namespace disk_usage_ui
         void tileContext_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (!Interactive) e.Cancel = true;
+
+            if (_recordReference != null)
+            {
+                openFolderButton.Text = $"{_recordReference.Path.Ellipsis(20)} ({_recordReference.FillLevel:##0}%)";
+            }
+            else
+            {
+                openFolderButton.Text = "&Open";
+            }
+
+
         }
+
+        void nameLabel_MouseEnter(object sender, EventArgs e)
+        {
+            if (ShowPathOnHover)
+            {
+                nameLabelHoverStore = nameLabel.Text;
+                System.Diagnostics.Debug.Print($"saving: {nameLabelHoverStore}");
+
+                nameLabelHoverText = $"{path}";
+                nameLabel.Text = nameLabelHoverText;
+            }
+        }
+
+        void nameLabel_MouseLeave(object sender, EventArgs e)
+        {
+            //if text hasn't been changed in the meantime
+            if (ShowPathOnHover && nameLabel.Text == nameLabelHoverText)
+            {
+                System.Diagnostics.Debug.Print($"restoring: {nameLabelHoverStore}");
+                nameLabel.Text = nameLabelHoverStore;
+            }
+
+
+        }
+
+
+        string nameLabelHoverStore { get; set; }
+        string nameLabelHoverText { get; set; }
+
+
     }
 
     public static class ModifyProgressBarColor

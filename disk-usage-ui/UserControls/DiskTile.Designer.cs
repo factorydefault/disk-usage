@@ -56,6 +56,8 @@
             this.nameLabel.TabIndex = 1;
             this.nameLabel.Text = "12345678901234567890123";
             this.nameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.nameLabel.MouseEnter += new System.EventHandler(this.nameLabel_MouseEnter);
+            this.nameLabel.MouseLeave += new System.EventHandler(this.nameLabel_MouseLeave);
             // 
             // detailLabel
             // 
