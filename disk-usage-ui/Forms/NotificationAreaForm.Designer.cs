@@ -227,6 +227,12 @@
             this.toolTipProvider.SetToolTip(this.orderByCombo, "Select Sorting Method");
             this.orderByCombo.SelectedIndexChanged += new System.EventHandler(this.orderByCombo_SelectedIndexChanged);
             // 
+            // toolTipProvider
+            // 
+            this.toolTipProvider.BackColor = System.Drawing.Color.White;
+            this.toolTipProvider.ForeColor = System.Drawing.Color.Black;
+            this.toolTipProvider.IsBalloon = true;
+            // 
             // NotificationAreaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
