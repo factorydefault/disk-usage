@@ -10,40 +10,19 @@ namespace disk_usage_ui.Forms
     {
         public PropertiesForm()
         {
-            _record = new disk_usage.PathRecord();
+            _record = new PathRecord();
             InitializeComponent();
         }
 
-        private void chart1_Click(object sender, EventArgs e)
-        {
-
-        }
 
         void driveLabelTextBox_TextChanged(object sender, EventArgs e)
         {
             setFormTitle();
         }
 
-        private void capacityBytesLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         void PropertiesForm_Load(object sender, EventArgs e)
         {
             shortcutButton.Enabled = true;
-
-
         }
 
         PathRecord _record;
@@ -63,18 +42,20 @@ namespace disk_usage_ui.Forms
 
             updatePieChart(_record.FillLevel);
 
-            usedBytesLabel.Text = $"{_record.UsedSpace.Bytes:#,0} bytes";
+            usedBytesLabel.Text = formattedBytes(_record.UsedSpace);
             usedSummary.Text = _record.UsedSpace.PropertiesLabel();
 
-            freeBytesLabel.Text = $"{_record.FreeSpace.Bytes:#,0} bytes";
+            freeBytesLabel.Text = formattedBytes(_record.FreeSpace);
             freeSummary.Text = _record.FreeSpace.PropertiesLabel();
 
-            capacityBytesLabel.Text = $"{_record.Capacity.Bytes:#,0} bytes";
+            capacityBytesLabel.Text = formattedBytes(_record.Capacity); 
             capacitySummary.Text = _record.Capacity.PropertiesLabel();
 
             setFormTitle();
 
         }
+
+        string formattedBytes(ByteSize size) => $"{size.Bytes:#,0} bytes";
 
         void setFormTitle()
         {
