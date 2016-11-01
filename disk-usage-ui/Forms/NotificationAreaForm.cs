@@ -13,7 +13,7 @@ namespace disk_usage_ui
         const int PADDING_BOTTOM = 10;
         const int PADDING_RIGHT = 23;
         const int BALLOON_TIMEOUT_DEFAULT = 4000;
-        const int FORM_WIDTH = 275;
+        const int FORM_WIDTH = 260;
         const int MAX_ITEM_HEIGHT = 7;
         DiskUsage core;
 
@@ -124,9 +124,14 @@ namespace disk_usage_ui
 
             int diskCount = (sortedCollection.Count < MAX_ITEM_HEIGHT) ? sortedCollection.Count : MAX_ITEM_HEIGHT;
 
-            int height = 64 * (diskCount +1); //extra 64px for the combo box area and padding etc
+            int rowOneHeight = tableLayout.GetRowHeights()[1];
 
-            SetFixedFormSize(FORM_WIDTH, height);
+            int BorderWidth = (Width - ClientSize.Width) / 2;
+            int TitlebarHeight = Height - ClientSize.Height - (2 * BorderWidth);
+
+            int height = (DiskTile.HeightPixels * diskCount) + rowOneHeight + (2* BorderWidth) + TitlebarHeight + diskStack.Padding.Top + diskStack.Padding.Bottom;
+
+            SetFixedFormSize(FORM_WIDTH + (2* BorderWidth), height);
 
             PositionForm();
 
@@ -190,8 +195,6 @@ namespace disk_usage_ui
         {
             ShowForm();
         }
-
-
 
         void FormDeactivate(object sender, EventArgs e)
         {

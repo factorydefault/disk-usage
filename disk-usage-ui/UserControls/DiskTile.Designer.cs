@@ -88,7 +88,7 @@
             this.toolStripSeparator1,
             this.propertiesButton});
             this.tileContext.Name = "tileContext";
-            this.tileContext.Size = new System.Drawing.Size(224, 185);
+            this.tileContext.Size = new System.Drawing.Size(224, 160);
             this.tileContext.Opening += new System.ComponentModel.CancelEventHandler(this.tileContext_Opening);
             // 
             // openFolderButton
@@ -174,8 +174,10 @@
             this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.pictureBox);
             this.Margin = new System.Windows.Forms.Padding(0);
+            this.MaximumSize = new System.Drawing.Size(230, 64);
+            this.MinimumSize = new System.Drawing.Size(230, 64);
             this.Name = "DiskTile";
-            this.Size = new System.Drawing.Size(237, 64);
+            this.Size = new System.Drawing.Size(230, 64);
             this.DoubleClick += new System.EventHandler(this.DiskTile_DoubleClick);
             this.tileContext.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();

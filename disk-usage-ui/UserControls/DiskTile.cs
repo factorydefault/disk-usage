@@ -10,6 +10,8 @@ namespace disk_usage_ui
 {
     public partial class DiskTile : UserControl
     {
+        public static int HeightPixels => 64;
+
 
         public event EventHandler<EventArgs> RemoveRequested;
 
