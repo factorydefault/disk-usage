@@ -96,6 +96,12 @@ namespace disk_usage_ui
                     detailLabel.Text = "";
                     break;
             }
+
+            if (Properties.Settings.Default.HideInaccessablePaths && Interactive) //non interactive (demo) tiles are not hidden
+            {
+                Visible = false;
+            }
+
         }
 
         public void UpdateUserInterface(PathRecord pathRecord)
@@ -106,6 +112,8 @@ namespace disk_usage_ui
 
         public void UpdateUserInterface() //disk_usage.PathRecord pathRecord)
         {
+            Visible = true;
+
             PathRecord pathRecord = _recordReference;
 
             
@@ -128,10 +136,7 @@ namespace disk_usage_ui
                     pictureBox.Image = Program.Theme.NetworkDiskImage;
                     break;
             }
-
-            //usageBar.Visible = true;
-            
-
+          
             usageBar.Minimum = 0;
             usageBar.Maximum = 100;
 

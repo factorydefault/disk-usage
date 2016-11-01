@@ -39,8 +39,12 @@ namespace disk_usage_ui.UserControls
             //for correct ordering
             int index = data.Count;
 
+            bool hideEmpty = Properties.Settings.Default.HideInaccessablePaths;
+
             foreach(var pc in data)
             {
+                if (hideEmpty && pc.Capacity.Bytes < 1) continue;
+
                 DataPoint usedPoint = new DataPoint();
 
                 usedPoint.SetValueXY(index, pc.UsedSpace.GigaBytes);

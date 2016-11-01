@@ -47,6 +47,7 @@
             this.chartButton = new System.Windows.Forms.Button();
             this.orderByCombo = new System.Windows.Forms.ComboBox();
             this.toolTipProvider = new System.Windows.Forms.ToolTip(this.components);
+            this.hideInaccessableItem = new System.Windows.Forms.ToolStripMenuItem();
             this.taskbarContext.SuspendLayout();
             this.emptySpaceContext.SuspendLayout();
             this.tableLayout.SuspendLayout();
@@ -72,11 +73,12 @@
             this.addPathTaskbarButton,
             this.editJsonButton,
             this.viewChartButton,
-            this.aboutButton,
+            this.hideInaccessableItem,
             this.toolStripSeparator2,
+            this.aboutButton,
             this.exitButton});
             this.taskbarContext.Name = "taskbarMenu";
-            this.taskbarContext.Size = new System.Drawing.Size(281, 154);
+            this.taskbarContext.Size = new System.Drawing.Size(281, 178);
             this.taskbarContext.Opening += new System.ComponentModel.CancelEventHandler(this.taskbarContext_Opening);
             // 
             // openButton
@@ -145,7 +147,7 @@
             this.diskStack.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.diskStack.Location = new System.Drawing.Point(0, 0);
             this.diskStack.Margin = new System.Windows.Forms.Padding(0);
-            this.diskStack.MinimumSize = new System.Drawing.Size(257, 70);
+            this.diskStack.MinimumSize = new System.Drawing.Size(257, 0);
             this.diskStack.Name = "diskStack";
             this.diskStack.Padding = new System.Windows.Forms.Padding(3);
             this.diskStack.Size = new System.Drawing.Size(257, 465);
@@ -179,7 +181,7 @@
             this.tableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayout.Location = new System.Drawing.Point(0, 0);
             this.tableLayout.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayout.MinimumSize = new System.Drawing.Size(257, 96);
+            this.tableLayout.MinimumSize = new System.Drawing.Size(257, 0);
             this.tableLayout.Name = "tableLayout";
             this.tableLayout.RowCount = 2;
             this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -233,6 +235,13 @@
             this.toolTipProvider.ForeColor = System.Drawing.Color.Black;
             this.toolTipProvider.IsBalloon = true;
             // 
+            // hideInaccessableItem
+            // 
+            this.hideInaccessableItem.Name = "hideInaccessableItem";
+            this.hideInaccessableItem.Size = new System.Drawing.Size(280, 24);
+            this.hideInaccessableItem.Text = "Hide inaccessable paths";
+            this.hideInaccessableItem.Click += new System.EventHandler(this.hideInaccessableItem_Click);
+            // 
             // NotificationAreaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -280,6 +289,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button chartButton;
         private System.Windows.Forms.ToolTip toolTipProvider;
+        private System.Windows.Forms.ToolStripMenuItem hideInaccessableItem;
     }
 }
 

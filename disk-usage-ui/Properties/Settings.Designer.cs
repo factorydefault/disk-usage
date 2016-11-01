@@ -34,5 +34,17 @@ namespace disk_usage_ui.Properties {
                 this["ComboIndex"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool HideInaccessablePaths {
+            get {
+                return ((bool)(this["HideInaccessablePaths"]));
+            }
+            set {
+                this["HideInaccessablePaths"] = value;
+            }
+        }
     }
 }

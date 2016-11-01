@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Linq;
 using System.Diagnostics;
 using disk_usage;
 using System.Collections.Generic;
@@ -122,7 +123,9 @@ namespace disk_usage_ui
 
             List<PathRecord> sortedCollection = core.SortedList(SelectedSorting);
 
-            int diskCount = (sortedCollection.Count < MAX_ITEM_HEIGHT) ? sortedCollection.Count : MAX_ITEM_HEIGHT;
+            int collectionCount = (UISettings.Default.HideInaccessablePaths) ? sortedCollection.Count(pr => pr.Capacity.Bytes > 0) : sortedCollection.Count;
+
+            int diskCount = (collectionCount < MAX_ITEM_HEIGHT) ? collectionCount : MAX_ITEM_HEIGHT;
 
             int rowOneHeight = tableLayout.GetRowHeights()[1];
 
@@ -355,6 +358,7 @@ namespace disk_usage_ui
         void taskbarContext_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             setAvailabilityOfChartMenuItems();
+            hideInaccessableItem.Checked = UISettings.Default.HideInaccessablePaths;
         }
 
         void aboutButton_Click(object sender, EventArgs e)
@@ -366,6 +370,14 @@ namespace disk_usage_ui
         void chartButton_Click(object sender, EventArgs e)
         {
             spawnChart();
+        }
+
+        void hideInaccessableItem_Click(object sender, EventArgs e)
+        {
+            UISettings.Default.HideInaccessablePaths = !UISettings.Default.HideInaccessablePaths; //toggle
+            hideInaccessableItem.Checked = UISettings.Default.HideInaccessablePaths;
+            UISettings.Default.Save();
+
         }
     }
 }

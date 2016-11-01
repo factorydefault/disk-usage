@@ -6,6 +6,7 @@ namespace disk_usage_ui
 {
     static class Program
     {
+
         public static Theme Theme;
 
         /// <summary>
