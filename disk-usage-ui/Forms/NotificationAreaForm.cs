@@ -237,7 +237,12 @@ namespace disk_usage_ui
 
             if (result == DialogResult.OK)
             {
-                core.AddPathToList(dialog.NewComputer);
+                var or = core.AddPathToList(dialog.NewComputer);
+
+                if (!or.Result)
+                {
+                    MessageBox.Show(or.Message, "Unable to add path");
+                }
                 RebuildUserInterface();
                 saveChanges();
             }

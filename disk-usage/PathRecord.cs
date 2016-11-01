@@ -114,7 +114,7 @@ namespace disk_usage
         }
 
 
-        public static Regex LocalRegex => new Regex(@"^([a-zA-Z]):\\(?:([^\\\n]+\\)*)$");
+        public static Regex LocalRegex => new Regex(@"^([A-Z]):\\(?:([^\\\n]+\\)*)$");
 
         public static Regex LocalRootRegex => new Regex(@"^([a-zA-Z]):\\");
 
