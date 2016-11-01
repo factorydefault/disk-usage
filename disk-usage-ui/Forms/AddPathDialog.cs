@@ -22,9 +22,13 @@ namespace disk_usage_ui
             NewComputer = new disk_usage.PathRecord();
             updateUserInterface();
             DialogResult = DialogResult.Cancel;
+            NewComputer.DiskInfoUpdated += NewComputer_DiskInfoUpdated;
         }
 
-        
+        void NewComputer_DiskInfoUpdated(object sender, EventArgs e)
+        {
+            exampleTile.UpdateUserInterface(NewComputer);
+        }
 
         void cancelButton_Click(object sender, EventArgs e)
         {
@@ -44,10 +48,12 @@ namespace disk_usage_ui
             {
                 if (disk_usage.PathRecord.LocalRegex.IsMatch(path)) 
                 {
+                    Console.WriteLine("Valid Local");
                     return true;
                 }
                 if (disk_usage.PathRecord.UNCNamedRegex.IsMatch(path))
                 {
+                    Console.WriteLine("Valid UNC");
                     return true;
                 }
 
@@ -72,7 +78,8 @@ namespace disk_usage_ui
 
             if (PathHasValidForm(pathTextBox.Text))
             {
-                exampleTile.UpdateUserInterface(); //NewComputer);
+                //exampleTile.UpdateUserInterface(); //NewComputer);
+                NewComputer.RequestDiskInfo();
                 acceptButton.Enabled = true;
             }
             else
@@ -92,6 +99,27 @@ namespace disk_usage_ui
         void load(object sender, EventArgs e)
         {
             pathTextBox.Text = InitialPath;
+            exampleTile.Interactive = false;
+        }
+
+        void pathTextBox_DoubleClick(object sender, EventArgs e)
+        {
+            var dr = folderBrowserDialog.ShowDialog();
+
+            if (dr == DialogResult.OK)
+            {
+                if(!folderBrowserDialog.SelectedPath.EndsWith("\\", StringComparison.Ordinal))
+                {
+                    pathTextBox.Text = $"{folderBrowserDialog.SelectedPath}\\";
+                }
+                else
+                {
+                    pathTextBox.Text = folderBrowserDialog.SelectedPath;
+                }
+                
+            }
+
+
         }
     }
 }

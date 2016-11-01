@@ -43,7 +43,7 @@ namespace disk_usage_ui.UserControls
             {
                 DataPoint usedPoint = new DataPoint();
 
-                usedPoint.SetValueXY(index, pc.TotalSpace - pc.FreeSpace);
+                usedPoint.SetValueXY(index, pc.UsedSpace.GigaBytes);
                 //usedPoint.SetValueY(pc.TotalSpace - pc.FreeSpace);
                 usedPoint.AxisLabel = pc.FriendlyName;
 
@@ -57,7 +57,7 @@ namespace disk_usage_ui.UserControls
 
                 DataPoint freePoint = new DataPoint();
 
-                freePoint.SetValueXY(index, pc.FreeSpace);
+                freePoint.SetValueXY(index, pc.FreeSpace.GigaBytes);
                 //freePoint.SetValueY(pc.FreeSpace);
                 freePoint.AxisLabel = pc.FriendlyName;
 

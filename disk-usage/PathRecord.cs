@@ -1,6 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
+using ByteSizeLib;
 
 namespace disk_usage
 {
@@ -43,6 +44,21 @@ namespace disk_usage
         }
         string _friendlyName;
 
+        public string ShortcutName
+        {
+            get
+            {
+                string filename = FriendlyName;
+
+                foreach (var c in System.IO.Path.GetInvalidFileNameChars())
+                {
+                    //filename = filename.Replace(c, '-');
+                    filename = filename.Replace(c.ToString(), "");
+                }
+
+                return filename;
+            }
+        }
 
         [JsonProperty]
         public string Path
@@ -57,7 +73,7 @@ namespace disk_usage
             }
         }
 
-        public double FreeSpace
+        public double FreeSpaceRounded
         {
             get
             {
@@ -65,8 +81,8 @@ namespace disk_usage
                 //return Math.Round(disk.Info().FreeSpaceInGB, 2);
             }
         }
-
-        public double TotalSpace
+                
+        public double TotalSpaceRounded
         {
             get
             {
@@ -75,14 +91,15 @@ namespace disk_usage
             }
         }
 
-        public string PercentageFilled
-        {
-            get
-            {
-                return $"{Math.Round(disk.DSI.PercentageFilled, 2)} %";
-                //return $"{Math.Round(disk.Info().PercentageFilled, 2)} %";
-            }
-        }
+        public string PercentageFilled => $"{Math.Round(disk.DSI.PercentageFilled, 2)} %";
+
+        public ByteSize FreeSpace => ByteSize.FromBytes(disk.DSI.FreeBytesAvailable);
+
+        public ByteSize UsedSpace => ByteSize.FromBytes(bytesUsed);
+
+        public ByteSize Capacity => ByteSize.FromBytes(disk.DSI.TotalNumberOfBytes);
+
+        ulong bytesUsed => disk.DSI.TotalNumberOfBytes - disk.DSI.FreeBytesAvailable;
 
         public int FillLevel => (int)Math.Round(disk.DSI.PercentageFilled, 0);
 
@@ -97,9 +114,11 @@ namespace disk_usage
         }
 
 
-        public static Regex LocalRegex => new Regex(@"([a-zA-Z]):");
+        public static Regex LocalRegex => new Regex(@"^([a-zA-Z]):\\(?:([^\\\n]+\\)*)$");
 
-        public static Regex UNCNamedRegex => new Regex(@"^\\\\.*\\.*\\");
+        public static Regex LocalRootRegex => new Regex(@"^([a-zA-Z]):\\");
+
+        public static Regex UNCNamedRegex => new Regex(@"^\\\\([^\\]+\\)(?:([^\\\n]+\\)+)$");
 
         //public Regex UNCIPRegex => new Regex(@"");
 
@@ -109,16 +128,13 @@ namespace disk_usage
 
             var match = LocalRegex.Match(Path);
 
-            if (match.Success)
+            if (match.Success || LocalRootRegex.IsMatch(Path))
             {
                 string drive = $"{match.Groups[1].Value}:\\";
                 //Console.WriteLine(drive);
                 return (drive == Windows.InstallDirectory) ? PathLocation.OS : PathLocation.Local;
             }
             return PathLocation.Remote;
-
-
-            
 
 
         }

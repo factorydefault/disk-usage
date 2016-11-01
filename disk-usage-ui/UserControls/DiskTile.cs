@@ -2,7 +2,10 @@
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+
 using ProgressBarState = disk_usage.ProgressBarState;
+using disk_usage;
+
 namespace disk_usage_ui
 {
     public partial class DiskTile : UserControl
@@ -12,6 +15,7 @@ namespace disk_usage_ui
 
         public event EventHandler<EventArgs> AddNewPath;
 
+        public event EventHandler<EventArgs> PropertiesChanged;
 
         public new event EventHandler DoubleClick
         {
@@ -45,6 +49,11 @@ namespace disk_usage_ui
             }
         }
 
+        //bool _interactive = true;
+
+        public bool Interactive { get; set; } = true;
+
+
         public void SetAsNotFound(string label = "")
         {
             if(!string.IsNullOrWhiteSpace(label))
@@ -57,14 +66,38 @@ namespace disk_usage_ui
             //usageBar.Visible = false;     
             usageBar.Minimum = 0;
             usageBar.Maximum = 100;
-            usageBar.Value = 1;
+            usageBar.Value = 100;
+            Console.WriteLine($"Setting progress bar not found, value {usageBar.Value}");
             usageBar.SetState(ProgressBarState.Error);
-            detailLabel.Text = "";
+
+            PathLocation location = _recordReference?.Location() ?? PathLocation.Unknown;
+
+            switch (location)
+            {
+                case PathLocation.Local:
+                case PathLocation.OS:
+                    detailLabel.Text = "Path not found";
+                    break;
+                case PathLocation.Remote:
+                    detailLabel.Text = "Path not available";
+                    break;
+                default:
+                    detailLabel.Text = "";
+                    break;
+            }
+        }
+
+        public void UpdateUserInterface(PathRecord pathRecord)
+        {
+            _recordReference = pathRecord;
+            UpdateUserInterface();
         }
 
         public void UpdateUserInterface() //disk_usage.PathRecord pathRecord)
         {
-            disk_usage.PathRecord pathRecord = _recordReference;
+            PathRecord pathRecord = _recordReference;
+
+            
 
             nameLabel.Text = $"{pathRecord.FriendlyName}";
 
@@ -74,10 +107,10 @@ namespace disk_usage_ui
 
             switch (pathRecord.Location())
             {
-                case disk_usage.PathLocation.Local:
+                case PathLocation.Local:
                     pictureBox.Image = Program.Theme.LocalDiskImage;
                     break;
-                case disk_usage.PathLocation.OS:
+                case PathLocation.OS:
                     pictureBox.Image = Program.Theme.OSDiskImage;
                     break;
                 default:
@@ -86,6 +119,7 @@ namespace disk_usage_ui
             }
 
             //usageBar.Visible = true;
+            
 
             usageBar.Minimum = 0;
             usageBar.Maximum = 100;
@@ -94,19 +128,21 @@ namespace disk_usage_ui
 
             usageBar.Value = pathRecord.FillLevel;
 
-            usageBar.SetState(pathRecord.HasLowDiskSpace ? ProgressBarState.Error : ProgressBarState.Normal);
+            detailLabel.Text = $"{pathRecord.FreeSpace.ExplorerLabel()} free of {pathRecord.Capacity.ExplorerLabel()}";
 
-            detailLabel.Text = $"{pathRecord.FreeSpace} GB free of {Math.Round(pathRecord.TotalSpace,0,MidpointRounding.AwayFromZero)} GB";
-
-            if (pathRecord.TotalSpace < 0.0001) //edge case where path has not been found
+            if (pathRecord.Capacity.Bytes < 1) //edge case where path has not been found
             {
                 SetAsNotFound();
             }
+            else
+            {
+                usageBar.SetState(pathRecord.HasLowDiskSpace ? ProgressBarState.Error : ProgressBarState.Normal);
+            }    
         }
 
-        disk_usage.PathRecord _recordReference;
+        PathRecord _recordReference;
 
-        public DiskTile(disk_usage.PathRecord pr) : this()
+        public DiskTile(PathRecord pr) : this()
         {
             _recordReference = pr;
             _recordReference.DiskInfoUpdated += Pr_DiskInfoUpdated;
@@ -126,7 +162,11 @@ namespace disk_usage_ui
 
         void DiskTile_DoubleClick(object sender, EventArgs e)
         {
-            OpenFolder();
+            if (Interactive)
+            {
+                OpenFolder();
+            }
+            
         }
 
         void removeItemButton_Click(object sender, EventArgs e)
@@ -146,10 +186,7 @@ namespace disk_usage_ui
 
         void OpenFolder()
         {
-            if (System.IO.Directory.Exists(path))
-            {
-                Process.Start(path);
-            }
+            Tools.OpenDirectory(path);
         }
 
         private void clipboardButton_Click(object sender, EventArgs e)
@@ -169,12 +206,41 @@ namespace disk_usage_ui
         {
             try
             {
-                disk_usage.Windows.ShowFileProperties(path);
+                //disk_usage.Windows.ShowFileProperties(path);
+                var propertiesForm = new Forms.PropertiesForm();
+                propertiesForm.ProvideData(_recordReference);
+
+                string existingFriendlyName = _recordReference.FriendlyName;
+                
+                var dr = propertiesForm.ShowDialog();
+
+                
+                switch (dr)
+                {
+                    case DialogResult.OK:
+                        _recordReference.FriendlyName = propertiesForm.DiskLabel;
+                        PropertiesChanged?.Invoke(this, new EventArgs());
+                        break;
+                    default:
+                        _recordReference.FriendlyName = existingFriendlyName; //restore existing name
+                        break;
+                }
+
             }
             catch (Exception)
             {
                 throw;
             }
+        }
+
+        void shortcutButton_Click(object sender, EventArgs e)
+        {
+            Shortcuts.TryCreate(_recordReference);
+        }
+
+        void tileContext_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!Interactive) e.Cancel = true;
         }
     }
 
@@ -185,10 +251,11 @@ namespace disk_usage_ui
         static void SetState(this ProgressBar pBar, int state)
         {
             SendMessage(pBar.Handle, 1040, (IntPtr)state, IntPtr.Zero);
+            pBar.Invalidate();
         }
 
 
-        public static void SetState(this ProgressBar pBar, disk_usage.ProgressBarState state)
+        public static void SetState(this ProgressBar pBar, ProgressBarState state)
         {
             pBar.SetState((int)state);
         }

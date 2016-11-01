@@ -4,6 +4,7 @@
     <IncludeAssemblies>
       disk-usage
       Newtonsoft.Json
+      ByteSizeLib
     </IncludeAssemblies>
   </Costura>
   

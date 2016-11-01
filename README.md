@@ -28,6 +28,7 @@ Tests have not yet been developed for this project. [TODO]
 
 * [Json.NET](https://github.com/JamesNK/Newtonsoft.Json) - JSON framework for .NET
 * Fody/[Costura](https://github.com/Fody/Costura) - To embed everything into a single .EXE
+* [ByteSize](https://github.com/omar/ByteSize) - Directory size conversions; bytes to GB etc.
 
 ## Versioning
 

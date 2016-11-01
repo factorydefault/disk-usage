@@ -104,6 +104,7 @@ namespace disk_usage_ui
                     c.UnsubscribeToEvents();
                     c.RemoveRequested -= RemovePathUsingTileObject;
                     c.AddNewPath -= AddNewPath;
+                    c.PropertiesChanged -= TilePropertiesChanged;
                     diskStack.Controls.Remove(c);
                     c.Dispose();
                 }
@@ -138,11 +139,17 @@ namespace disk_usage_ui
                 //subscribe to the events
                 newTile.RemoveRequested += RemovePathUsingTileObject;
                 newTile.AddNewPath += AddNewPath;
+                newTile.PropertiesChanged += TilePropertiesChanged;
 
                 diskStack.Controls.Add(newTile);
             }
 
             ResumeLayout(true);
+        }
+
+        void TilePropertiesChanged(object sender, EventArgs e)
+        {
+            saveChanges();
         }
 
         public void SetFixedFormSize(int width, int height)

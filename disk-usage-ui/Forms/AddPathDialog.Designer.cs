@@ -38,6 +38,7 @@
             this.acceptButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.exampleTile = new disk_usage_ui.DiskTile();
+            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.SuspendLayout();
             // 
             // label1
@@ -61,7 +62,7 @@
             // labelTextBox
             // 
             this.labelTextBox.Location = new System.Drawing.Point(105, 16);
-            this.labelTextBox.MaxLength = 22;
+            this.labelTextBox.MaxLength = 128;
             this.labelTextBox.Name = "labelTextBox";
             this.labelTextBox.Size = new System.Drawing.Size(188, 20);
             this.labelTextBox.TabIndex = 2;
@@ -74,6 +75,7 @@
             this.pathTextBox.Size = new System.Drawing.Size(226, 20);
             this.pathTextBox.TabIndex = 3;
             this.pathTextBox.TextChanged += new System.EventHandler(this.dialogTextChanged);
+            this.pathTextBox.DoubleClick += new System.EventHandler(this.pathTextBox_DoubleClick);
             // 
             // label3
             // 
@@ -115,6 +117,11 @@
             this.exampleTile.Size = new System.Drawing.Size(237, 64);
             this.exampleTile.TabIndex = 8;
             // 
+            // folderBrowserDialog
+            // 
+            this.folderBrowserDialog.Description = "Select Folder";
+            this.folderBrowserDialog.ShowNewFolderButton = false;
+            // 
             // AddPathDialog
             // 
             this.AcceptButton = this.acceptButton;
@@ -154,5 +161,6 @@
         private System.Windows.Forms.Button acceptButton;
         private System.Windows.Forms.Button cancelButton;
         private DiskTile exampleTile;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
     }
 }

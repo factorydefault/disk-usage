@@ -58,7 +58,21 @@
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Win10|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug Win10\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;THEME</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ByteSizeLib, Version=1.2.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\disk-usage\packages\ByteSize.1.2.2\lib\net45\ByteSizeLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\disk-usage\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -95,7 +109,15 @@
     <Compile Include="Forms\ChartDialogForm.Designer.cs">
       <DependentUpon>ChartDialogForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\PropertiesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PropertiesForm.Designer.cs">
+      <DependentUpon>PropertiesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Shortcuts.cs" />
     <Compile Include="Theme.cs" />
+    <Compile Include="Tools.cs" />
     <Compile Include="UserControls\DiskChart.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -124,6 +146,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ChartDialogForm.resx">
       <DependentUpon>ChartDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PropertiesForm.resx">
+      <DependentUpon>PropertiesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\DiskChart.resx">
       <DependentUpon>DiskChart.cs</DependentUpon>
@@ -167,6 +192,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
+    <None Include="Resources\properties_16xLG.png" />
     <Content Include="storage.ico" />
     <None Include="Resources\notfound10.png" />
     <None Include="Resources\osdrive10.png" />
@@ -179,7 +205,6 @@
     <None Include="Resources\7networkdrive.PNG" />
     <None Include="Resources\GitHub.png" />
     <None Include="Resources\KPI_16xLG.png" />
-    <None Include="Resources\Bubble_16xLG.png" />
     <None Include="Resources\OpenFolder_16x.png" />
     <None Include="Resources\resource_16xLG.png" />
     <None Include="Resources\filter_16xLG.png" />

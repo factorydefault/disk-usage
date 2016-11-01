@@ -19,6 +19,7 @@ namespace disk_usage
         Local,
         Remote,
         OS,
+        Unknown
     }
 
     public enum ProgressBarState
