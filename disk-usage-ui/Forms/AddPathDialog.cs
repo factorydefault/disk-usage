@@ -66,18 +66,29 @@ namespace disk_usage_ui
         void updateUserInterface()
         {
             NewComputer.FriendlyName = labelTextBox.Text;
-            NewComputer.Path = pathTextBox.Text;
-            
+            var inputText = pathTextBox.Text;
 
-            if (PathHasValidForm(pathTextBox.Text))
+            NewComputer.Path = inputText;
+
+            var withBackslash = $"{inputText}\\";
+
+            if (PathHasValidForm(inputText) ) 
             {
-                //exampleTile.UpdateUserInterface(); //NewComputer);
+                System.Diagnostics.Debug.Print("Path valid.");
+                
+                NewComputer.RequestDiskInfo();
+                acceptButton.Enabled = true;
+            }
+            else if(PathHasValidForm(withBackslash)) //lenient to missing backslash
+            {
+                System.Diagnostics.Debug.Print("Missing backslash added.");
+                NewComputer.Path = withBackslash;
                 NewComputer.RequestDiskInfo();
                 acceptButton.Enabled = true;
             }
             else
             {
-                exampleTile.SetAsNotFound(NewComputer.FriendlyName);
+                exampleTile.SetAsNotFound();
                 acceptButton.Enabled = false;
             }
 
