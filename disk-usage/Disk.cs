@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using ByteSizeLib;
 
 namespace disk_usage
 {
@@ -24,17 +25,23 @@ namespace disk_usage
             Console.WriteLine("Total Number Of FreeBytes: {0,15:D}", TotalNumberOfFreeBytes);
         }
 
-        public double FreeSpaceInGB => FreeBytesAvailable / Disk.GBConversion;
+        public double FreeSpaceInGB => ByteSize.FromBytes(FreeBytesAvailable).GigaBytes; // / Disk.GBConversion;
 
-        public double TotalSpaceInGB => TotalNumberOfBytes / Disk.GBConversion;
+        public double TotalSpaceInGB => ByteSize.FromBytes(TotalNumberOfBytes).GigaBytes; // Disk.GBConversion;
 
-        public double PercentageFree => (FreeBytesAvailable / (double)TotalNumberOfBytes * 100.0);
+        public double PercentageFree
+        {
+            get
+            {
+                return (TotalNumberOfBytes > 0) ? (FreeBytesAvailable / (double)TotalNumberOfBytes * 100.0) : 0;
+            }
+        }
 
         public double PercentageFilled => (100.0 - PercentageFree);
 
     }
 
-    internal class Disk
+    class Disk
     {
         [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -79,7 +86,7 @@ namespace disk_usage
                 }
                 else
                 {
-                    DSI = new DiskSpaceInformation(1, 1, 0);
+                    DSI = new DiskSpaceInformation(0, 0, 0);
                 }
             });
 

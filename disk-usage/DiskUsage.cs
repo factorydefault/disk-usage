@@ -11,7 +11,7 @@ namespace disk_usage
     {
         const string DATA_FOLDER = "disk_usage_data";
         const string PATHS_FILE = "paths.json";
-        Formatting SETTINGS_FORMAT = Formatting.Indented;
+        Newtonsoft.Json.Formatting SETTINGS_FORMAT = Newtonsoft.Json.Formatting.Indented;
 
         public bool SettingsFileWasGenerated { get; private set; } = false;
 
@@ -109,6 +109,15 @@ namespace disk_usage
 
         public void AddPathToList(PathRecord computer)
         {
+            foreach(var existing in _pathList)
+            {
+                if (existing.Path == computer.Path)
+                {
+                    Debug.Print($"Path {computer.Path} cannot be added as it already exists with label {existing.FriendlyName}.");
+                    return;
+                }
+            }
+
             _pathList.Add(computer);
         }
 
@@ -138,21 +147,21 @@ namespace disk_usage
                 case SortingOption.AlphabeticalDescending:
                     return Paths.OrderByDescending(o => o.FriendlyName.Replace("\\", "")).ToList();
                 case SortingOption.FreeSpace:
-                    return Paths.OrderBy(o => o.FreeSpace).ToList();
+                    return Paths.OrderBy(o => o.FreeSpace.Bytes).ToList();
                 case SortingOption.FreeSpaceDescending:
-                    return Paths.OrderByDescending(o => o.FreeSpace).ToList();
+                    return Paths.OrderByDescending(o => o.FreeSpace.Bytes).ToList();
                 case SortingOption.FillPercentage:
                     return Paths.OrderBy(o => o.FillLevel).ToList();
                 case SortingOption.FillPercentageDescending:
                     return Paths.OrderByDescending(o => o.FillLevel).ToList();
                 case SortingOption.Capacity:
-                    return Paths.OrderBy(o => o.TotalSpace).ToList();
+                    return Paths.OrderBy(o => o.Capacity.Bytes).ToList();
                 case SortingOption.CapacityDescending:
-                    return Paths.OrderByDescending(o => o.TotalSpace).ToList();
+                    return Paths.OrderByDescending(o => o.Capacity.Bytes).ToList();
                 case SortingOption.UsedSpace:
-                    return Paths.OrderBy(o => o.TotalSpace-o.FreeSpace).ToList();
+                    return Paths.OrderBy(o => o.UsedSpace.Bytes).ToList();
                 case SortingOption.UsedSpaceDescending:
-                    return Paths.OrderByDescending(o => o.TotalSpace - o.FreeSpace).ToList();
+                    return Paths.OrderByDescending(o => o.UsedSpace.Bytes).ToList();
                 default:
                     Debug.Print("sorting not recognised");
                     return Paths;

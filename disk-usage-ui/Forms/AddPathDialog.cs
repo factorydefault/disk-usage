@@ -25,7 +25,7 @@ namespace disk_usage_ui
             NewComputer.DiskInfoUpdated += NewComputer_DiskInfoUpdated;
         }
 
-        private void NewComputer_DiskInfoUpdated(object sender, EventArgs e)
+        void NewComputer_DiskInfoUpdated(object sender, EventArgs e)
         {
             exampleTile.UpdateUserInterface(NewComputer);
         }
@@ -48,10 +48,12 @@ namespace disk_usage_ui
             {
                 if (disk_usage.PathRecord.LocalRegex.IsMatch(path)) 
                 {
+                    Console.WriteLine("Valid Local");
                     return true;
                 }
                 if (disk_usage.PathRecord.UNCNamedRegex.IsMatch(path))
                 {
+                    Console.WriteLine("Valid UNC");
                     return true;
                 }
 
@@ -97,6 +99,27 @@ namespace disk_usage_ui
         void load(object sender, EventArgs e)
         {
             pathTextBox.Text = InitialPath;
+            exampleTile.Interactive = false;
+        }
+
+        void pathTextBox_DoubleClick(object sender, EventArgs e)
+        {
+            var dr = folderBrowserDialog.ShowDialog();
+
+            if (dr == DialogResult.OK)
+            {
+                if(!folderBrowserDialog.SelectedPath.EndsWith("\\", StringComparison.Ordinal))
+                {
+                    pathTextBox.Text = $"{folderBrowserDialog.SelectedPath}\\";
+                }
+                else
+                {
+                    pathTextBox.Text = folderBrowserDialog.SelectedPath;
+                }
+                
+            }
+
+
         }
     }
 }

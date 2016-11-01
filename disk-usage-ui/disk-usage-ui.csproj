@@ -69,6 +69,10 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ByteSizeLib, Version=1.2.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\disk-usage\packages\ByteSize.1.2.2\lib\net45\ByteSizeLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\disk-usage\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -111,6 +115,7 @@
     <Compile Include="Forms\PropertiesForm.Designer.cs">
       <DependentUpon>PropertiesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Shortcuts.cs" />
     <Compile Include="Theme.cs" />
     <Compile Include="UserControls\DiskChart.cs">
       <SubType>UserControl</SubType>
@@ -199,7 +204,6 @@
     <None Include="Resources\7networkdrive.PNG" />
     <None Include="Resources\GitHub.png" />
     <None Include="Resources\KPI_16xLG.png" />
-    <None Include="Resources\Bubble_16xLG.png" />
     <None Include="Resources\OpenFolder_16x.png" />
     <None Include="Resources\resource_16xLG.png" />
     <None Include="Resources\filter_16xLG.png" />

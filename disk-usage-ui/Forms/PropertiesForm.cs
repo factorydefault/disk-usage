@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 using disk_usage;
+using ByteSizeLib;
 
 namespace disk_usage_ui.Forms
 {
@@ -18,9 +19,9 @@ namespace disk_usage_ui.Forms
 
         }
 
-        private void driveLabelTextBox_TextChanged(object sender, EventArgs e)
+        void driveLabelTextBox_TextChanged(object sender, EventArgs e)
         {
-
+            setFormTitle();
         }
 
         private void capacityBytesLabel_Click(object sender, EventArgs e)
@@ -40,9 +41,9 @@ namespace disk_usage_ui.Forms
 
         void PropertiesForm_Load(object sender, EventArgs e)
         {
-            EnableTab(tabPage2, false);
-            ((Control)tabPage2).Enabled = false;
-            
+            shortcutButton.Enabled = true;
+
+
         }
 
         PathRecord _record;
@@ -61,6 +62,30 @@ namespace disk_usage_ui.Forms
             diskTypeLabel.Text = DiskTypeString;
 
             updatePieChart(_record.FillLevel);
+
+            usedBytesLabel.Text = $"{_record.UsedSpace.Bytes:#,0} bytes";
+            usedSummary.Text = _record.UsedSpace.PropertiesLabel();
+
+            freeBytesLabel.Text = $"{_record.FreeSpace.Bytes:#,0} bytes";
+            freeSummary.Text = _record.FreeSpace.PropertiesLabel();
+
+            capacityBytesLabel.Text = $"{_record.Capacity.Bytes:#,0} bytes";
+            capacitySummary.Text = _record.Capacity.PropertiesLabel();
+
+            setFormTitle();
+
+        }
+
+        void setFormTitle()
+        {
+            if (string.IsNullOrWhiteSpace(driveLabelTextBox.Text))
+            {
+                Text = $"{_record.Path.Trim().Ellipsis(22)} Properties";
+            }
+            else
+            {
+                Text = $"{driveLabelTextBox.Text.Trim().Ellipsis(22)} Properties";
+            }
         }
                 
         string DiskTypeString
@@ -130,11 +155,19 @@ namespace disk_usage_ui.Forms
             try
             {
                 Windows.ShowFileProperties(_record.Path);
+                DialogResult = DialogResult.OK;
+                Close();
             }
             catch (Exception)
             {
                 throw;
             }
+        }
+
+        void shortcutButton_Click(object sender, EventArgs e)
+        {
+            _record.FriendlyName = DiskLabel;
+            Shortcuts.TryCreate(_record);
         }
     }
 }
