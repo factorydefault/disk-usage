@@ -29,6 +29,12 @@ namespace disk_usage_ui.Forms
 
         void saveImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(saveFileDialog.InitialDirectory))
+            {
+                saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            }
+            saveFileDialog.FileName = $"DiskUsage {Tools.Timestamp()}.png";
+
             var dr = saveFileDialog.ShowDialog();
 
             if (dr == DialogResult.OK)

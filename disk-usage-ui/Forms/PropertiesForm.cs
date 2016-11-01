@@ -169,5 +169,10 @@ namespace disk_usage_ui.Forms
             _record.FriendlyName = DiskLabel;
             Shortcuts.TryCreate(_record);
         }
+
+        void explorePathButton_Click(object sender, EventArgs e)
+        {
+            Tools.OpenDirectory(_record);
+        }
     }
 }

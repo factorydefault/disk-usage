@@ -117,6 +117,7 @@
     </Compile>
     <Compile Include="Shortcuts.cs" />
     <Compile Include="Theme.cs" />
+    <Compile Include="Tools.cs" />
     <Compile Include="UserControls\DiskChart.cs">
       <SubType>UserControl</SubType>
     </Compile>
