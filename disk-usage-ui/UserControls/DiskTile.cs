@@ -186,10 +186,7 @@ namespace disk_usage_ui
 
         void OpenFolder()
         {
-            if (System.IO.Directory.Exists(path))
-            {
-                Process.Start(path);
-            }
+            Tools.OpenDirectory(path);
         }
 
         private void clipboardButton_Click(object sender, EventArgs e)
@@ -258,7 +255,7 @@ namespace disk_usage_ui
         }
 
 
-        public static void SetState(this ProgressBar pBar, disk_usage.ProgressBarState state)
+        public static void SetState(this ProgressBar pBar, ProgressBarState state)
         {
             pBar.SetState((int)state);
         }

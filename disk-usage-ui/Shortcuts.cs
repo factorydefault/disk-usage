@@ -6,7 +6,7 @@ namespace disk_usage_ui
 {
     public static class Shortcuts
     {
-        public static bool TryCreate(PathRecord record)
+        public static bool TryCreate(PathRecord record, bool notify = true)
         {
             try
             {
@@ -15,6 +15,8 @@ namespace disk_usage_ui
                 string shortcutLocation = $"{Windows.Desktop}\\{record.ShortcutName} - Shortcut.lnk";
 
                 Windows.CreateShortcut(record.Path, shortcutLocation);
+
+                if (notify) MessageBox.Show($"A shortcut to \"{record.Path}\" was placed on your Desktop.");
 
                 return true;
             }
