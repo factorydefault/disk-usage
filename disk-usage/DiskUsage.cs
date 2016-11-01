@@ -51,7 +51,7 @@ namespace disk_usage
         {
             Paths.Clear();
             Debug.Print("Creating json settings file with defaults");
-            AddPathToList(Windows.InstallDirectory, $"OSDisk ({Windows.InstallDirectory})");
+            var or = AddPathToList(Windows.InstallDirectory, $"OSDisk ({Windows.InstallDirectory})");
 
             Directory.CreateDirectory(SettingsDirectory);
 
@@ -107,23 +107,36 @@ namespace disk_usage
 
         List<PathRecord> _pathList;
 
-        public void AddPathToList(PathRecord computer)
+        public struct OperationResult
+        {
+            public bool Result { get; private set; }
+            public string Message { get; private set; }
+
+            public OperationResult(bool result, string message = "")
+            {
+                Result = result;
+                Message = message;
+            }
+        }
+
+        public OperationResult AddPathToList(PathRecord computer)
         {
             foreach(var existing in _pathList)
             {
                 if (existing.Path == computer.Path)
                 {
-                    Debug.Print($"Path {computer.Path} cannot be added as it already exists with label {existing.FriendlyName}.");
-                    return;
+                    Debug.Print($"Path {computer.Path} cannot be added as it already exists with the label {existing.FriendlyName}.");
+                    return new OperationResult(false, $"Path {computer.Path} cannot be added as it already exists with the label {existing.FriendlyName}.");
                 }
             }
 
             _pathList.Add(computer);
+            return new OperationResult(true);
         }
 
-        public void AddPathToList(string path, string friendlyName = "")
+        public OperationResult AddPathToList(string path, string friendlyName = "")
         {
-            AddPathToList(PathRecord.Create(path, friendlyName));
+            return AddPathToList(PathRecord.Create(path, friendlyName));
         }
 
         public List<PathRecord> Paths

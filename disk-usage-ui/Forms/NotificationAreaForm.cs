@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Linq;
 using System.Diagnostics;
 using disk_usage;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace disk_usage_ui
         const int PADDING_BOTTOM = 10;
         const int PADDING_RIGHT = 23;
         const int BALLOON_TIMEOUT_DEFAULT = 4000;
-        const int FORM_WIDTH = 275;
+        const int FORM_WIDTH = 260;
         const int MAX_ITEM_HEIGHT = 7;
         DiskUsage core;
 
@@ -122,11 +123,18 @@ namespace disk_usage_ui
 
             List<PathRecord> sortedCollection = core.SortedList(SelectedSorting);
 
-            int diskCount = (sortedCollection.Count < MAX_ITEM_HEIGHT) ? sortedCollection.Count : MAX_ITEM_HEIGHT;
+            int collectionCount = (UISettings.Default.HideInaccessablePaths) ? sortedCollection.Count(pr => pr.Capacity.Bytes > 0) : sortedCollection.Count;
 
-            int height = 64 * (diskCount +1); //extra 64px for the combo box area and padding etc
+            int diskCount = (collectionCount < MAX_ITEM_HEIGHT) ? collectionCount : MAX_ITEM_HEIGHT;
 
-            SetFixedFormSize(FORM_WIDTH, height);
+            int rowOneHeight = tableLayout.GetRowHeights()[1];
+
+            int BorderWidth = (Width - ClientSize.Width) / 2;
+            int TitlebarHeight = Height - ClientSize.Height - (2 * BorderWidth);
+
+            int height = (DiskTile.HeightPixels * diskCount) + rowOneHeight + (2* BorderWidth) + TitlebarHeight + diskStack.Padding.Top + diskStack.Padding.Bottom;
+
+            SetFixedFormSize(FORM_WIDTH + (2* BorderWidth), height);
 
             PositionForm();
 
@@ -191,8 +199,6 @@ namespace disk_usage_ui
             ShowForm();
         }
 
-
-
         void FormDeactivate(object sender, EventArgs e)
         {
             allowshowdisplay = false;
@@ -234,7 +240,12 @@ namespace disk_usage_ui
 
             if (result == DialogResult.OK)
             {
-                core.AddPathToList(dialog.NewComputer);
+                var or = core.AddPathToList(dialog.NewComputer);
+
+                if (!or.Result)
+                {
+                    MessageBox.Show(or.Message, "Unable to add path");
+                }
                 RebuildUserInterface();
                 saveChanges();
             }
@@ -347,6 +358,7 @@ namespace disk_usage_ui
         void taskbarContext_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             setAvailabilityOfChartMenuItems();
+            hideInaccessableItem.Checked = UISettings.Default.HideInaccessablePaths;
         }
 
         void aboutButton_Click(object sender, EventArgs e)
@@ -358,6 +370,14 @@ namespace disk_usage_ui
         void chartButton_Click(object sender, EventArgs e)
         {
             spawnChart();
+        }
+
+        void hideInaccessableItem_Click(object sender, EventArgs e)
+        {
+            UISettings.Default.HideInaccessablePaths = !UISettings.Default.HideInaccessablePaths; //toggle
+            hideInaccessableItem.Checked = UISettings.Default.HideInaccessablePaths;
+            UISettings.Default.Save();
+
         }
     }
 }

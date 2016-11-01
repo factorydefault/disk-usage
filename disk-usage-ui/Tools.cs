@@ -11,6 +11,10 @@ namespace disk_usage_ui
             {
                 Process.Start(path);
             }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show($"Cannot open \"{path}\", it may be inaccessible or invalid.","Unable to open path");
+            }
         }
 
         public static void OpenDirectory(disk_usage.PathRecord record)

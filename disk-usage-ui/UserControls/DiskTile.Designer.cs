@@ -56,6 +56,8 @@
             this.nameLabel.TabIndex = 1;
             this.nameLabel.Text = "12345678901234567890123";
             this.nameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.nameLabel.MouseEnter += new System.EventHandler(this.nameLabel_MouseEnter);
+            this.nameLabel.MouseLeave += new System.EventHandler(this.nameLabel_MouseLeave);
             // 
             // detailLabel
             // 
@@ -88,7 +90,7 @@
             this.toolStripSeparator1,
             this.propertiesButton});
             this.tileContext.Name = "tileContext";
-            this.tileContext.Size = new System.Drawing.Size(224, 185);
+            this.tileContext.Size = new System.Drawing.Size(224, 160);
             this.tileContext.Opening += new System.ComponentModel.CancelEventHandler(this.tileContext_Opening);
             // 
             // openFolderButton
@@ -174,8 +176,10 @@
             this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.pictureBox);
             this.Margin = new System.Windows.Forms.Padding(0);
+            this.MaximumSize = new System.Drawing.Size(230, 64);
+            this.MinimumSize = new System.Drawing.Size(230, 64);
             this.Name = "DiskTile";
-            this.Size = new System.Drawing.Size(237, 64);
+            this.Size = new System.Drawing.Size(230, 64);
             this.DoubleClick += new System.EventHandler(this.DiskTile_DoubleClick);
             this.tileContext.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();

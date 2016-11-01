@@ -33,20 +33,21 @@
             this.taskbarIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.taskbarContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.addPathTaskbarButton = new System.Windows.Forms.ToolStripMenuItem();
             this.editJsonButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewChartButton = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutButton = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitButton = new System.Windows.Forms.ToolStripMenuItem();
             this.diskStack = new System.Windows.Forms.FlowLayoutPanel();
             this.emptySpaceContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.emptySpaceAddPathButton = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.chartButton = new System.Windows.Forms.Button();
             this.orderByCombo = new System.Windows.Forms.ComboBox();
             this.toolTipProvider = new System.Windows.Forms.ToolTip(this.components);
-            this.emptySpaceAddPathButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.chartButton = new System.Windows.Forms.Button();
-            this.addPathTaskbarButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewChartButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.hideInaccessableItem = new System.Windows.Forms.ToolStripMenuItem();
             this.taskbarContext.SuspendLayout();
             this.emptySpaceContext.SuspendLayout();
             this.tableLayout.SuspendLayout();
@@ -72,11 +73,12 @@
             this.addPathTaskbarButton,
             this.editJsonButton,
             this.viewChartButton,
-            this.aboutButton,
+            this.hideInaccessableItem,
             this.toolStripSeparator2,
+            this.aboutButton,
             this.exitButton});
             this.taskbarContext.Name = "taskbarMenu";
-            this.taskbarContext.Size = new System.Drawing.Size(281, 179);
+            this.taskbarContext.Size = new System.Drawing.Size(281, 178);
             this.taskbarContext.Opening += new System.ComponentModel.CancelEventHandler(this.taskbarContext_Opening);
             // 
             // openButton
@@ -88,6 +90,15 @@
             this.openButton.Text = "&Open Disk Usage";
             this.openButton.Click += new System.EventHandler(this.openButton_Click);
             // 
+            // addPathTaskbarButton
+            // 
+            this.addPathTaskbarButton.Image = global::disk_usage_ui.Properties.Resources.action_add_16xLG;
+            this.addPathTaskbarButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.addPathTaskbarButton.Name = "addPathTaskbarButton";
+            this.addPathTaskbarButton.Size = new System.Drawing.Size(280, 24);
+            this.addPathTaskbarButton.Text = "Add new path";
+            this.addPathTaskbarButton.Click += new System.EventHandler(this.AddNewPath);
+            // 
             // editJsonButton
             // 
             this.editJsonButton.Name = "editJsonButton";
@@ -97,6 +108,15 @@
             this.editJsonButton.Text = "Edit JSON path list";
             this.editJsonButton.Visible = false;
             this.editJsonButton.Click += new System.EventHandler(this.editJsonButton_Click);
+            // 
+            // viewChartButton
+            // 
+            this.viewChartButton.Image = global::disk_usage_ui.Properties.Resources.KPI_16xLG;
+            this.viewChartButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.viewChartButton.Name = "viewChartButton";
+            this.viewChartButton.Size = new System.Drawing.Size(280, 24);
+            this.viewChartButton.Text = "View bar chart";
+            this.viewChartButton.Click += new System.EventHandler(this.viewChartButton_Click);
             // 
             // aboutButton
             // 
@@ -120,14 +140,16 @@
             // diskStack
             // 
             this.diskStack.AutoScroll = true;
+            this.diskStack.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.diskStack.BackColor = System.Drawing.Color.White;
             this.diskStack.ContextMenuStrip = this.emptySpaceContext;
             this.diskStack.Dock = System.Windows.Forms.DockStyle.Fill;
             this.diskStack.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.diskStack.Location = new System.Drawing.Point(0, 0);
             this.diskStack.Margin = new System.Windows.Forms.Padding(0);
+            this.diskStack.MinimumSize = new System.Drawing.Size(257, 0);
             this.diskStack.Name = "diskStack";
-            this.diskStack.Padding = new System.Windows.Forms.Padding(3, 3, 0, 0);
+            this.diskStack.Padding = new System.Windows.Forms.Padding(3);
             this.diskStack.Size = new System.Drawing.Size(257, 465);
             this.diskStack.TabIndex = 3;
             this.diskStack.WrapContents = false;
@@ -140,16 +162,26 @@
             this.emptySpaceContext.Name = "contextMenuStrip1";
             this.emptySpaceContext.Size = new System.Drawing.Size(169, 28);
             // 
+            // emptySpaceAddPathButton
+            // 
+            this.emptySpaceAddPathButton.Image = global::disk_usage_ui.Properties.Resources.action_add_16xLG;
+            this.emptySpaceAddPathButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.emptySpaceAddPathButton.Name = "emptySpaceAddPathButton";
+            this.emptySpaceAddPathButton.Size = new System.Drawing.Size(168, 24);
+            this.emptySpaceAddPathButton.Text = "Add new path";
+            this.emptySpaceAddPathButton.Click += new System.EventHandler(this.AddNewPath);
+            // 
             // tableLayout
             // 
             this.tableLayout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
             this.tableLayout.ColumnCount = 1;
-            this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayout.Controls.Add(this.diskStack, 0, 0);
             this.tableLayout.Controls.Add(this.panel1, 0, 1);
             this.tableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayout.Location = new System.Drawing.Point(0, 0);
             this.tableLayout.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayout.MinimumSize = new System.Drawing.Size(257, 0);
             this.tableLayout.Name = "tableLayout";
             this.tableLayout.RowCount = 2;
             this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -164,9 +196,22 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 465);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.MinimumSize = new System.Drawing.Size(257, 32);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(257, 32);
             this.panel1.TabIndex = 5;
+            // 
+            // chartButton
+            // 
+            this.chartButton.Image = global::disk_usage_ui.Properties.Resources.KPI_16xLG;
+            this.chartButton.Location = new System.Drawing.Point(215, 4);
+            this.chartButton.Margin = new System.Windows.Forms.Padding(0);
+            this.chartButton.Name = "chartButton";
+            this.chartButton.Size = new System.Drawing.Size(39, 23);
+            this.chartButton.TabIndex = 5;
+            this.toolTipProvider.SetToolTip(this.chartButton, "View list as a Chart");
+            this.chartButton.UseVisualStyleBackColor = true;
+            this.chartButton.Click += new System.EventHandler(this.chartButton_Click);
             // 
             // orderByCombo
             // 
@@ -177,49 +222,25 @@
             this.orderByCombo.Items.AddRange(new object[] {
             "Sort by Name (A-Z)"});
             this.orderByCombo.Location = new System.Drawing.Point(3, 5);
+            this.orderByCombo.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             this.orderByCombo.Name = "orderByCombo";
-            this.orderByCombo.Size = new System.Drawing.Size(206, 21);
+            this.orderByCombo.Size = new System.Drawing.Size(209, 21);
             this.orderByCombo.TabIndex = 4;
             this.toolTipProvider.SetToolTip(this.orderByCombo, "Select Sorting Method");
             this.orderByCombo.SelectedIndexChanged += new System.EventHandler(this.orderByCombo_SelectedIndexChanged);
             // 
-            // emptySpaceAddPathButton
+            // toolTipProvider
             // 
-            this.emptySpaceAddPathButton.Image = global::disk_usage_ui.Properties.Resources.action_add_16xLG;
-            this.emptySpaceAddPathButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.emptySpaceAddPathButton.Name = "emptySpaceAddPathButton";
-            this.emptySpaceAddPathButton.Size = new System.Drawing.Size(168, 24);
-            this.emptySpaceAddPathButton.Text = "Add new path";
-            this.emptySpaceAddPathButton.Click += new System.EventHandler(this.AddNewPath);
+            this.toolTipProvider.BackColor = System.Drawing.Color.White;
+            this.toolTipProvider.ForeColor = System.Drawing.Color.Black;
+            this.toolTipProvider.IsBalloon = true;
             // 
-            // chartButton
+            // hideInaccessableItem
             // 
-            this.chartButton.Image = global::disk_usage_ui.Properties.Resources.KPI_16xLG;
-            this.chartButton.Location = new System.Drawing.Point(213, 4);
-            this.chartButton.Name = "chartButton";
-            this.chartButton.Size = new System.Drawing.Size(39, 23);
-            this.chartButton.TabIndex = 5;
-            this.toolTipProvider.SetToolTip(this.chartButton, "View list as a Chart");
-            this.chartButton.UseVisualStyleBackColor = true;
-            this.chartButton.Click += new System.EventHandler(this.chartButton_Click);
-            // 
-            // addPathTaskbarButton
-            // 
-            this.addPathTaskbarButton.Image = global::disk_usage_ui.Properties.Resources.action_add_16xLG;
-            this.addPathTaskbarButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.addPathTaskbarButton.Name = "addPathTaskbarButton";
-            this.addPathTaskbarButton.Size = new System.Drawing.Size(280, 24);
-            this.addPathTaskbarButton.Text = "Add new path";
-            this.addPathTaskbarButton.Click += new System.EventHandler(this.AddNewPath);
-            // 
-            // viewChartButton
-            // 
-            this.viewChartButton.Image = global::disk_usage_ui.Properties.Resources.KPI_16xLG;
-            this.viewChartButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.viewChartButton.Name = "viewChartButton";
-            this.viewChartButton.Size = new System.Drawing.Size(280, 24);
-            this.viewChartButton.Text = "View bar chart";
-            this.viewChartButton.Click += new System.EventHandler(this.viewChartButton_Click);
+            this.hideInaccessableItem.Name = "hideInaccessableItem";
+            this.hideInaccessableItem.Size = new System.Drawing.Size(280, 24);
+            this.hideInaccessableItem.Text = "Hide inaccessable paths";
+            this.hideInaccessableItem.Click += new System.EventHandler(this.hideInaccessableItem_Click);
             // 
             // NotificationAreaForm
             // 
@@ -232,7 +253,7 @@
             this.Font = new System.Drawing.Font("Segoe UI", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(275, 515);
-            this.MinimumSize = new System.Drawing.Size(275, 515);
+            this.MinimumSize = new System.Drawing.Size(275, 96);
             this.Name = "NotificationAreaForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
@@ -268,6 +289,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button chartButton;
         private System.Windows.Forms.ToolTip toolTipProvider;
+        private System.Windows.Forms.ToolStripMenuItem hideInaccessableItem;
     }
 }
 
