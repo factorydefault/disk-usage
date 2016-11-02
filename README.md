@@ -1,6 +1,8 @@
 # Disk Usage :cd: :floppy_disk: :computer: 
 
-Desktop utility to keep track of how full your :cd:'s are getting. Supports Windows with either local drives and network shares.
+> I have multiple disks and network shares across multiple computers and I need to keep track of how much disk space i'm using (without mapping every drive), how do i do that?
+
+disk-usage is a desktop utility to keep track of how full your :cd:'s are getting. Supports Windows with either local drives and network shares. For downloads please see the [releases page](https://github.com/factorydefault/disk-usage/releases).
 
 ![Disk Usage Screenshot](/screenshots/mainscreen.png?raw=true "Disk Usage Popup Window")
 
@@ -32,13 +34,13 @@ Tests have not yet been developed for this project. [TODO]
 
 ## Versioning
 
-The intent is to use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/alex22hayes/disk-usage/tags). 
+The intent is to use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/factorydefault/disk-usage/tags). 
 
 ## Authors
 
-* :uk: **Alex Hayes** - *Initial work* - [alex22hayes](https://github.com/alex22hayes)
+* **Alex H** - *Initial work* - [factorydefault](https://github.com/factorydefault)
 
-See also the list of [contributors](https://github.com/alex22hayes/disk-usage/graphs/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/factorydefault/disk-usage/graphs/contributors) who participated in this project.
 
 ## License
 
