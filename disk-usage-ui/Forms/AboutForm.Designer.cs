@@ -67,10 +67,10 @@
             this.gitLink.LinkColor = System.Drawing.SystemColors.HotTrack;
             this.gitLink.Location = new System.Drawing.Point(103, 143);
             this.gitLink.Name = "gitLink";
-            this.gitLink.Size = new System.Drawing.Size(60, 13);
+            this.gitLink.Size = new System.Drawing.Size(71, 13);
             this.gitLink.TabIndex = 3;
             this.gitLink.TabStop = true;
-            this.gitLink.Text = "Alex Hayes";
+            this.gitLink.Text = "factorydefault";
             this.gitLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.gitLink_LinkClicked);
             // 
             // rtbInfo

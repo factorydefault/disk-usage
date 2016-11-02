@@ -17,6 +17,7 @@ namespace disk_usage_ui.Forms
             rtbInfo.Text += "\nExternal Libraries:\n\n";
             rtbInfo.Text += LinkString(Links.JSON_NAME, Links.URL_JSON);
             rtbInfo.Text += LinkString(Links.COSTURA_NAME,Links.URL_COSTURA);
+            rtbInfo.Text += LinkString(Links.BYTESIZE_NAME, Links.URL_BYTESIZE);
 
             licenseLink.Text = Links.LICENSE_NAME;
         }
@@ -36,7 +37,7 @@ namespace disk_usage_ui.Forms
 
         void gitLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(Links.URL_ALEX);
+            Process.Start(Links.URL_GIT_PROFILE);
         }
 
         void licenseLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
