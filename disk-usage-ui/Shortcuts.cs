@@ -31,23 +31,23 @@ namespace disk_usage_ui
             return false;
         }
 
-        public static bool HasExisting(PathRecord record)
-        {
-            try
-            {
-                string shortcutLocation = $"{Windows.Desktop}\\{record.ShortcutName} - Shortcut.lnk";
+        //public static bool HasExisting(PathRecord record)
+        //{
+        //    try
+        //    {
+        //        string shortcutLocation = $"{Windows.Desktop}\\{record.ShortcutName} - Shortcut.lnk";
 
-                return System.IO.File.Exists(shortcutLocation);
-            }
-            catch (System.IO.FileNotFoundException)
-            {
-                return false;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+        //        return System.IO.File.Exists(shortcutLocation);
+        //    }
+        //    catch (System.IO.FileNotFoundException)
+        //    {
+        //        return false;
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //}
 
                     
 

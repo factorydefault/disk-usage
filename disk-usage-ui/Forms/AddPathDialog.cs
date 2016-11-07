@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace disk_usage_ui
@@ -29,7 +30,7 @@ namespace disk_usage_ui
             Close();
         }
 
-        private void dialogTextChanged(object sender, EventArgs e)
+        void dialogTextChanged(object sender, EventArgs e)
         {
             updateUserInterface();    
         }
@@ -62,27 +63,34 @@ namespace disk_usage_ui
 
         }
 
+        string sanitisePath(string input)
+        {
+            var result = System.IO.Path.GetInvalidPathChars().Aggregate(input, (current, c) => current.Replace(c.ToString(), string.Empty)).Trim();
+            return result.Replace('/', '\\');
+        }
+
 
         void updateUserInterface()
         {
             NewComputer.FriendlyName = labelTextBox.Text;
-            var inputText = pathTextBox.Text;
 
-            NewComputer.Path = inputText;
+            var typedPath = sanitisePath(pathTextBox.Text);
 
-            var withBackslash = $"{inputText}\\";
+            NewComputer.Path = typedPath;
 
-            if (PathHasValidForm(inputText) ) 
+            var typedPathWithBackslash = $"{typedPath}\\";
+
+            if (PathHasValidForm(typedPath) ) 
             {
                 System.Diagnostics.Debug.Print("Path valid.");
                 
                 NewComputer.RequestDiskInfo();
                 acceptButton.Enabled = true;
             }
-            else if(PathHasValidForm(withBackslash)) //lenient to missing backslash
+            else if(PathHasValidForm(typedPathWithBackslash)) //lenient to missing backslash
             {
                 System.Diagnostics.Debug.Print("Missing backslash added.");
-                NewComputer.Path = withBackslash;
+                NewComputer.Path = typedPathWithBackslash;
                 NewComputer.RequestDiskInfo();
                 acceptButton.Enabled = true;
             }
@@ -124,6 +132,65 @@ namespace disk_usage_ui
             }
 
 
+        }
+
+        void DragEnterEvent(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+
+
+        }
+
+        void ProcessDragDrop(string[] FileList)
+        {
+            try
+            {
+                if (FileList.Count() > 0)
+                {
+                    string path = FileList.FirstOrDefault();
+
+                    Console.WriteLine(path);
+
+                    if (disk_usage.PathRecord.LocalRegex.IsMatch(path))
+                    {
+                        pathTextBox.Text = path;
+                        return;
+                    }
+
+                    System.IO.FileAttributes attr = System.IO.File.GetAttributes(path);
+
+                    if (attr.HasFlag(System.IO.FileAttributes.Directory))
+                    {
+                        pathTextBox.Text = sanitisePath(path);
+                    }
+                    else
+                    {
+                        System.IO.FileInfo fi = new System.IO.FileInfo(FileList.FirstOrDefault());
+                        pathTextBox.Text = sanitisePath(fi.Directory.FullName);
+                    }
+
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
+        void DragDropEvent(object sender, DragEventArgs e)
+        {
+            string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+
+            ProcessDragDrop(FileList);
         }
     }
 }

@@ -1,39 +1,34 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using ByteSizeLib;
 
 namespace disk_usage
 {
-    public struct DiskSpaceInformation
+    public struct DiskAttributes
     {
-        public ulong FreeBytesAvailable;
-        public ulong TotalNumberOfBytes;
-        public ulong TotalNumberOfFreeBytes;
+        public ulong AvailableBytes { get; private set; }
+        public ulong TotalBytes { get; private set; }
+        public ulong FreeBytes { get; private set; }
 
-        public DiskSpaceInformation(ulong free, ulong totalBytes, ulong totalFreeBytes)
+        public DiskAttributes(ulong available, ulong totalBytes, ulong totalFreeBytes)
         {
-            FreeBytesAvailable = free;
-            TotalNumberOfBytes = totalBytes;
-            TotalNumberOfFreeBytes = totalFreeBytes;
+            AvailableBytes = available;
+            TotalBytes = totalBytes;
+            FreeBytes = totalFreeBytes;
         }
 
         public void WriteToConsole()
         {
-            Console.WriteLine("Free Bytes Available:      {0,15:D}", FreeBytesAvailable);
-            Console.WriteLine("Total Number Of Bytes:     {0,15:D}", TotalNumberOfBytes);
-            Console.WriteLine("Total Number Of FreeBytes: {0,15:D}", TotalNumberOfFreeBytes);
+            Console.WriteLine("Bytes Available to User: {0,15:D}", AvailableBytes);
+            Console.WriteLine("Total Bytes: {0,15:D}", TotalBytes);
+            Console.WriteLine("Free Bytes: {0,15:D}", FreeBytes);
         }
-
-        public double FreeSpaceInGB => ByteSize.FromBytes(FreeBytesAvailable).GigaBytes; // / Disk.GBConversion;
-
-        public double TotalSpaceInGB => ByteSize.FromBytes(TotalNumberOfBytes).GigaBytes; // Disk.GBConversion;
 
         public double PercentageFree
         {
             get
             {
-                return (TotalNumberOfBytes > 0) ? (FreeBytesAvailable / (double)TotalNumberOfBytes * 100.0) : 0;
+                return (TotalBytes > 0) ? (FreeBytes / (double)TotalBytes * 100.0) : 0;
             }
         }
 
@@ -50,43 +45,38 @@ namespace disk_usage
       out ulong lpTotalNumberOfBytes,
       out ulong lpTotalNumberOfFreeBytes);
 
-        public const double GBConversion = 1073741824.0;
-
         public event EventHandler<EventArgs> DiskInfoUpdated;
 
         public string Path { get; set; }
 
-        public DiskSpaceInformation DSI { get; set; } = new DiskSpaceInformation(1, 1, 0);
-
-
+        public DiskAttributes Attributes { get; private set; } = new DiskAttributes(0, 0, 0);
 
         public async Task RequestDiskInfo()
         {
             await GetInfoAsync();
-            Console.WriteLine($"Async done, {Path} has {DSI.FreeSpaceInGB} GB free space.");
+            Console.WriteLine($"Async done, {Path} has {Attributes.FreeBytes} bytes free.");
             DiskInfoUpdated?.Invoke(this, new EventArgs());
         }
-
 
         public Task GetInfoAsync()
         {
             return Task.Run( () =>
             {
+                ulong ulAvailableBytes;
+                ulong ulBytes;
                 ulong ulFreeBytes;
-                ulong ulTotalBytes;
-                ulong ulTotalFreeBytes;
 
                 bool success = GetDiskFreeSpaceEx(Path,
-                                      out ulFreeBytes,
-                                      out ulTotalBytes,
-                                      out ulTotalFreeBytes);
+                                      out ulAvailableBytes,
+                                      out ulBytes,
+                                      out ulFreeBytes);
                 if (success)
                 {
-                    DSI = new DiskSpaceInformation(ulFreeBytes, ulTotalBytes, ulTotalFreeBytes);
+                    Attributes = new DiskAttributes(ulAvailableBytes, ulBytes, ulFreeBytes);
                 }
                 else
                 {
-                    DSI = new DiskSpaceInformation(0, 0, 0);
+                    Attributes = new DiskAttributes(0, 0, 0);
                 }
             });
 
@@ -94,11 +84,4 @@ namespace disk_usage
 
     }
 
-    internal static class DiskExtensions
-    {
-        //public static DiskSpaceInformation GetDiskInformation(this System.IO.DirectoryInfo dir)
-        //{
-        //    return Disk.GetInfoForPath(dir.FullName);
-        //}
-    }
 }

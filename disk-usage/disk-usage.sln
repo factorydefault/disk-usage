@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "disk-usage", "disk-usage.cs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "disk-usage-ui", "..\disk-usage-ui\disk-usage-ui.csproj", "{F8E9A211-6EAD-4C4A-B880-E6F2CA82D60B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "disk-usage-test", "..\disk-usage-test\disk-usage-test.csproj", "{B9E7A81B-147D-44E1-8BAD-48E48E3E66E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug Win10 Theme|Any CPU = Debug Win10 Theme|Any CPU
@@ -26,6 +28,12 @@ Global
 		{F8E9A211-6EAD-4C4A-B880-E6F2CA82D60B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8E9A211-6EAD-4C4A-B880-E6F2CA82D60B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8E9A211-6EAD-4C4A-B880-E6F2CA82D60B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9E7A81B-147D-44E1-8BAD-48E48E3E66E8}.Debug Win10 Theme|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9E7A81B-147D-44E1-8BAD-48E48E3E66E8}.Debug Win10 Theme|Any CPU.Build.0 = Debug|Any CPU
+		{B9E7A81B-147D-44E1-8BAD-48E48E3E66E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9E7A81B-147D-44E1-8BAD-48E48E3E66E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9E7A81B-147D-44E1-8BAD-48E48E3E66E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9E7A81B-147D-44E1-8BAD-48E48E3E66E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

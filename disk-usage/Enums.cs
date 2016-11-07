@@ -33,17 +33,17 @@ namespace disk_usage
 
     public enum SortingOption
     {
-        [Description("Sort Alphabetical by Label (A-Z)")]
+        [Description("Sort Alphabetically (A-Z)")]
         Alphabetical,
-        [Description("Sort Alphabetical by Label (Z-A)")]
+        [Description("Sort Alphabetically (Z-A)")]
         AlphabeticalDescending,
         [Description("Sort by Free Space (Low to High)")]
         FreeSpace,
         [Description("Sort by Free Space (High To Low)")]
         FreeSpaceDescending,
-        [Description("Sort by Percentage Fill (Low to High)")]
+        [Description("Sort by % Fill (Low to High)")]
         FillPercentage,
-        [Description("Sort by Percentage Fill (High To Low)")]
+        [Description("Sort by % Fill (High To Low)")]
         FillPercentageDescending,
         [Description("Sort by Volume Size (Low to High)")]
         Capacity,

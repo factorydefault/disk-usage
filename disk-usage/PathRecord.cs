@@ -2,12 +2,17 @@
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using ByteSizeLib;
+using System.Linq;
 
 namespace disk_usage
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class PathRecord
     {
+        public const int LOW_DISK_SPACE_PERCENTAGE = 90;
+
+        Disk disk;
+
         public PathRecord()
         {
             FriendlyName = "";
@@ -27,9 +32,6 @@ namespace disk_usage
             disk.RequestDiskInfo().Forget();
         }
 
-
-        Disk disk;
-
         [JsonProperty]
         public string FriendlyName
         {
@@ -48,15 +50,13 @@ namespace disk_usage
         {
             get
             {
-                string filename = FriendlyName;
+                string filename = FriendlyName.Replace('.', '_');
 
-                foreach (var c in System.IO.Path.GetInvalidFileNameChars())
-                {
-                    //filename = filename.Replace(c, '-');
-                    filename = filename.Replace(c.ToString(), "");
-                }
+                filename = filename.Replace("\\", " ");
 
-                return filename;
+                char[] toTrim = { ' ', '_' };
+
+                return System.IO.Path.GetInvalidFileNameChars().Aggregate(filename, (current, c) => current.Replace(c.ToString(), string.Empty)).Trim(toTrim);     
             }
         }
 
@@ -73,46 +73,27 @@ namespace disk_usage
             }
         }
 
-        public double FreeSpaceRounded
-        {
-            get
-            {
-                return Math.Round(disk.DSI.FreeSpaceInGB, 2);
-                //return Math.Round(disk.Info().FreeSpaceInGB, 2);
-            }
-        }
-                
-        public double TotalSpaceRounded
-        {
-            get
-            {
-                return Math.Round(disk.DSI.TotalSpaceInGB, 2);
-                //return Math.Round(disk.Info().TotalSpaceInGB, 2);
-            }
-        }
+        public string PercentageFilled => $"{Math.Round(disk.Attributes.PercentageFilled, 2)} %";
 
-        public string PercentageFilled => $"{Math.Round(disk.DSI.PercentageFilled, 2)} %";
-
-        public ByteSize FreeSpace => ByteSize.FromBytes(disk.DSI.FreeBytesAvailable);
+        public ByteSize FreeSpace => ByteSize.FromBytes(disk.Attributes.FreeBytes);
 
         public ByteSize UsedSpace => ByteSize.FromBytes(bytesUsed);
 
-        public ByteSize Capacity => ByteSize.FromBytes(disk.DSI.TotalNumberOfBytes);
+        public ByteSize Capacity => ByteSize.FromBytes(disk.Attributes.TotalBytes);
 
-        ulong bytesUsed => disk.DSI.TotalNumberOfBytes - disk.DSI.FreeBytesAvailable;
+        ulong bytesUsed => disk.Attributes.TotalBytes - disk.Attributes.FreeBytes;
 
-        public int FillLevel => (int)Math.Round(disk.DSI.PercentageFilled, 0);
+        public int FillLevel => (int)Math.Round(disk.Attributes.PercentageFilled, 0);
 
         /// <summary>
         /// As per https://blogs.msdn.microsoft.com/oldnewthing/20101117-00/?p=12263/
         /// </summary>
-        public bool HasLowDiskSpace => FillLevel > 90;
+        public bool HasLowDiskSpace => FillLevel > LOW_DISK_SPACE_PERCENTAGE;
         
         public static PathRecord Create(string path, string name = "")
         {
             return new PathRecord { Path = path, FriendlyName = name };
         }
-
 
         public static Regex LocalRegex => new Regex(@"^([A-Z]):\\(?:([^\\\n]+\\)*)$");
 
@@ -120,23 +101,17 @@ namespace disk_usage
 
         public static Regex UNCNamedRegex => new Regex(@"^\\\\([^\\]+\\)(?:([^\\\n]+\\)+)$");
 
-        //public Regex UNCIPRegex => new Regex(@"");
-
 
         public PathLocation Location()
         {
-
             var match = LocalRegex.Match(Path);
 
             if (match.Success || LocalRootRegex.IsMatch(Path))
             {
                 string drive = $"{match.Groups[1].Value}:\\";
-                //Console.WriteLine(drive);
                 return (drive == Windows.InstallDirectory) ? PathLocation.OS : PathLocation.Local;
             }
             return PathLocation.Remote;
-
-
         }
 
     }

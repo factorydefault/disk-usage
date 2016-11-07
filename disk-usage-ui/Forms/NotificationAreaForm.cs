@@ -236,7 +236,7 @@ namespace disk_usage_ui
         {
             AddPathDialog dialog = new AddPathDialog();
             dialog.InitialPath = Windows.InstallDirectory;
-            var result = dialog.ShowDialog();
+            var result = dialog.ShowDialog(this);
 
             if (result == DialogResult.OK)
             {
