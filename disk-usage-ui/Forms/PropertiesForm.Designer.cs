@@ -479,9 +479,9 @@
             this.highlightCheckBox.AutoSize = true;
             this.highlightCheckBox.Location = new System.Drawing.Point(8, 19);
             this.highlightCheckBox.Name = "highlightCheckBox";
-            this.highlightCheckBox.Size = new System.Drawing.Size(119, 17);
+            this.highlightCheckBox.Size = new System.Drawing.Size(67, 17);
             this.highlightCheckBox.TabIndex = 2;
-            this.highlightCheckBox.Text = "Highlight entry in list";
+            this.highlightCheckBox.Text = "Highlight";
             this.highlightCheckBox.UseVisualStyleBackColor = true;
             // 
             // groupBox2
@@ -492,7 +492,7 @@
             this.groupBox2.Size = new System.Drawing.Size(327, 54);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Display";
+            this.groupBox2.Text = "Display Options";
             // 
             // PropertiesForm
             // 

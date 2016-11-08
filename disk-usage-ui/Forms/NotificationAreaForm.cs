@@ -363,6 +363,17 @@ namespace disk_usage_ui
         void taskbarContext_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             setAvailabilityOfChartMenuItems();
+
+            if (UISettings.Default.Notifications)
+            {
+                notificationsMI.Image = Properties.Resources.ic_notifications_black_18dp;
+            }
+            else
+            {
+                notificationsMI.Image = Properties.Resources.ic_notifications_off_black_18dp;
+            }
+
+
             hideInaccessableItem.Checked = UISettings.Default.HideInaccessablePaths;
         }
 

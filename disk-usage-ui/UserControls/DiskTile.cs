@@ -84,6 +84,8 @@ namespace disk_usage_ui
 
             PathLocation location = _recordReference?.Location() ?? PathLocation.Unknown;
 
+            notificationPicture.Visible = false;
+
             switch (location)
             {
                 case PathLocation.Local:
@@ -122,6 +124,8 @@ namespace disk_usage_ui
             path = pathRecord.Path;
 
             pictureBox.Visible = true;
+            notificationPicture.Visible = true;
+            UpdateNotificationPicture(pathRecord);
 
             switch (pathRecord.Location())
             {
@@ -135,7 +139,7 @@ namespace disk_usage_ui
                     pictureBox.Image = Program.Theme.NetworkDiskImage;
                     break;
             }
-          
+
             usageBar.Minimum = 0;
             usageBar.Maximum = 100;
 
@@ -143,7 +147,7 @@ namespace disk_usage_ui
 
             BackColor = highlight ? SystemColors.MenuHighlight : Color.White;
             nameLabel.ForeColor = highlight ? SystemColors.HighlightText : SystemColors.ControlText;
-            detailLabel.ForeColor = highlight ? SystemColors.HighlightText : SystemColors.GrayText;
+            detailLabel.ForeColor = highlight ? SystemColors.HighlightText : Color.FromArgb(117, 117, 117);
 
             BorderStyle = highlight ? BorderStyle.FixedSingle : BorderStyle.None;
 
@@ -160,7 +164,19 @@ namespace disk_usage_ui
             else
             {
                 usageBar.SetState(pathRecord.HasLowDiskSpace ? ProgressBarState.Error : ProgressBarState.Normal);
-            }    
+            }
+        }
+
+        void UpdateNotificationPicture(PathRecord pathRecord)
+        {
+            if (pathRecord.Notifications)
+            {
+                notificationPicture.Image = Properties.Resources.ic_notifications_black_18dp;
+            }
+            else
+            {
+                notificationPicture.Image = Properties.Resources.ic_notifications_off_black_18dp;
+            }
         }
 
         PathRecord _recordReference;
@@ -308,6 +324,22 @@ namespace disk_usage_ui
         string nameLabelHoverStore { get; set; }
         string nameLabelHoverText { get; set; }
 
+        void notificationPicture_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        void FlipNotifications()
+        {
+            _recordReference.Notifications = !_recordReference.Notifications;
+            UpdateNotificationPicture(_recordReference);
+            PropertiesChanged?.Invoke(this, new EventArgs());
+        }
+
+        void notificationPicture_MouseDown(object sender, MouseEventArgs e)
+        {
+
+        }
     }
 
     public static class ModifyProgressBarColor

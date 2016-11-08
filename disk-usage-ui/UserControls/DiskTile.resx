@@ -120,4 +120,15 @@
   <metadata name="tileContext.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="notificationPicture.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1
+        MAAA6mAAADqYAAAXcJy6UTwAAAAJcEhZcwAACw0AAAsNAe0HwCwAAAACYktHRAD/h4/MvwAAAKlJREFU
+        OE/d1LEKwjAURuEMDi2Czg6Cm6u4uLr2hcTNvojgU4irD+Du6OLoIri41PMHBAnXECM69MA3pJAbQkvd
+        v+pjibFffdECDbZ+lVGJFc7QoBvWGCI5XecADQhdMEFSOtka8nREB9F6uMMa8KpCtBmsjSG9yWhzWBtD
+        NaK1dFCBHayNoRNGMNvA2vSOhpnpi9XVPpHcHjr9iq4e5DaA/gBTv/p9zj0A78tuAJLeOoIAAAAASUVO
+        RK5CYII=
+</value>
+  </data>
 </root>

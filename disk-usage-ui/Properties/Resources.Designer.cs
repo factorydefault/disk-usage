@@ -83,9 +83,9 @@ namespace disk_usage_ui.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Alert_16x {
+        internal static System.Drawing.Bitmap GitHub {
             get {
-                object obj = ResourceManager.GetObject("Alert_16x", resourceCulture);
+                object obj = ResourceManager.GetObject("GitHub", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,29 @@ namespace disk_usage_ui.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap GitHub {
+        internal static System.Drawing.Bitmap ic_notifications_black_18dp {
             get {
-                object obj = ResourceManager.GetObject("GitHub", resourceCulture);
+                object obj = ResourceManager.GetObject("ic_notifications_black_18dp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ic_notifications_none_black_18dp {
+            get {
+                object obj = ResourceManager.GetObject("ic_notifications_none_black_18dp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ic_notifications_off_black_18dp {
+            get {
+                object obj = ResourceManager.GetObject("ic_notifications_off_black_18dp", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -29,20 +29,23 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DiskTile));
             this.nameLabel = new System.Windows.Forms.Label();
             this.detailLabel = new System.Windows.Forms.Label();
             this.usageBar = new System.Windows.Forms.ProgressBar();
             this.tileContext = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.openFolderButton = new System.Windows.Forms.ToolStripMenuItem();
             this.clipboardButton = new System.Windows.Forms.ToolStripMenuItem();
             this.shortcutButton = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.tileAddPathButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeItemButton = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.propertiesButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFolderButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.tileAddPathButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeItemButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.notificationPicture = new System.Windows.Forms.PictureBox();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.tileContext.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.notificationPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,7 +55,7 @@
             this.nameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nameLabel.Location = new System.Drawing.Point(69, 3);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(150, 16);
+            this.nameLabel.Size = new System.Drawing.Size(151, 16);
             this.nameLabel.TabIndex = 1;
             this.nameLabel.Text = "12345678901234567890123";
             this.nameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -63,7 +66,7 @@
             // 
             this.detailLabel.AutoSize = true;
             this.detailLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.detailLabel.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.detailLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(117)))), ((int)(((byte)(117)))));
             this.detailLabel.Location = new System.Drawing.Point(68, 40);
             this.detailLabel.Name = "detailLabel";
             this.detailLabel.Size = new System.Drawing.Size(54, 13);
@@ -74,7 +77,7 @@
             // 
             this.usageBar.Location = new System.Drawing.Point(70, 21);
             this.usageBar.Name = "usageBar";
-            this.usageBar.Size = new System.Drawing.Size(150, 16);
+            this.usageBar.Size = new System.Drawing.Size(130, 16);
             this.usageBar.TabIndex = 3;
             // 
             // tileContext
@@ -92,16 +95,6 @@
             this.tileContext.Name = "tileContext";
             this.tileContext.Size = new System.Drawing.Size(224, 160);
             this.tileContext.Opening += new System.ComponentModel.CancelEventHandler(this.tileContext_Opening);
-            // 
-            // openFolderButton
-            // 
-            this.openFolderButton.Font = new System.Drawing.Font("Segoe UI", 9.163636F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.openFolderButton.Image = global::disk_usage_ui.Properties.Resources.OpenFolder_16x;
-            this.openFolderButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.openFolderButton.Name = "openFolderButton";
-            this.openFolderButton.Size = new System.Drawing.Size(223, 24);
-            this.openFolderButton.Text = "&Open";
-            this.openFolderButton.Click += new System.EventHandler(this.openFolderButton_Click);
             // 
             // clipboardButton
             // 
@@ -122,6 +115,28 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(220, 6);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(220, 6);
+            // 
+            // propertiesButton
+            // 
+            this.propertiesButton.Name = "propertiesButton";
+            this.propertiesButton.Size = new System.Drawing.Size(223, 24);
+            this.propertiesButton.Text = "Properties";
+            this.propertiesButton.Click += new System.EventHandler(this.propertiesButton_Click);
+            // 
+            // openFolderButton
+            // 
+            this.openFolderButton.Font = new System.Drawing.Font("Segoe UI", 9.163636F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.openFolderButton.Image = global::disk_usage_ui.Properties.Resources.OpenFolder_16x;
+            this.openFolderButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.openFolderButton.Name = "openFolderButton";
+            this.openFolderButton.Size = new System.Drawing.Size(223, 24);
+            this.openFolderButton.Text = "&Open";
+            this.openFolderButton.Click += new System.EventHandler(this.openFolderButton_Click);
+            // 
             // tileAddPathButton
             // 
             this.tileAddPathButton.Image = global::disk_usage_ui.Properties.Resources.action_add_16xLG;
@@ -140,17 +155,19 @@
             this.removeItemButton.Text = "&Remove";
             this.removeItemButton.Click += new System.EventHandler(this.removeItemButton_Click);
             // 
-            // toolStripSeparator1
+            // notificationPicture
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(220, 6);
-            // 
-            // propertiesButton
-            // 
-            this.propertiesButton.Name = "propertiesButton";
-            this.propertiesButton.Size = new System.Drawing.Size(223, 24);
-            this.propertiesButton.Text = "Properties";
-            this.propertiesButton.Click += new System.EventHandler(this.propertiesButton_Click);
+            this.notificationPicture.BackColor = System.Drawing.Color.Transparent;
+            this.notificationPicture.Enabled = false;
+            this.notificationPicture.Image = ((System.Drawing.Image)(resources.GetObject("notificationPicture.Image")));
+            this.notificationPicture.Location = new System.Drawing.Point(204, 21);
+            this.notificationPicture.Name = "notificationPicture";
+            this.notificationPicture.Size = new System.Drawing.Size(16, 16);
+            this.notificationPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.notificationPicture.TabIndex = 4;
+            this.notificationPicture.TabStop = false;
+            this.notificationPicture.Click += new System.EventHandler(this.notificationPicture_Click);
+            this.notificationPicture.MouseDown += new System.Windows.Forms.MouseEventHandler(this.notificationPicture_MouseDown);
             // 
             // pictureBox
             // 
@@ -171,6 +188,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ContextMenuStrip = this.tileContext;
+            this.Controls.Add(this.notificationPicture);
             this.Controls.Add(this.usageBar);
             this.Controls.Add(this.detailLabel);
             this.Controls.Add(this.nameLabel);
@@ -182,6 +200,7 @@
             this.Size = new System.Drawing.Size(230, 64);
             this.DoubleClick += new System.EventHandler(this.DiskTile_DoubleClick);
             this.tileContext.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.notificationPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -203,5 +222,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem propertiesButton;
         private System.Windows.Forms.ToolStripMenuItem shortcutButton;
+        private System.Windows.Forms.PictureBox notificationPicture;
     }
 }
