@@ -13,9 +13,13 @@ namespace disk_usage_ui
     {
         const int PADDING_BOTTOM = 10;
         const int PADDING_RIGHT = 23;
-        const int BALLOON_TIMEOUT_DEFAULT = 4000;
+
+        const int BALLOON_TIMEOUT_DEFAULT = 5000; //five seconds
+        const int NOTIFY_DURATION = 15000;
+
         const int FORM_WIDTH = 260;
         const int MAX_ITEM_HEIGHT = 7;
+
         DiskUsage core;
 
         public NotificationAreaForm()
@@ -46,7 +50,8 @@ namespace disk_usage_ui
 
             //do an update now
             core.RequestUpdateFromAll();
-
+            NotificationTime = DateTime.Now.AddSeconds(10);
+            notificationTimer.Enabled = true;
         }
 
 
@@ -76,7 +81,7 @@ namespace disk_usage_ui
             }
             else
             {
-                debugprint();
+                //debugprint();
                 RebuildUserInterface();
                 allowshowdisplay = true;
                 Visible = true;
@@ -176,7 +181,7 @@ namespace disk_usage_ui
 
             if (notify)
             {
-                taskbarIcon.ShowBalloonTip(BALLOON_TIMEOUT_DEFAULT);
+                taskbarIcon.ShowBalloonTip(BALLOON_TIMEOUT_DEFAULT,"Disk Usage", "Click the taskbar icon to see disk usage information", ToolTipIcon.None);
             }
         }
 
@@ -358,6 +363,17 @@ namespace disk_usage_ui
         void taskbarContext_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             setAvailabilityOfChartMenuItems();
+
+            if (UISettings.Default.Notifications)
+            {
+                notificationsMI.Image = Properties.Resources.ic_notifications_black_18dp;
+            }
+            else
+            {
+                notificationsMI.Image = Properties.Resources.ic_notifications_off_black_18dp;
+            }
+
+
             hideInaccessableItem.Checked = UISettings.Default.HideInaccessablePaths;
         }
 
@@ -379,5 +395,157 @@ namespace disk_usage_ui
             UISettings.Default.Save();
 
         }
+
+        void notificationTimer_Tick(object sender, EventArgs e)
+        {
+            if (UISettings.Default.Notifications) ProcessNotifications();
+        }
+
+        
+        DateTime NotificationTime { get; set; }
+
+        public DateTime GetNextNotification()
+        {
+            var result = DateTime.Now.AddMinutes(UISettings.Default.Frequency);
+
+            Console.WriteLine($"Next notification after {result.ToShortTimeString()}");
+
+            return result;
+        }
+
+        void ProcessNotifications()
+        {
+            //is it the right time?
+
+            if (DateTime.Compare(DateTime.Now,NotificationTime) >= 0)
+            {
+                Console.WriteLine("Can notify if required!");
+
+
+                int count = 0;
+
+                List<PathRecord> notificationTargets = new List<PathRecord>();
+
+                foreach (var path in core.Paths)
+                {
+                    if (path.HasLowDiskSpace && path.ShouldNotify)
+                    {
+                        count++;
+                        notificationTargets.Add(path);
+                    }
+                }
+
+                if (count > 0)
+                {
+                    DoNotify(notificationTargets);
+                }
+            }
+            else
+            {
+                //Console.WriteLine( $"Blocked, wating for {NotificationTime.ToShortTimeString()}.");
+            }
+        }
+
+        void DoNotify(List<PathRecord> notificationTargets)
+        {
+            
+
+            NotificationTime = GetNextNotification();
+            taskbarIcon.ShowBalloonTip(NOTIFY_DURATION, "Low Disk Space", $"You are running out of disk space on {pathListDescription(notificationTargets)}. Click here to see details.", ToolTipIcon.Info);
+        }
+
+        string pathListDescription(List<PathRecord> paths)
+        {
+            const int MAX_NAMED_PATHS = 3;
+
+            if (paths == null || paths.Count == 0)
+            {
+                return "null";
+            }
+
+            System.Text.StringBuilder result = new System.Text.StringBuilder();
+            
+
+            if (paths.Count > MAX_NAMED_PATHS)
+            {
+                int others = paths.Count - MAX_NAMED_PATHS;
+                string kwd = (others > 1) ? "disks" : "disk";
+
+                for (int i = 0; i < MAX_NAMED_PATHS; i++)
+                {
+                    result.Append(paths[i].FriendlyName);
+                    result.Append(i < MAX_NAMED_PATHS - 1 ? ", " : "");
+                }
+                result.Append($" and { others} other {kwd}");
+
+                return result.ToString();
+            }
+
+            int joins = paths.Count - 1;
+
+            for (int i = 0; i < paths.Count; i++)
+            {
+                result.Append(paths[i].FriendlyName);
+                if (i == joins) break;
+                result.Append(i < joins - 1 ? ", " : " and ");
+            }
+            
+            return result.ToString();
+        }
+
+
+
+        void taskbarIcon_BalloonTipClicked(object sender, EventArgs e)
+        {
+            ShowForm();
+        }
+
+        void setNotificationFrequency(int min)
+        {
+            UISettings.Default.Notifications = (min > 0);
+            UISettings.Default.Frequency = min;
+            UISettings.Default.Save();
+            
+            NotificationTime = DateTime.Now; //do a notification now
+            if (UISettings.Default.Notifications) ProcessNotifications();
+        }
+
+        void offMI_Click(object sender, EventArgs e)
+        {
+            setNotificationFrequency(0);
+        }
+
+        void fiveminMI_Click(object sender, EventArgs e)
+        {
+            setNotificationFrequency(5);
+        }
+
+        void thirtyMI_Click(object sender, EventArgs e)
+        {
+            setNotificationFrequency(30);
+        }
+
+        void onehourMI_Click(object sender, EventArgs e)
+        {
+            setNotificationFrequency(60);
+        }
+
+        void fourhourMI_Click(object sender, EventArgs e)
+        {
+            setNotificationFrequency(60 * 4);
+        }
+
+        void notificationsMI_DropDownOpened(object sender, EventArgs e)
+        {
+            int freq = UISettings.Default.Frequency;
+
+            offMI.Checked = (freq == 0);
+            fiveminMI.Checked = (freq == 5);
+            thirtyMI.Checked = (freq == 30);
+            onehourMI.Checked = (freq == 60);
+            fourhourMI.Checked = (freq == (60 * 4));
+        }
+
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
@@ -78,10 +79,12 @@ namespace disk_usage_ui
             usageBar.Minimum = 0;
             usageBar.Maximum = 100;
             usageBar.Value = 100;
-            Console.WriteLine($"Setting progress bar not found, value {usageBar.Value}");
+            //Console.WriteLine($"Setting progress bar not found, value {usageBar.Value}");
             usageBar.SetState(ProgressBarState.Error);
 
             PathLocation location = _recordReference?.Location() ?? PathLocation.Unknown;
+
+            notificationPicture.Visible = false;
 
             switch (location)
             {
@@ -116,13 +119,13 @@ namespace disk_usage_ui
 
             PathRecord pathRecord = _recordReference;
 
-            
-
             nameLabel.Text = $"{pathRecord.FriendlyName}";
 
             path = pathRecord.Path;
 
             pictureBox.Visible = true;
+            notificationPicture.Visible = true;
+            UpdateNotificationPicture(pathRecord);
 
             switch (pathRecord.Location())
             {
@@ -136,11 +139,19 @@ namespace disk_usage_ui
                     pictureBox.Image = Program.Theme.NetworkDiskImage;
                     break;
             }
-          
+
             usageBar.Minimum = 0;
             usageBar.Maximum = 100;
 
-            Console.WriteLine($"Setting progress bar for {path} to {pathRecord.FillLevel}");
+            bool highlight = pathRecord.Highlight;
+
+            BackColor = highlight ? SystemColors.MenuHighlight : Color.White;
+            nameLabel.ForeColor = highlight ? SystemColors.HighlightText : SystemColors.ControlText;
+            detailLabel.ForeColor = highlight ? SystemColors.HighlightText : Color.FromArgb(117, 117, 117);
+
+            BorderStyle = highlight ? BorderStyle.FixedSingle : BorderStyle.None;
+
+            //Console.WriteLine($"Setting progress bar for {path} to {pathRecord.FillLevel}");
 
             usageBar.Value = pathRecord.FillLevel;
 
@@ -153,7 +164,19 @@ namespace disk_usage_ui
             else
             {
                 usageBar.SetState(pathRecord.HasLowDiskSpace ? ProgressBarState.Error : ProgressBarState.Normal);
-            }    
+            }
+        }
+
+        void UpdateNotificationPicture(PathRecord pathRecord)
+        {
+            if (pathRecord.Notifications)
+            {
+                notificationPicture.Image = Properties.Resources.ic_notifications_black_18dp;
+            }
+            else
+            {
+                notificationPicture.Image = Properties.Resources.ic_notifications_off_black_18dp;
+            }
         }
 
         PathRecord _recordReference;
@@ -235,6 +258,9 @@ namespace disk_usage_ui
                 {
                     case DialogResult.OK:
                         _recordReference.FriendlyName = propertiesForm.DiskLabel;
+                        _recordReference.Notifications = propertiesForm.ShouldUseNotifications;
+                        _recordReference.Highlight = propertiesForm.ShouldHighlight;
+
                         PropertiesChanged?.Invoke(this, new EventArgs());
                         break;
                     default:
@@ -298,7 +324,22 @@ namespace disk_usage_ui
         string nameLabelHoverStore { get; set; }
         string nameLabelHoverText { get; set; }
 
+        void notificationPicture_Click(object sender, EventArgs e)
+        {
+            
+        }
 
+        void FlipNotifications()
+        {
+            _recordReference.Notifications = !_recordReference.Notifications;
+            UpdateNotificationPicture(_recordReference);
+            PropertiesChanged?.Invoke(this, new EventArgs());
+        }
+
+        void notificationPicture_MouseDown(object sender, MouseEventArgs e)
+        {
+
+        }
     }
 
     public static class ModifyProgressBarColor

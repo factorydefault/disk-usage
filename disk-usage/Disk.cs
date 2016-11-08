@@ -54,7 +54,7 @@ namespace disk_usage
         public async Task RequestDiskInfo()
         {
             await GetInfoAsync();
-            Console.WriteLine($"Async done, {Path} has {Attributes.FreeBytes} bytes free.");
+            //Console.WriteLine($"Async done, {Path} has {Attributes.FreeBytes} bytes free.");
             DiskInfoUpdated?.Invoke(this, new EventArgs());
         }
 

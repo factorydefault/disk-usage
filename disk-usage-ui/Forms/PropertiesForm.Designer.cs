@@ -38,6 +38,7 @@
             this.explorerButton = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.explorePathButton = new System.Windows.Forms.Button();
             this.shortcutButton = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.capacitySummary = new System.Windows.Forms.Label();
@@ -64,12 +65,19 @@
             this.label2 = new System.Windows.Forms.Label();
             this.pieChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.explorePathButton = new System.Windows.Forms.Button();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.notificationsCheckBox = new System.Windows.Forms.CheckBox();
+            this.highlightCheckBox = new System.Windows.Forms.CheckBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.driveIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pieChart)).BeginInit();
             this.tabControl1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // cancelButton
@@ -154,6 +162,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(337, 364);
             this.panel1.TabIndex = 0;
+            // 
+            // explorePathButton
+            // 
+            this.explorePathButton.Location = new System.Drawing.Point(125, 308);
+            this.explorePathButton.Name = "explorePathButton";
+            this.explorePathButton.Size = new System.Drawing.Size(75, 23);
+            this.explorePathButton.TabIndex = 27;
+            this.explorePathButton.Text = "&Explore";
+            this.explorePathButton.UseVisualStyleBackColor = true;
+            this.explorePathButton.Click += new System.EventHandler(this.explorePathButton_Click);
             // 
             // shortcutButton
             // 
@@ -416,6 +434,7 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(6, 10);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(1);
             this.tabControl1.Name = "tabControl1";
@@ -423,15 +442,57 @@
             this.tabControl1.Size = new System.Drawing.Size(347, 392);
             this.tabControl1.TabIndex = 26;
             // 
-            // explorePathButton
+            // tabPage2
             // 
-            this.explorePathButton.Location = new System.Drawing.Point(125, 308);
-            this.explorePathButton.Name = "explorePathButton";
-            this.explorePathButton.Size = new System.Drawing.Size(75, 23);
-            this.explorePathButton.TabIndex = 27;
-            this.explorePathButton.Text = "&Explore";
-            this.explorePathButton.UseVisualStyleBackColor = true;
-            this.explorePathButton.Click += new System.EventHandler(this.explorePathButton_Click);
+            this.tabPage2.Controls.Add(this.groupBox2);
+            this.tabPage2.Controls.Add(this.groupBox1);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(339, 366);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Customize";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.notificationsCheckBox);
+            this.groupBox1.Location = new System.Drawing.Point(6, 10);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(327, 50);
+            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Notifications";
+            // 
+            // notificationsCheckBox
+            // 
+            this.notificationsCheckBox.AutoSize = true;
+            this.notificationsCheckBox.Location = new System.Drawing.Point(8, 19);
+            this.notificationsCheckBox.Name = "notificationsCheckBox";
+            this.notificationsCheckBox.Size = new System.Drawing.Size(263, 17);
+            this.notificationsCheckBox.TabIndex = 0;
+            this.notificationsCheckBox.Text = "Notify when there is low disk space at this location";
+            this.notificationsCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // highlightCheckBox
+            // 
+            this.highlightCheckBox.AutoSize = true;
+            this.highlightCheckBox.Location = new System.Drawing.Point(8, 19);
+            this.highlightCheckBox.Name = "highlightCheckBox";
+            this.highlightCheckBox.Size = new System.Drawing.Size(67, 17);
+            this.highlightCheckBox.TabIndex = 2;
+            this.highlightCheckBox.Text = "Highlight";
+            this.highlightCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.highlightCheckBox);
+            this.groupBox2.Location = new System.Drawing.Point(6, 66);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(327, 54);
+            this.groupBox2.TabIndex = 3;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Display Options";
             // 
             // PropertiesForm
             // 
@@ -459,6 +520,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.driveIcon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pieChart)).EndInit();
             this.tabControl1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -496,5 +562,10 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.Button shortcutButton;
         private System.Windows.Forms.Button explorePathButton;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.CheckBox notificationsCheckBox;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.CheckBox highlightCheckBox;
     }
 }

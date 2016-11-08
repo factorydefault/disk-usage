@@ -36,8 +36,15 @@
             this.addPathTaskbarButton = new System.Windows.Forms.ToolStripMenuItem();
             this.editJsonButton = new System.Windows.Forms.ToolStripMenuItem();
             this.viewChartButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.hideInaccessableItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.notificationsMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.offMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.fiveminMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.thirtyMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.onehourMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.fourhourMI = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.aboutButton = new System.Windows.Forms.ToolStripMenuItem();
             this.exitButton = new System.Windows.Forms.ToolStripMenuItem();
             this.diskStack = new System.Windows.Forms.FlowLayoutPanel();
             this.emptySpaceContext = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -47,7 +54,7 @@
             this.chartButton = new System.Windows.Forms.Button();
             this.orderByCombo = new System.Windows.Forms.ComboBox();
             this.toolTipProvider = new System.Windows.Forms.ToolTip(this.components);
-            this.hideInaccessableItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.notificationTimer = new System.Windows.Forms.Timer(this.components);
             this.taskbarContext.SuspendLayout();
             this.emptySpaceContext.SuspendLayout();
             this.tableLayout.SuspendLayout();
@@ -63,6 +70,7 @@
             this.taskbarIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("taskbarIcon.Icon")));
             this.taskbarIcon.Text = "Disk Usage";
             this.taskbarIcon.Visible = true;
+            this.taskbarIcon.BalloonTipClicked += new System.EventHandler(this.taskbarIcon_BalloonTipClicked);
             this.taskbarIcon.Click += new System.EventHandler(this.taskbarIcon_Click);
             // 
             // taskbarContext
@@ -74,11 +82,12 @@
             this.editJsonButton,
             this.viewChartButton,
             this.hideInaccessableItem,
+            this.notificationsMI,
             this.toolStripSeparator2,
             this.aboutButton,
             this.exitButton});
             this.taskbarContext.Name = "taskbarMenu";
-            this.taskbarContext.Size = new System.Drawing.Size(281, 178);
+            this.taskbarContext.Size = new System.Drawing.Size(281, 227);
             this.taskbarContext.Opening += new System.ComponentModel.CancelEventHandler(this.taskbarContext_Opening);
             // 
             // openButton
@@ -118,17 +127,73 @@
             this.viewChartButton.Text = "View bar chart";
             this.viewChartButton.Click += new System.EventHandler(this.viewChartButton_Click);
             // 
+            // hideInaccessableItem
+            // 
+            this.hideInaccessableItem.Name = "hideInaccessableItem";
+            this.hideInaccessableItem.Size = new System.Drawing.Size(280, 24);
+            this.hideInaccessableItem.Text = "Hide inaccessable paths";
+            this.hideInaccessableItem.Click += new System.EventHandler(this.hideInaccessableItem_Click);
+            // 
+            // notificationsMI
+            // 
+            this.notificationsMI.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.offMI,
+            this.fiveminMI,
+            this.thirtyMI,
+            this.onehourMI,
+            this.fourhourMI});
+            this.notificationsMI.Image = global::disk_usage_ui.Properties.Resources.ic_notifications_black_18dp;
+            this.notificationsMI.Name = "notificationsMI";
+            this.notificationsMI.Size = new System.Drawing.Size(280, 24);
+            this.notificationsMI.Text = "Notifications";
+            this.notificationsMI.DropDownOpened += new System.EventHandler(this.notificationsMI_DropDownOpened);
+            // 
+            // offMI
+            // 
+            this.offMI.Name = "offMI";
+            this.offMI.Size = new System.Drawing.Size(202, 24);
+            this.offMI.Text = "Off";
+            this.offMI.Click += new System.EventHandler(this.offMI_Click);
+            // 
+            // fiveminMI
+            // 
+            this.fiveminMI.Name = "fiveminMI";
+            this.fiveminMI.Size = new System.Drawing.Size(202, 24);
+            this.fiveminMI.Text = "Every 5 minutes";
+            this.fiveminMI.Click += new System.EventHandler(this.fiveminMI_Click);
+            // 
+            // thirtyMI
+            // 
+            this.thirtyMI.Name = "thirtyMI";
+            this.thirtyMI.Size = new System.Drawing.Size(202, 24);
+            this.thirtyMI.Text = "Every 30 minutes";
+            this.thirtyMI.Click += new System.EventHandler(this.thirtyMI_Click);
+            // 
+            // onehourMI
+            // 
+            this.onehourMI.Name = "onehourMI";
+            this.onehourMI.Size = new System.Drawing.Size(202, 24);
+            this.onehourMI.Text = "Once an hour";
+            this.onehourMI.Click += new System.EventHandler(this.onehourMI_Click);
+            // 
+            // fourhourMI
+            // 
+            this.fourhourMI.Name = "fourhourMI";
+            this.fourhourMI.Size = new System.Drawing.Size(202, 24);
+            this.fourhourMI.Text = "Once every 4 hours";
+            this.fourhourMI.Click += new System.EventHandler(this.fourhourMI_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(277, 6);
+            // 
             // aboutButton
             // 
             this.aboutButton.Name = "aboutButton";
             this.aboutButton.Size = new System.Drawing.Size(280, 24);
             this.aboutButton.Text = "About";
             this.aboutButton.Click += new System.EventHandler(this.aboutButton_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(277, 6);
             // 
             // exitButton
             // 
@@ -149,7 +214,7 @@
             this.diskStack.Margin = new System.Windows.Forms.Padding(0);
             this.diskStack.MinimumSize = new System.Drawing.Size(257, 0);
             this.diskStack.Name = "diskStack";
-            this.diskStack.Padding = new System.Windows.Forms.Padding(3);
+            this.diskStack.Padding = new System.Windows.Forms.Padding(6, 3, 3, 3);
             this.diskStack.Size = new System.Drawing.Size(257, 465);
             this.diskStack.TabIndex = 3;
             this.diskStack.WrapContents = false;
@@ -235,12 +300,10 @@
             this.toolTipProvider.ForeColor = System.Drawing.Color.Black;
             this.toolTipProvider.IsBalloon = true;
             // 
-            // hideInaccessableItem
+            // notificationTimer
             // 
-            this.hideInaccessableItem.Name = "hideInaccessableItem";
-            this.hideInaccessableItem.Size = new System.Drawing.Size(280, 24);
-            this.hideInaccessableItem.Text = "Hide inaccessable paths";
-            this.hideInaccessableItem.Click += new System.EventHandler(this.hideInaccessableItem_Click);
+            this.notificationTimer.Interval = 10000;
+            this.notificationTimer.Tick += new System.EventHandler(this.notificationTimer_Tick);
             // 
             // NotificationAreaForm
             // 
@@ -290,6 +353,13 @@
         private System.Windows.Forms.Button chartButton;
         private System.Windows.Forms.ToolTip toolTipProvider;
         private System.Windows.Forms.ToolStripMenuItem hideInaccessableItem;
+        private System.Windows.Forms.Timer notificationTimer;
+        private System.Windows.Forms.ToolStripMenuItem notificationsMI;
+        private System.Windows.Forms.ToolStripMenuItem offMI;
+        private System.Windows.Forms.ToolStripMenuItem fiveminMI;
+        private System.Windows.Forms.ToolStripMenuItem thirtyMI;
+        private System.Windows.Forms.ToolStripMenuItem onehourMI;
+        private System.Windows.Forms.ToolStripMenuItem fourhourMI;
     }
 }
 
