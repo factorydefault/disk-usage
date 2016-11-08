@@ -495,7 +495,8 @@ namespace disk_usage_ui
             UISettings.Default.Frequency = min;
             UISettings.Default.Save();
             
-            NotificationTime = DateTime.Now.AddSeconds(3); //do a notification now
+            NotificationTime = DateTime.Now; //do a notification now
+            if (UISettings.Default.Notifications) ProcessNotifications();
         }
 
         void offMI_Click(object sender, EventArgs e)
