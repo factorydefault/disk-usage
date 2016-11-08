@@ -52,7 +52,9 @@ namespace disk_usage_ui.Forms
             capacityBytesLabel.Text = formattedBytes(_record.Capacity); 
             capacitySummary.Text = _record.Capacity.PropertiesLabel();
 
+            //check boxes
             notificationsCheckBox.Checked = _record.Notifications;
+            highlightCheckBox.Checked = _record.Highlight;
 
             setFormTitle();
 
@@ -116,7 +118,9 @@ namespace disk_usage_ui.Forms
             }
         }
 
-        public bool ShouldUseNotifications => notificationsCheckBox.Checked;       
+        public bool ShouldUseNotifications => notificationsCheckBox.Checked;
+
+        public bool ShouldHighlight => highlightCheckBox.Checked;
 
         public static void EnableTab(TabPage page, bool enable)
         {

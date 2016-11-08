@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
@@ -138,6 +139,14 @@ namespace disk_usage_ui
             usageBar.Minimum = 0;
             usageBar.Maximum = 100;
 
+            bool highlight = pathRecord.Highlight;
+
+            BackColor = highlight ? SystemColors.MenuHighlight : Color.White;
+            nameLabel.ForeColor = highlight ? SystemColors.HighlightText : SystemColors.ControlText;
+            detailLabel.ForeColor = highlight ? SystemColors.HighlightText : SystemColors.GrayText;
+
+            BorderStyle = highlight ? BorderStyle.FixedSingle : BorderStyle.None;
+
             //Console.WriteLine($"Setting progress bar for {path} to {pathRecord.FillLevel}");
 
             usageBar.Value = pathRecord.FillLevel;
@@ -234,6 +243,8 @@ namespace disk_usage_ui
                     case DialogResult.OK:
                         _recordReference.FriendlyName = propertiesForm.DiskLabel;
                         _recordReference.Notifications = propertiesForm.ShouldUseNotifications;
+                        _recordReference.Highlight = propertiesForm.ShouldHighlight;
+
                         PropertiesChanged?.Invoke(this, new EventArgs());
                         break;
                     default:

@@ -193,6 +193,7 @@
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
     <None Include="Resources\properties_16xLG.png" />
+    <None Include="Resources\Alert_16x.png" />
     <Content Include="storage.ico" />
     <None Include="Resources\notfound10.png" />
     <None Include="Resources\osdrive10.png" />

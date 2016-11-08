@@ -66,8 +66,10 @@
             this.pieChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.notificationsCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.notificationsCheckBox = new System.Windows.Forms.CheckBox();
+            this.highlightCheckBox = new System.Windows.Forms.CheckBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.driveIcon)).BeginInit();
@@ -75,6 +77,7 @@
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // cancelButton
@@ -441,6 +444,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.groupBox2);
             this.tabPage2.Controls.Add(this.groupBox1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
@@ -449,6 +453,16 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Customize";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.notificationsCheckBox);
+            this.groupBox1.Location = new System.Drawing.Point(6, 10);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(327, 50);
+            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Notifications";
             // 
             // notificationsCheckBox
             // 
@@ -460,15 +474,25 @@
             this.notificationsCheckBox.Text = "Notify when there is low disk space at this location";
             this.notificationsCheckBox.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
+            // highlightCheckBox
             // 
-            this.groupBox1.Controls.Add(this.notificationsCheckBox);
-            this.groupBox1.Location = new System.Drawing.Point(6, 10);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(327, 59);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Notifications";
+            this.highlightCheckBox.AutoSize = true;
+            this.highlightCheckBox.Location = new System.Drawing.Point(8, 19);
+            this.highlightCheckBox.Name = "highlightCheckBox";
+            this.highlightCheckBox.Size = new System.Drawing.Size(119, 17);
+            this.highlightCheckBox.TabIndex = 2;
+            this.highlightCheckBox.Text = "Highlight entry in list";
+            this.highlightCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.highlightCheckBox);
+            this.groupBox2.Location = new System.Drawing.Point(6, 66);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(327, 54);
+            this.groupBox2.TabIndex = 3;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Display";
             // 
             // PropertiesForm
             // 
@@ -499,6 +523,8 @@
             this.tabPage2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -539,5 +565,7 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.CheckBox notificationsCheckBox;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.CheckBox highlightCheckBox;
     }
 }

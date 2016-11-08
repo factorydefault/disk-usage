@@ -83,6 +83,16 @@ namespace disk_usage_ui.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Alert_16x {
+            get {
+                object obj = ResourceManager.GetObject("Alert_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap GitHub {
             get {
                 object obj = ResourceManager.GetObject("GitHub", resourceCulture);
