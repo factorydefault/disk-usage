@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Drawing;
+using System.ComponentModel;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using ByteSizeLib;
 using System.Linq;
+using Newtonsoft.Json.Converters;
 
 namespace disk_usage
 {
@@ -113,6 +116,19 @@ namespace disk_usage
             }
             return PathLocation.Remote;
         }
+
+        public bool ShouldNotify
+        {
+            get
+            {
+                return Notifications && Capacity.Bytes > 0;
+            }
+        }
+
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [DefaultValue(false)]
+        public bool Notifications { get; set; } = false;
+
 
     }
 }

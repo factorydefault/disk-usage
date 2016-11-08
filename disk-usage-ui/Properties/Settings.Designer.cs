@@ -46,5 +46,29 @@ namespace disk_usage_ui.Properties {
                 this["HideInaccessablePaths"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Notifications {
+            get {
+                return ((bool)(this["Notifications"]));
+            }
+            set {
+                this["Notifications"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int Frequency {
+            get {
+                return ((int)(this["Frequency"]));
+            }
+            set {
+                this["Frequency"] = value;
+            }
+        }
     }
 }

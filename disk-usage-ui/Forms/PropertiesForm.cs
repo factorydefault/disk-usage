@@ -12,6 +12,7 @@ namespace disk_usage_ui.Forms
         {
             _record = new PathRecord();
             InitializeComponent();
+
         }
 
 
@@ -50,6 +51,8 @@ namespace disk_usage_ui.Forms
 
             capacityBytesLabel.Text = formattedBytes(_record.Capacity); 
             capacitySummary.Text = _record.Capacity.PropertiesLabel();
+
+            notificationsCheckBox.Checked = _record.Notifications;
 
             setFormTitle();
 
@@ -113,6 +116,7 @@ namespace disk_usage_ui.Forms
             }
         }
 
+        public bool ShouldUseNotifications => notificationsCheckBox.Checked;       
 
         public static void EnableTab(TabPage page, bool enable)
         {
@@ -155,5 +159,7 @@ namespace disk_usage_ui.Forms
         {
             Tools.OpenDirectory(_record);
         }
+
+
     }
 }

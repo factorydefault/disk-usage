@@ -78,7 +78,7 @@ namespace disk_usage_ui
             usageBar.Minimum = 0;
             usageBar.Maximum = 100;
             usageBar.Value = 100;
-            Console.WriteLine($"Setting progress bar not found, value {usageBar.Value}");
+            //Console.WriteLine($"Setting progress bar not found, value {usageBar.Value}");
             usageBar.SetState(ProgressBarState.Error);
 
             PathLocation location = _recordReference?.Location() ?? PathLocation.Unknown;
@@ -116,8 +116,6 @@ namespace disk_usage_ui
 
             PathRecord pathRecord = _recordReference;
 
-            
-
             nameLabel.Text = $"{pathRecord.FriendlyName}";
 
             path = pathRecord.Path;
@@ -140,7 +138,7 @@ namespace disk_usage_ui
             usageBar.Minimum = 0;
             usageBar.Maximum = 100;
 
-            Console.WriteLine($"Setting progress bar for {path} to {pathRecord.FillLevel}");
+            //Console.WriteLine($"Setting progress bar for {path} to {pathRecord.FillLevel}");
 
             usageBar.Value = pathRecord.FillLevel;
 
@@ -235,6 +233,7 @@ namespace disk_usage_ui
                 {
                     case DialogResult.OK:
                         _recordReference.FriendlyName = propertiesForm.DiskLabel;
+                        _recordReference.Notifications = propertiesForm.ShouldUseNotifications;
                         PropertiesChanged?.Invoke(this, new EventArgs());
                         break;
                     default:
@@ -297,7 +296,6 @@ namespace disk_usage_ui
 
         string nameLabelHoverStore { get; set; }
         string nameLabelHoverText { get; set; }
-
 
     }
 
