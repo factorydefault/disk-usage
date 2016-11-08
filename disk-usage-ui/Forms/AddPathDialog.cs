@@ -192,5 +192,10 @@ namespace disk_usage_ui
 
             ProcessDragDrop(FileList);
         }
+
+        void notificationsCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            NewComputer.Notifications = notificationsCheck.Checked;
+        }
     }
 }
