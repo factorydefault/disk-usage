@@ -424,7 +424,7 @@ namespace disk_usage_ui
                     }
                 }
 
-                if (count > 1)
+                if (count > 0)
                 {
                     DoNotify(notificationTargets);
                 }
