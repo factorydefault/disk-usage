@@ -124,7 +124,8 @@ namespace disk_usage_ui
             path = pathRecord.Path;
 
             pictureBox.Visible = true;
-            notificationPicture.Visible = true;
+            notificationPicture.Visible = false;
+
             UpdateNotificationPicture(pathRecord);
 
             switch (pathRecord.Location())
@@ -189,7 +190,7 @@ namespace disk_usage_ui
             UpdateUserInterface(); 
         }
 
-        private void Pr_DiskInfoUpdated(object sender, EventArgs e)
+        void Pr_DiskInfoUpdated(object sender, EventArgs e)
         {
             UpdateUserInterface();
         }
@@ -228,7 +229,7 @@ namespace disk_usage_ui
             Tools.OpenDirectory(path);
         }
 
-        private void clipboardButton_Click(object sender, EventArgs e)
+        void clipboardButton_Click(object sender, EventArgs e)
         {
             try
             {
@@ -293,7 +294,22 @@ namespace disk_usage_ui
                 openFolderButton.Text = "&Open";
             }
 
+            SetupNotificationContextItem();
 
+        }
+
+        private void SetupNotificationContextItem()
+        {
+            if (_recordReference.Notifications)
+            {
+                notifyMI.Image = Properties.Resources.ic_notifications_black_18dp;
+                notifyMI.Text = "Notifications: Enabled";
+            }
+            else
+            {
+                notifyMI.Image = Properties.Resources.ic_notifications_off_black_18dp;
+                notifyMI.Text = "Notifications: Disabled";
+            }
         }
 
         void nameLabel_MouseEnter(object sender, EventArgs e)
@@ -339,6 +355,12 @@ namespace disk_usage_ui
         void notificationPicture_MouseDown(object sender, MouseEventArgs e)
         {
 
+        }
+
+        void notifyMI_Click(object sender, EventArgs e)
+        {
+            FlipNotifications();
+            SetupNotificationContextItem();
         }
     }
 
