@@ -385,16 +385,8 @@ namespace disk_usage_ui
 
         void settingsMainButton_Click(object sender, EventArgs e)
         {
-            Point screenPoint = settingsButton.PointToScreen(new Point(settingsButton.Left, settingsButton.Bottom));
-            if (screenPoint.Y + mainContextMenu.Size.Height > Screen.PrimaryScreen.WorkingArea.Height)
-            {
-                mainContextMenu.Show(settingsButton, new Point(0, -mainContextMenu.Size.Height));
-            }
-            else
-            {
-                mainContextMenu.Show(settingsButton, new Point(0, settingsButton.Height));
-            }
-
+            Console.WriteLine(mainContextMenu.Size.Width);
+            mainContextMenu.Show(settingsButton, new Point((settingsButton.Size.Width-mainContextMenu.Size.Width)+20, -mainContextMenu.Size.Height));
         }
 
         void hideInaccessableItem_Click(object sender, EventArgs e)
