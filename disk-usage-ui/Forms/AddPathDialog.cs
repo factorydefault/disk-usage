@@ -14,6 +14,7 @@ namespace disk_usage_ui
         {
             InitializeComponent();
             NewComputer = new disk_usage.PathRecord();
+            notificationsCheck.Checked = NewComputer.Notifications;
             updateUserInterface();
             DialogResult = DialogResult.Cancel;
             NewComputer.DiskInfoUpdated += NewComputer_DiskInfoUpdated;
