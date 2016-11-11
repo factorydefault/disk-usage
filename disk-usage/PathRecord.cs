@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Drawing;
 using System.ComponentModel;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using ByteSizeLib;
 using System.Linq;
-using Newtonsoft.Json.Converters;
 
 namespace disk_usage
 {
