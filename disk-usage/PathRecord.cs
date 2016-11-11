@@ -125,7 +125,7 @@ namespace disk_usage
 
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         [DefaultValue(false)]
-        public bool Notifications { get; set; } = false;
+        public bool Notifications { get; set; } = true;
 
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         [DefaultValue(false)]
