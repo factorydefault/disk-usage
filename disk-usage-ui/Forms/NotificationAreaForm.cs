@@ -17,8 +17,8 @@ namespace disk_usage_ui
         const int BALLOON_TIMEOUT_DEFAULT = 5000; //five seconds
         const int NOTIFY_DURATION = 15000;
 
-        const int FORM_WIDTH = 260;
-        const int MAX_ITEM_HEIGHT = 7;
+        const int FORM_WIDTH = 303;
+        const int MAX_ITEM_LIST_COUNT = 6;
 
         DiskUsage core;
 
@@ -130,9 +130,9 @@ namespace disk_usage_ui
 
             int collectionCount = (UISettings.Default.HideInaccessablePaths) ? sortedCollection.Count(pr => pr.Capacity.Bytes > 0) : sortedCollection.Count;
 
-            int diskCount = (collectionCount < MAX_ITEM_HEIGHT) ? collectionCount : MAX_ITEM_HEIGHT;
+            int diskCount = (collectionCount < MAX_ITEM_LIST_COUNT) ? collectionCount : MAX_ITEM_LIST_COUNT;
 
-            int rowOneHeight = tableLayout.GetRowHeights()[1];
+            int rowOneHeight = tableLayout.GetRowHeights()[1] + tableLayout.GetRowHeights()[2];
 
             int BorderWidth = (Width - ClientSize.Width) / 2;
             int TitlebarHeight = Height - ClientSize.Height - (2 * BorderWidth);
@@ -201,7 +201,7 @@ namespace disk_usage_ui
 
         void openButton_Click(object sender, EventArgs e)
         {
-            ShowForm();
+           
         }
 
         void FormDeactivate(object sender, EventArgs e)
@@ -351,12 +351,12 @@ namespace disk_usage_ui
             {
                 bool availability = core.Paths.Count > 0;
                 viewChartButton.Enabled = availability;
-                chartButton.Enabled = availability;
+                settingsButton.Enabled = availability;
             }
             catch (Exception)
             {
                 viewChartButton.Enabled = false;
-                chartButton.Enabled = false;
+                settingsButton.Enabled = false;
             }
         }
 
@@ -383,9 +383,18 @@ namespace disk_usage_ui
             about.ShowDialog();
         }
 
-        void chartButton_Click(object sender, EventArgs e)
+        void settingsMainButton_Click(object sender, EventArgs e)
         {
-            spawnChart();
+            Point screenPoint = settingsButton.PointToScreen(new Point(settingsButton.Left, settingsButton.Bottom));
+            if (screenPoint.Y + mainContextMenu.Size.Height > Screen.PrimaryScreen.WorkingArea.Height)
+            {
+                mainContextMenu.Show(settingsButton, new Point(0, -mainContextMenu.Size.Height));
+            }
+            else
+            {
+                mainContextMenu.Show(settingsButton, new Point(0, settingsButton.Height));
+            }
+
         }
 
         void hideInaccessableItem_Click(object sender, EventArgs e)
@@ -393,6 +402,7 @@ namespace disk_usage_ui
             UISettings.Default.HideInaccessablePaths = !UISettings.Default.HideInaccessablePaths; //toggle
             hideInaccessableItem.Checked = UISettings.Default.HideInaccessablePaths;
             UISettings.Default.Save();
+            RebuildUserInterface();
 
         }
 
@@ -546,6 +556,25 @@ namespace disk_usage_ui
             fourhourMI.Checked = (freq == (60 * 4));
         }
 
+        void chartButton_Click(object sender, EventArgs e)
+        {
 
+        }
+    }
+
+    public class NoFocusCueButton : Button
+    {
+        public NoFocusCueButton() : base()
+        {
+            this.SetStyle(ControlStyles.Selectable, false);
+        }
+
+        protected override bool ShowFocusCues
+        {
+            get
+            {
+                return false;
+            }
+        }
     }
 }
