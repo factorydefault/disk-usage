@@ -86,6 +86,8 @@ namespace disk_usage
 
         public int FillLevel => (int)Math.Round(disk.Attributes.PercentageFilled, 0);
 
+        public double FillPercentageDbl => disk.Attributes.PercentageFilled;
+
         /// <summary>
         /// As per https://blogs.msdn.microsoft.com/oldnewthing/20101117-00/?p=12263/
         /// </summary>

@@ -41,7 +41,7 @@ namespace disk_usage_ui.Forms
 
             diskTypeLabel.Text = DiskTypeString;
 
-            updatePieChart(_record.FillLevel);
+            updatePieChart(_record.FillPercentageDbl);
 
             usedBytesLabel.Text = formattedBytes(_record.UsedSpace);
             usedSummary.Text = _record.UsedSpace.PropertiesLabel();
@@ -92,7 +92,7 @@ namespace disk_usage_ui.Forms
             }
         }
 
-        void updatePieChart(int usedPercentage)
+        void updatePieChart(double usedPercentage)
         {
             try
             {

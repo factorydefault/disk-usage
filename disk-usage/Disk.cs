@@ -28,7 +28,7 @@ namespace disk_usage
         {
             get
             {
-                return (TotalBytes > 0) ? (FreeBytes / (double)TotalBytes * 100.0) : 0;
+                return (TotalBytes > 0) ? (FreeBytes / (double)TotalBytes) * 100.0 : 0;
             }
         }
 
