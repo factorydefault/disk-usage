@@ -68,7 +68,7 @@
             this.detailLabel.AutoSize = true;
             this.detailLabel.Font = new System.Drawing.Font("Segoe UI", 7.854546F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.detailLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(117)))), ((int)(((byte)(117)))));
-            this.detailLabel.Location = new System.Drawing.Point(60, 45);
+            this.detailLabel.Location = new System.Drawing.Point(60, 43);
             this.detailLabel.Name = "detailLabel";
             this.detailLabel.Size = new System.Drawing.Size(64, 17);
             this.detailLabel.TabIndex = 2;
