@@ -86,7 +86,7 @@
             this.aboutButton,
             this.exitButton});
             this.mainContextMenu.Name = "taskbarMenu";
-            this.mainContextMenu.Size = new System.Drawing.Size(281, 203);
+            this.mainContextMenu.Size = new System.Drawing.Size(281, 178);
             this.mainContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.taskbarContext_Opening);
             // 
             // addPathTaskbarButton
@@ -267,7 +267,7 @@
             this.settingsButton.Name = "settingsButton";
             this.settingsButton.Size = new System.Drawing.Size(32, 24);
             this.settingsButton.TabIndex = 5;
-            this.toolTipProvider.SetToolTip(this.settingsButton, "View list as a Chart");
+            this.toolTipProvider.SetToolTip(this.settingsButton, "Settings Menu");
             this.settingsButton.UseVisualStyleBackColor = true;
             this.settingsButton.Click += new System.EventHandler(this.settingsMainButton_Click);
             // 
