@@ -50,16 +50,20 @@
             this.emptySpaceAddPathButton = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.settingsButton = new disk_usage_ui.NoFocusCueButton();
             this.orderByCombo = new System.Windows.Forms.ComboBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.toolTipProvider = new System.Windows.Forms.ToolTip(this.components);
             this.notificationTimer = new System.Windows.Forms.Timer(this.components);
+            this.taskbarContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.exitTBMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.openTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsButton = new disk_usage_ui.NoFocusCueButton();
             this.mainContextMenu.SuspendLayout();
             this.emptySpaceContext.SuspendLayout();
             this.tableLayout.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.taskbarContext.SuspendLayout();
             this.SuspendLayout();
             // 
             // taskbarIcon
@@ -67,6 +71,7 @@
             this.taskbarIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.taskbarIcon.BalloonTipText = "Click the taskbar icon to see disk usage information";
             this.taskbarIcon.BalloonTipTitle = "Disk Usage";
+            this.taskbarIcon.ContextMenuStrip = this.taskbarContext;
             this.taskbarIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("taskbarIcon.Icon")));
             this.taskbarIcon.Text = "Disk Usage";
             this.taskbarIcon.Visible = true;
@@ -85,6 +90,7 @@
             this.toolStripSeparator2,
             this.aboutButton,
             this.exitButton});
+            this.mainContextMenu.MinimumSize = new System.Drawing.Size(279, 16);
             this.mainContextMenu.Name = "taskbarMenu";
             this.mainContextMenu.Size = new System.Drawing.Size(281, 178);
             this.mainContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.taskbarContext_Opening);
@@ -259,18 +265,6 @@
             this.panel1.Size = new System.Drawing.Size(303, 35);
             this.panel1.TabIndex = 5;
             // 
-            // settingsButton
-            // 
-            this.settingsButton.Image = global::disk_usage_ui.Properties.Resources.SettingsDropdown;
-            this.settingsButton.Location = new System.Drawing.Point(238, 3);
-            this.settingsButton.Margin = new System.Windows.Forms.Padding(0);
-            this.settingsButton.Name = "settingsButton";
-            this.settingsButton.Size = new System.Drawing.Size(32, 24);
-            this.settingsButton.TabIndex = 5;
-            this.toolTipProvider.SetToolTip(this.settingsButton, "Settings Menu");
-            this.settingsButton.UseVisualStyleBackColor = true;
-            this.settingsButton.Click += new System.EventHandler(this.settingsMainButton_Click);
-            // 
             // orderByCombo
             // 
             this.orderByCombo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(251)))));
@@ -309,6 +303,41 @@
             this.notificationTimer.Interval = 10000;
             this.notificationTimer.Tick += new System.EventHandler(this.notificationTimer_Tick);
             // 
+            // taskbarContext
+            // 
+            this.taskbarContext.ImageScalingSize = new System.Drawing.Size(18, 18);
+            this.taskbarContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openTSMI,
+            this.exitTBMI});
+            this.taskbarContext.Name = "taskbarContext";
+            this.taskbarContext.Size = new System.Drawing.Size(170, 77);
+            // 
+            // exitTBMI
+            // 
+            this.exitTBMI.Name = "exitTBMI";
+            this.exitTBMI.Size = new System.Drawing.Size(169, 24);
+            this.exitTBMI.Text = "E&xit";
+            this.exitTBMI.Click += new System.EventHandler(this.exitTBMI_Click);
+            // 
+            // openTSMI
+            // 
+            this.openTSMI.Name = "openTSMI";
+            this.openTSMI.Size = new System.Drawing.Size(169, 24);
+            this.openTSMI.Text = "&Open";
+            this.openTSMI.Click += new System.EventHandler(this.openTSMI_Click);
+            // 
+            // settingsButton
+            // 
+            this.settingsButton.Image = global::disk_usage_ui.Properties.Resources.SettingsDropdown;
+            this.settingsButton.Location = new System.Drawing.Point(238, 3);
+            this.settingsButton.Margin = new System.Windows.Forms.Padding(0);
+            this.settingsButton.Name = "settingsButton";
+            this.settingsButton.Size = new System.Drawing.Size(32, 24);
+            this.settingsButton.TabIndex = 5;
+            this.toolTipProvider.SetToolTip(this.settingsButton, "Settings Menu");
+            this.settingsButton.UseVisualStyleBackColor = true;
+            this.settingsButton.Click += new System.EventHandler(this.settingsMainButton_Click);
+            // 
             // NotificationAreaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -334,6 +363,7 @@
             this.tableLayout.PerformLayout();
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.taskbarContext.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -366,6 +396,9 @@
         private System.Windows.Forms.ToolStripMenuItem onehourMI;
         private System.Windows.Forms.ToolStripMenuItem fourhourMI;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ContextMenuStrip taskbarContext;
+        private System.Windows.Forms.ToolStripMenuItem openTSMI;
+        private System.Windows.Forms.ToolStripMenuItem exitTBMI;
     }
 }
 

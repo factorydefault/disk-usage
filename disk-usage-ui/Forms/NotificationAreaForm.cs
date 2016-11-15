@@ -18,7 +18,7 @@ namespace disk_usage_ui
         const int NOTIFY_DURATION = 15000;
 
         const int FORM_WIDTH = 303;
-        const int MAX_ITEM_LIST_COUNT = 6;
+        const int MAX_ITEM_LIST_COUNT = 9;
 
         DiskUsage core;
 
@@ -369,8 +369,7 @@ namespace disk_usage_ui
 
         void settingsMainButton_Click(object sender, EventArgs e)
         {
-            Console.WriteLine(mainContextMenu.Size.Width);
-            mainContextMenu.Show(settingsButton, new Point((settingsButton.Size.Width-mainContextMenu.Size.Width)+20, -mainContextMenu.Size.Height));
+            mainContextMenu.Show(settingsButton, Cursor.Position);
         }
 
         void hideInaccessableItem_Click(object sender, EventArgs e)
@@ -522,6 +521,16 @@ namespace disk_usage_ui
             thirtyMI.Checked = (freq == 30);
             onehourMI.Checked = (freq == 60);
             fourhourMI.Checked = (freq == (60 * 4));
+        }
+
+        void openTSMI_Click(object sender, EventArgs e)
+        {
+            ShowForm();
+        }
+
+        void exitTBMI_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 
