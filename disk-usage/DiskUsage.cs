@@ -128,6 +128,13 @@ namespace disk_usage
             {
                 return new OperationResult { Success = result, Message = message };
             }
+
+            public override string ToString()
+            {
+                string resultdesc = Success ? "Success" : "Failure";
+                string message = !string.IsNullOrWhiteSpace(Message) ? $": {Message}" : string.Empty;
+                return $"{resultdesc}{message}";
+            }
         }
 
         public OperationResult AddPathToList(PathRecord computer)
