@@ -16,6 +16,8 @@ namespace disk_usage
 
         public static string ExplorerLabel(this ByteSize size)
         {
+            if (size.Bytes < 1) return string.Empty;
+
             if (size.TeraBytes >= 1.0) return size.ToString("#.##"); //2dp
             if (size.GigaBytes >= 1.0) return size.ToString("#.#"); //1dp
             return size.ToString("#"); //0dp

@@ -34,6 +34,15 @@ namespace disk_usage.Tests
         }
 
         [TestMethod]
+        public void ExplorerLabelTestEmpty()
+        {
+            var input = ByteSizeLib.ByteSize.FromBytes(0);
+            var expected = "";
+            var result = Formatting.ExplorerLabel(input);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
         public void EllipsisTest()
         {
             //arrange
