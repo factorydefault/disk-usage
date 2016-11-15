@@ -345,7 +345,7 @@
         private System.Windows.Forms.ToolStripMenuItem exitButton;
         private System.Windows.Forms.FlowLayoutPanel diskStack;
         private System.Windows.Forms.TableLayoutPanel tableLayout;
-        private DiskTile diskTile5;
+        //private DiskTile diskTile5;
         private System.Windows.Forms.ContextMenuStrip emptySpaceContext;
         private System.Windows.Forms.ToolStripMenuItem emptySpaceAddPathButton;
         private System.Windows.Forms.ToolStripMenuItem addPathTaskbarButton;

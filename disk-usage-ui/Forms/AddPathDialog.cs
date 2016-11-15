@@ -85,14 +85,14 @@ namespace disk_usage_ui
             {
                 System.Diagnostics.Debug.Print("Path valid.");
                 
-                NewComputer.RequestDiskInfo();
+                NewComputer.RequestDiskInfoAsync();
                 acceptButton.Enabled = true;
             }
             else if(PathHasValidForm(typedPathWithBackslash)) //lenient to missing backslash
             {
                 System.Diagnostics.Debug.Print("Missing backslash added.");
                 NewComputer.Path = typedPathWithBackslash;
-                NewComputer.RequestDiskInfo();
+                NewComputer.RequestDiskInfoAsync();
                 acceptButton.Enabled = true;
             }
             else

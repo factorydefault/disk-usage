@@ -36,52 +36,46 @@ namespace disk_usage
 
     }
 
+
+
     class Disk
     {
-        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool GetDiskFreeSpaceEx(string lpDirectoryName,
-      out ulong lpFreeBytesAvailable,
-      out ulong lpTotalNumberOfBytes,
-      out ulong lpTotalNumberOfFreeBytes);
-
         public event EventHandler<EventArgs> DiskInfoUpdated;
 
         public string Path { get; set; }
 
         public DiskAttributes Attributes { get; private set; } = new DiskAttributes(0, 0, 0);
 
-        public async Task RequestDiskInfo()
+        public async Task RequestDiskInfoAsync()
         {
-            await GetInfoAsync();
-            //Console.WriteLine($"Async done, {Path} has {Attributes.FreeBytes} bytes free.");
+            await RequestDiskInfoTask();
             DiskInfoUpdated?.Invoke(this, new EventArgs());
         }
 
-        public Task GetInfoAsync()
+        Task RequestDiskInfoTask() => Task.Run( () => RequestDiskInfo() );
+        
+        /// <summary>
+        /// Blocks thread when called directly.. use RequestDiskInfoAync instead.
+        /// </summary>
+        public void RequestDiskInfo()
         {
-            return Task.Run( () =>
+            ulong ulAvailableBytes;
+            ulong ulBytes;
+            ulong ulFreeBytes;
+
+            var success = NativeMethods.GetDiskFreeSpaceEx(Path,
+                                  out ulAvailableBytes,
+                                  out ulBytes,
+                                  out ulFreeBytes);
+            if (success)
             {
-                ulong ulAvailableBytes;
-                ulong ulBytes;
-                ulong ulFreeBytes;
-
-                bool success = GetDiskFreeSpaceEx(Path,
-                                      out ulAvailableBytes,
-                                      out ulBytes,
-                                      out ulFreeBytes);
-                if (success)
-                {
-                    Attributes = new DiskAttributes(ulAvailableBytes, ulBytes, ulFreeBytes);
-                }
-                else
-                {
-                    Attributes = new DiskAttributes(0, 0, 0);
-                }
-            });
-
+                Attributes = new DiskAttributes(ulAvailableBytes, ulBytes, ulFreeBytes);
+            }
+            else
+            {
+                Attributes = new DiskAttributes(0, 0, 0);
+            }
         }
-
     }
 
 }

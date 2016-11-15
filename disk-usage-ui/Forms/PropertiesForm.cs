@@ -92,12 +92,14 @@ namespace disk_usage_ui.Forms
             }
         }
 
-        void updatePieChart(double usedPercentage)
+        void updatePieChart(double percentageUsed)
         {
+            double percentageClamped = percentageUsed.Clamp(0, 100);
+
             try
             {
-                pieChart.Series.FirstOrDefault().Points[0].SetValueY(usedPercentage);
-                pieChart.Series.FirstOrDefault().Points[1].SetValueY(100 - usedPercentage);
+                pieChart.Series.FirstOrDefault().Points[0].SetValueY(percentageClamped);
+                pieChart.Series.FirstOrDefault().Points[1].SetValueY(100 - percentageClamped);
             }
             catch (Exception ex)
             {
