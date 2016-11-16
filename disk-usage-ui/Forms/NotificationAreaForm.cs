@@ -18,7 +18,7 @@ namespace disk_usage_ui
         const int NOTIFY_DURATION = 15000;
 
         const int FORM_WIDTH = 303;
-        const int MAX_ITEM_LIST_COUNT = 9;
+        const int MAX_ITEM_LIST_COUNT = 7;
 
         DiskUsage core;
 
