@@ -76,8 +76,7 @@ namespace disk_usage_ui.UserControls
             usedSeries.Points.Clear();
             freeSeries.Points.Clear();
 
-            //for correct ordering
-            var index = data.Count();
+            var index = data.Count(); //for correct ordering
 
             bool hideEmpty = Properties.Settings.Default.HideInaccessablePaths;
 
@@ -101,7 +100,6 @@ namespace disk_usage_ui.UserControls
                 var freePoint = new DataPoint();
 
                 freePoint.SetValueXY(index, pc.FreeSpace.GigaBytes);
-                //freePoint.SetValueY(pc.FreeSpace);
                 freePoint.AxisLabel = pc.FriendlyName;
 
                 freeSeries.Points.Add(freePoint);
