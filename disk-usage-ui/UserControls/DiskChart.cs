@@ -3,9 +3,16 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using disk_usage;
 
 namespace disk_usage_ui.UserControls
 {
+    public enum ChartDisplayMode
+    {
+        Capacity,
+        PercentageFill
+    }
+
     public partial class DiskChart : UserControl
     {
 
@@ -23,22 +30,53 @@ namespace disk_usage_ui.UserControls
             }
         }
 
+        ChartDisplayMode Mode { get; set; } = ChartDisplayMode.Capacity;
                 
         public void SaveImage(string imageFileName,ChartImageFormat format)
         {
             Chart.SaveImage(imageFileName, format);
         }
 
-        public void SetData(IEnumerable<disk_usage.PathRecord> data)
+        DiskUsage dataStore { get; set; } //hold a reference to disk usage.
+
+        SortingOption Sorting { get; set; }
+
+        public void AssignData(DiskUsage data, SortingOption initialSorting)
+        {
+            dataStore = data;
+            Sorting = initialSorting;
+
+            SetChartOptions(Mode, Sorting);
+        }
+        
+        public void SetChartOptions(ChartDisplayMode mode, SortingOption sorting)
+        {
+            Sorting = sorting;
+            Mode = mode;
+            DrawChart(dataStore.Sorted(Sorting));
+        }
+
+        void SetAxisYTitle(string text)
+        {
+            Chart.ChartAreas[0].AxisY.Title = text;
+        } 
+          
+        void DrawChart(IEnumerable<PathRecord> data)
         {
             var usedSeries = Chart.Series["UsedSpace"];
             var freeSeries = Chart.Series["FreeSpace"];
 
+            bool isUsingCapacity = (Mode == ChartDisplayMode.Capacity);
+
+            usedSeries.ChartType = (isUsingCapacity) ? SeriesChartType.StackedBar : SeriesChartType.StackedBar100;
+            freeSeries.ChartType = (isUsingCapacity) ? SeriesChartType.StackedBar : SeriesChartType.StackedBar100;
+
+            SetAxisYTitle((isUsingCapacity) ? "Capacity (GB)" : "Percentage Fill");
+
             usedSeries.Points.Clear();
             freeSeries.Points.Clear();
 
-            //for correct ordering
-            var index = data.Count();
+            var index = data.Count(); //for correct ordering
 
             bool hideEmpty = Properties.Settings.Default.HideInaccessablePaths;
 
@@ -49,7 +87,6 @@ namespace disk_usage_ui.UserControls
                 var usedPoint = new DataPoint();
 
                 usedPoint.SetValueXY(index, pc.UsedSpace.GigaBytes);
-                //usedPoint.SetValueY(pc.TotalSpace - pc.FreeSpace);
                 usedPoint.AxisLabel = pc.FriendlyName;
 
                 if (pc.HasLowDiskSpace)
@@ -63,7 +100,6 @@ namespace disk_usage_ui.UserControls
                 var freePoint = new DataPoint();
 
                 freePoint.SetValueXY(index, pc.FreeSpace.GigaBytes);
-                //freePoint.SetValueY(pc.FreeSpace);
                 freePoint.AxisLabel = pc.FriendlyName;
 
                 freeSeries.Points.Add(freePoint);
