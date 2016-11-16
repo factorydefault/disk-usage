@@ -100,10 +100,7 @@ namespace disk_usage_ui
                     break;
             }
 
-            if (Properties.Settings.Default.HideInaccessablePaths && Interactive) //non interactive (demo) tiles are not hidden
-            {
-                Visible = false;
-            }
+            Visible &= (!Properties.Settings.Default.HideInaccessablePaths || !Interactive);
 
         }
 
@@ -283,7 +280,7 @@ namespace disk_usage_ui
 
         void tileContext_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (!Interactive) e.Cancel = true;
+            e.Cancel |= !Interactive;
 
             if (_recordReference != null)
             {

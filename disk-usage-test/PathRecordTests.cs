@@ -95,6 +95,14 @@ namespace disk_usage.Tests
             Assert.AreEqual("TestingInvalid Chars_Text", result);
         }
 
+        [TestMethod]
+        public void InvalidPathRecordPath()
+        {
+            var pr = new PathRecord { Path = "invalidpath" };
+            pr.RequestDiskInfo();
+            Assert.AreEqual(0, pr.Capacity.Bytes); //expect zero capacity
+
+        }
 
     }
 }

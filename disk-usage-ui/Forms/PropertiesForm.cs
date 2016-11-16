@@ -41,7 +41,7 @@ namespace disk_usage_ui.Forms
 
             diskTypeLabel.Text = DiskTypeString;
 
-            updatePieChart(_record.FillLevel);
+            updatePieChart(_record.FillPercentageDbl);
 
             usedBytesLabel.Text = formattedBytes(_record.UsedSpace);
             usedSummary.Text = _record.UsedSpace.PropertiesLabel();
@@ -92,12 +92,14 @@ namespace disk_usage_ui.Forms
             }
         }
 
-        void updatePieChart(int usedPercentage)
+        void updatePieChart(double percentageUsed)
         {
+            double percentageClamped = percentageUsed.Clamp(0, 100);
+
             try
             {
-                pieChart.Series.FirstOrDefault().Points[0].SetValueY(usedPercentage);
-                pieChart.Series.FirstOrDefault().Points[1].SetValueY(100 - usedPercentage);
+                pieChart.Series.FirstOrDefault().Points[0].SetValueY(percentageClamped);
+                pieChart.Series.FirstOrDefault().Points[1].SetValueY(100 - percentageClamped);
             }
             catch (Exception ex)
             {

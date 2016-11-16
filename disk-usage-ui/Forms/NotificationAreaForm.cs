@@ -17,8 +17,8 @@ namespace disk_usage_ui
         const int BALLOON_TIMEOUT_DEFAULT = 5000; //five seconds
         const int NOTIFY_DURATION = 15000;
 
-        const int FORM_WIDTH = 260;
-        const int MAX_ITEM_HEIGHT = 7;
+        const int FORM_WIDTH = 303;
+        const int MAX_ITEM_LIST_COUNT = 7;
 
         DiskUsage core;
 
@@ -55,7 +55,7 @@ namespace disk_usage_ui
         }
 
 
-        bool allowshowdisplay = false;
+        bool allowshowdisplay;
 
         protected override void SetVisibleCore(bool value)
         {
@@ -73,40 +73,34 @@ namespace disk_usage_ui
             }
         }
 
+        bool HasOneOrMorePath => core.Paths.Count > 0;
+
         void ShowForm()
         {
-            if (core.Paths.Count == 0)
+            if (!HasOneOrMorePath)
             {
                 AddNewPath(this, new EventArgs());
             }
             else
             {
-                //debugprint();
                 RebuildUserInterface();
-                allowshowdisplay = true;
-                Visible = true;
             }
+            
+            allowshowdisplay = true;
+            Visible = true;
+          
             setAvailabilityOfChartMenuItems();
             core.RequestUpdateFromAll();
 
         }
-
-        void debugprint()
-        {
-            foreach(var path in core.Paths)
-            {
-                Debug.Print($"{path.FriendlyName}: {path.PercentageFilled}");
-            }
-        }
-
-
+        
         void ClearStackControls()
         {
             if (diskStack.Controls.Count > 0)
             {
                 for (int index = diskStack.Controls.Count - 1; index >= 0; index--)
                 {
-                    DiskTile c = (DiskTile)diskStack.Controls[index];
+                    var c = (DiskTile)diskStack.Controls[index];
                     c.UnsubscribeToEvents();
                     c.RemoveRequested -= RemovePathUsingTileObject;
                     c.AddNewPath -= AddNewPath;
@@ -126,13 +120,13 @@ namespace disk_usage_ui
 
             ClearStackControls();
 
-            List<PathRecord> sortedCollection = core.SortedList(SelectedSorting);
+            var sortedCollection = core.Sorted(SelectedSorting);
 
-            int collectionCount = (UISettings.Default.HideInaccessablePaths) ? sortedCollection.Count(pr => pr.Capacity.Bytes > 0) : sortedCollection.Count;
+            int collectionCount = (UISettings.Default.HideInaccessablePaths) ? sortedCollection.Count(pr => pr.Capacity.Bytes > 0) : sortedCollection.Count();
 
-            int diskCount = (collectionCount < MAX_ITEM_HEIGHT) ? collectionCount : MAX_ITEM_HEIGHT;
+            int diskCount = (collectionCount < MAX_ITEM_LIST_COUNT) ? collectionCount : MAX_ITEM_LIST_COUNT;
 
-            int rowOneHeight = tableLayout.GetRowHeights()[1];
+            int rowOneHeight = tableLayout.GetRowHeights()[1] + tableLayout.GetRowHeights()[2];
 
             int BorderWidth = (Width - ClientSize.Width) / 2;
             int TitlebarHeight = Height - ClientSize.Height - (2 * BorderWidth);
@@ -145,9 +139,7 @@ namespace disk_usage_ui
 
             foreach (var pc in sortedCollection)
             {
-                DiskTile newTile = new DiskTile(pc);
-
-                newTile.Padding = new Padding(0);
+                var newTile = new DiskTile(pc) { Padding = new Padding(0) };
 
                 //subscribe to the events
                 newTile.RemoveRequested += RemovePathUsingTileObject;
@@ -187,7 +179,7 @@ namespace disk_usage_ui
 
         public void PositionForm()
         {
-            Rectangle workingArea = Screen.GetWorkingArea(this);
+            var workingArea = Screen.GetWorkingArea(this);
 
             Location = new Point(workingArea.Right - Size.Width - PADDING_RIGHT,
                 workingArea.Bottom - Size.Height - PADDING_BOTTOM);
@@ -197,11 +189,6 @@ namespace disk_usage_ui
         void exitButton_Click(object sender, EventArgs e)
         {
             Application.Exit();
-        }
-
-        void openButton_Click(object sender, EventArgs e)
-        {
-            ShowForm();
         }
 
         void FormDeactivate(object sender, EventArgs e)
@@ -214,7 +201,7 @@ namespace disk_usage_ui
         {
             try
             {
-                MouseEventArgs mouseEvent = (MouseEventArgs)e;
+                var mouseEvent = (MouseEventArgs)e;
 
                 if (mouseEvent.Button == MouseButtons.Left)
                 {
@@ -232,30 +219,23 @@ namespace disk_usage_ui
             PositionForm();
         }
 
-        void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            
-        }
-
         void AddNewPath(object sender, EventArgs e)
         {
-            AddPathDialog dialog = new AddPathDialog();
+            var dialog = new AddPathDialog();
             dialog.InitialPath = Windows.InstallDirectory;
             var result = dialog.ShowDialog(this);
 
             if (result == DialogResult.OK)
             {
-                var or = core.AddPathToList(dialog.NewComputer);
+                var addPathOperation = core.AddPathToList(dialog.NewComputer);
 
-                if (!or.Result)
+                if (!addPathOperation.Success)
                 {
-                    MessageBox.Show(or.Message, "Unable to add path");
+                    MessageBox.Show(addPathOperation.Message, "Unable to add path");
                 }
                 RebuildUserInterface();
                 saveChanges();
             }
-
-
         }
 
         void RemovePathUsingTileObject(object sender, EventArgs e)
@@ -287,11 +267,16 @@ namespace disk_usage_ui
 
         void saveChanges()
         {
-            core.SaveSettingsFile();
+            var saveOperatation = core.SaveSettingsFile();
+
+            if (!saveOperatation.Success)
+            {
+                MessageBox.Show(saveOperatation.Message, "Could not save file", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
         }
 
 
-        private void editJsonButton_Click(object sender, EventArgs e)
+        void editJsonButton_Click(object sender, EventArgs e)
         {
             try
             {
@@ -341,7 +326,7 @@ namespace disk_usage_ui
 
         void spawnChart()
         {
-            Forms.ChartDialogForm chartDialog = new Forms.ChartDialogForm(core.SortedList(SelectedSorting));
+            var chartDialog = new Forms.ChartDialogForm(core.Sorted(SelectedSorting));
             chartDialog.Show();
         }
         
@@ -349,14 +334,13 @@ namespace disk_usage_ui
         {
             try
             {
-                bool availability = core.Paths.Count > 0;
-                viewChartButton.Enabled = availability;
-                chartButton.Enabled = availability;
+                viewChartButton.Enabled = HasOneOrMorePath;
+                settingsButton.Enabled = HasOneOrMorePath;
             }
             catch (Exception)
             {
                 viewChartButton.Enabled = false;
-                chartButton.Enabled = false;
+                settingsButton.Enabled = false;
             }
         }
 
@@ -379,13 +363,13 @@ namespace disk_usage_ui
 
         void aboutButton_Click(object sender, EventArgs e)
         {
-            Forms.AboutForm about = new Forms.AboutForm();
+            var about = new Forms.AboutForm();
             about.ShowDialog();
         }
 
-        void chartButton_Click(object sender, EventArgs e)
+        void settingsMainButton_Click(object sender, EventArgs e)
         {
-            spawnChart();
+            mainContextMenu.Show(settingsButton, Cursor.Position);
         }
 
         void hideInaccessableItem_Click(object sender, EventArgs e)
@@ -393,6 +377,7 @@ namespace disk_usage_ui
             UISettings.Default.HideInaccessablePaths = !UISettings.Default.HideInaccessablePaths; //toggle
             hideInaccessableItem.Checked = UISettings.Default.HideInaccessablePaths;
             UISettings.Default.Save();
+            RebuildUserInterface();
 
         }
 
@@ -415,16 +400,13 @@ namespace disk_usage_ui
 
         void ProcessNotifications()
         {
-            //is it the right time?
-
-            if (DateTime.Compare(DateTime.Now,NotificationTime) >= 0)
+            if (DateTime.Compare(DateTime.Now,NotificationTime) >= 0) //is it the right time?
             {
                 Console.WriteLine("Can notify if required!");
 
-
                 int count = 0;
 
-                List<PathRecord> notificationTargets = new List<PathRecord>();
+                var notificationTargets = new List<PathRecord>();
 
                 foreach (var path in core.Paths)
                 {
@@ -448,8 +430,6 @@ namespace disk_usage_ui
 
         void DoNotify(List<PathRecord> notificationTargets)
         {
-            
-
             NotificationTime = GetNextNotification();
             taskbarIcon.ShowBalloonTip(NOTIFY_DURATION, "Low Disk Space", $"You are running out of disk space on {pathListDescription(notificationTargets)}. Click here to see details.", ToolTipIcon.Info);
         }
@@ -463,9 +443,8 @@ namespace disk_usage_ui
                 return "null";
             }
 
-            System.Text.StringBuilder result = new System.Text.StringBuilder();
+            var result = new System.Text.StringBuilder();
             
-
             if (paths.Count > MAX_NAMED_PATHS)
             {
                 int others = paths.Count - MAX_NAMED_PATHS;
@@ -476,7 +455,7 @@ namespace disk_usage_ui
                     result.Append(paths[i].FriendlyName);
                     result.Append(i < MAX_NAMED_PATHS - 1 ? ", " : "");
                 }
-                result.Append($" and { others} other {kwd}");
+                result.Append($" and {others} other {kwd}");
 
                 return result.ToString();
             }
@@ -488,11 +467,9 @@ namespace disk_usage_ui
                 result.Append(paths[i].FriendlyName);
                 if (i == joins) break;
                 result.Append(i < joins - 1 ? ", " : " and ");
-            }
-            
+            }            
             return result.ToString();
         }
-
 
 
         void taskbarIcon_BalloonTipClicked(object sender, EventArgs e)
@@ -546,6 +523,30 @@ namespace disk_usage_ui
             fourhourMI.Checked = (freq == (60 * 4));
         }
 
+        void openTSMI_Click(object sender, EventArgs e)
+        {
+            ShowForm();
+        }
 
+        void exitTBMI_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+    }
+
+    public class NoFocusCueButton : Button
+    {
+        public NoFocusCueButton()
+        {
+            SetStyle(ControlStyles.Selectable, false);
+        }
+
+        protected override bool ShowFocusCues
+        {
+            get
+            {
+                return false;
+            }
+        }
     }
 }

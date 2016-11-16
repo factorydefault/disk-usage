@@ -83,6 +83,16 @@ namespace disk_usage_ui.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap div {
+            get {
+                object obj = ResourceManager.GetObject("div", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap GitHub {
             get {
                 object obj = ResourceManager.GetObject("GitHub", resourceCulture);
@@ -236,6 +246,16 @@ namespace disk_usage_ui.Properties {
         internal static System.Drawing.Bitmap resource_16xLG {
             get {
                 object obj = ResourceManager.GetObject("resource_16xLG", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SettingsDropdown {
+            get {
+                object obj = ResourceManager.GetObject("SettingsDropdown", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -39,9 +39,8 @@
             this.cancelButton = new System.Windows.Forms.Button();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.mainPanel = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.exampleTile = new disk_usage_ui.DiskTile();
             this.notificationsCheck = new System.Windows.Forms.CheckBox();
+            this.exampleTile = new disk_usage_ui.DiskTile();
             this.mainPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -128,7 +127,6 @@
             this.mainPanel.BackColor = System.Drawing.Color.White;
             this.mainPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.mainPanel.Controls.Add(this.notificationsCheck);
-            this.mainPanel.Controls.Add(this.label4);
             this.mainPanel.Controls.Add(this.exampleTile);
             this.mainPanel.Controls.Add(this.label3);
             this.mainPanel.Controls.Add(this.label1);
@@ -142,30 +140,6 @@
             this.mainPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.DragDropEvent);
             this.mainPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragEnterEvent);
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.label4.Location = new System.Drawing.Point(6, 118);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(48, 13);
-            this.label4.TabIndex = 10;
-            this.label4.Text = "Preview:";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // exampleTile
-            // 
-            this.exampleTile.BackColor = System.Drawing.Color.White;
-            this.exampleTile.Interactive = true;
-            this.exampleTile.Location = new System.Drawing.Point(75, 114);
-            this.exampleTile.Margin = new System.Windows.Forms.Padding(0);
-            this.exampleTile.MaximumSize = new System.Drawing.Size(230, 64);
-            this.exampleTile.MinimumSize = new System.Drawing.Size(230, 64);
-            this.exampleTile.Name = "exampleTile";
-            this.exampleTile.ShowPathOnHover = false;
-            this.exampleTile.Size = new System.Drawing.Size(230, 64);
-            this.exampleTile.TabIndex = 8;
-            // 
             // notificationsCheck
             // 
             this.notificationsCheck.AutoSize = true;
@@ -176,6 +150,19 @@
             this.notificationsCheck.Text = "Include this path in desktop notifications (if enabled)";
             this.notificationsCheck.UseVisualStyleBackColor = true;
             this.notificationsCheck.CheckedChanged += new System.EventHandler(this.notificationsCheck_CheckedChanged);
+            // 
+            // exampleTile
+            // 
+            this.exampleTile.BackColor = System.Drawing.Color.White;
+            this.exampleTile.Interactive = true;
+            this.exampleTile.Location = new System.Drawing.Point(20, 104);
+            this.exampleTile.Margin = new System.Windows.Forms.Padding(0);
+            this.exampleTile.MaximumSize = new System.Drawing.Size(270, 64);
+            this.exampleTile.MinimumSize = new System.Drawing.Size(270, 64);
+            this.exampleTile.Name = "exampleTile";
+            this.exampleTile.ShowPathOnHover = false;
+            this.exampleTile.Size = new System.Drawing.Size(270, 64);
+            this.exampleTile.TabIndex = 8;
             // 
             // AddPathDialog
             // 
@@ -216,7 +203,6 @@
         private DiskTile exampleTile;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.Panel mainPanel;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox notificationsCheck;
     }
 }

@@ -12,7 +12,7 @@ namespace disk_usage_ui.Forms
             InitializeComponent();
         }
 
-        public ChartDialogForm(List<disk_usage.PathRecord> collection)
+        public ChartDialogForm(IEnumerable<disk_usage.PathRecord> collection)
         {
             InitializeComponent();
 
@@ -35,9 +35,9 @@ namespace disk_usage_ui.Forms
             }
             saveFileDialog.FileName = $"DiskUsage {Tools.Timestamp()}.png";
 
-            var dr = saveFileDialog.ShowDialog();
+            var dialogResult = saveFileDialog.ShowDialog();
 
-            if (dr == DialogResult.OK)
+            if (dialogResult == DialogResult.OK)
             {
                 diskChart.SaveImage(saveFileDialog.FileName, ImageFormat.Png);
                 MessageBox.Show($"Saved {saveFileDialog.FileName}");

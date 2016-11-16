@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Drawing;
 using System.ComponentModel;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using ByteSizeLib;
 using System.Linq;
-using Newtonsoft.Json.Converters;
 
 namespace disk_usage
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class PathRecord
     {
+        // As per https://blogs.msdn.microsoft.com/oldnewthing/20101117-00/?p=12263/
         public const int LOW_DISK_SPACE_PERCENTAGE = 90;
 
-        Disk disk;
+        readonly Disk disk;
 
         public PathRecord()
         {
@@ -27,12 +26,17 @@ namespace disk_usage
 
         void Disk_DiskInfoUpdated(object sender, EventArgs e)
         {
-            DiskInfoUpdated?.Invoke(this, new EventArgs()); //pass on event
+            DiskInfoUpdated?.Invoke(this, new EventArgs()); //pass up event
+        }
+
+        public void RequestDiskInfoAsync()
+        {
+            disk.RequestDiskInfoAsync().Forget();
         }
 
         public void RequestDiskInfo()
         {
-            disk.RequestDiskInfo().Forget();
+            disk.RequestDiskInfo();
         }
 
         [JsonProperty]
@@ -53,9 +57,7 @@ namespace disk_usage
         {
             get
             {
-                string filename = FriendlyName.Replace('.', '_');
-
-                filename = filename.Replace("\\", " ");
+                var filename = FriendlyName.Replace('.', '_').Replace("\\", " ");
 
                 char[] toTrim = { ' ', '_' };
 
@@ -76,8 +78,6 @@ namespace disk_usage
             }
         }
 
-        public string PercentageFilled => $"{Math.Round(disk.Attributes.PercentageFilled, 2)} %";
-
         public ByteSize FreeSpace => ByteSize.FromBytes(disk.Attributes.FreeBytes);
 
         public ByteSize UsedSpace => ByteSize.FromBytes(bytesUsed);
@@ -88,9 +88,8 @@ namespace disk_usage
 
         public int FillLevel => (int)Math.Round(disk.Attributes.PercentageFilled, 0);
 
-        /// <summary>
-        /// As per https://blogs.msdn.microsoft.com/oldnewthing/20101117-00/?p=12263/
-        /// </summary>
+        public double FillPercentageDbl => disk.Attributes.PercentageFilled;
+
         public bool HasLowDiskSpace => FillLevel > LOW_DISK_SPACE_PERCENTAGE;
         
         public static PathRecord Create(string path, string name = "")

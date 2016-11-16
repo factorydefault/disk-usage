@@ -41,10 +41,10 @@
             this.tileAddPathButton = new System.Windows.Forms.ToolStripMenuItem();
             this.removeItemButton = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.notifyMI = new System.Windows.Forms.ToolStripMenuItem();
             this.propertiesButton = new System.Windows.Forms.ToolStripMenuItem();
             this.notificationPicture = new System.Windows.Forms.PictureBox();
             this.pictureBox = new System.Windows.Forms.PictureBox();
-            this.notifyMI = new System.Windows.Forms.ToolStripMenuItem();
             this.tileContext.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.notificationPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -53,10 +53,10 @@
             // nameLabel
             // 
             this.nameLabel.AutoEllipsis = true;
-            this.nameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nameLabel.Location = new System.Drawing.Point(69, 3);
+            this.nameLabel.Font = new System.Drawing.Font("Segoe UI", 9.163636F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nameLabel.Location = new System.Drawing.Point(61, 6);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(151, 16);
+            this.nameLabel.Size = new System.Drawing.Size(186, 18);
             this.nameLabel.TabIndex = 1;
             this.nameLabel.Text = "12345678901234567890123";
             this.nameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -66,19 +66,19 @@
             // detailLabel
             // 
             this.detailLabel.AutoSize = true;
-            this.detailLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.detailLabel.Font = new System.Drawing.Font("Segoe UI", 7.854546F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.detailLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(117)))), ((int)(((byte)(117)))));
-            this.detailLabel.Location = new System.Drawing.Point(68, 40);
+            this.detailLabel.Location = new System.Drawing.Point(60, 43);
             this.detailLabel.Name = "detailLabel";
-            this.detailLabel.Size = new System.Drawing.Size(54, 13);
+            this.detailLabel.Size = new System.Drawing.Size(64, 17);
             this.detailLabel.TabIndex = 2;
             this.detailLabel.Text = "Loading...";
             // 
             // usageBar
             // 
-            this.usageBar.Location = new System.Drawing.Point(70, 21);
+            this.usageBar.Location = new System.Drawing.Point(62, 27);
             this.usageBar.Name = "usageBar";
-            this.usageBar.Size = new System.Drawing.Size(150, 16);
+            this.usageBar.Size = new System.Drawing.Size(200, 16);
             this.usageBar.TabIndex = 3;
             // 
             // tileContext
@@ -95,7 +95,7 @@
             this.notifyMI,
             this.propertiesButton});
             this.tileContext.Name = "tileContext";
-            this.tileContext.Size = new System.Drawing.Size(224, 209);
+            this.tileContext.Size = new System.Drawing.Size(224, 184);
             this.tileContext.Opening += new System.ComponentModel.CancelEventHandler(this.tileContext_Opening);
             // 
             // openFolderButton
@@ -150,6 +150,13 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(220, 6);
             // 
+            // notifyMI
+            // 
+            this.notifyMI.Name = "notifyMI";
+            this.notifyMI.Size = new System.Drawing.Size(223, 24);
+            this.notifyMI.Text = "Notifications";
+            this.notifyMI.Click += new System.EventHandler(this.notifyMI_Click);
+            // 
             // propertiesButton
             // 
             this.propertiesButton.Name = "propertiesButton";
@@ -162,7 +169,7 @@
             this.notificationPicture.BackColor = System.Drawing.Color.Transparent;
             this.notificationPicture.Enabled = false;
             this.notificationPicture.Image = ((System.Drawing.Image)(resources.GetObject("notificationPicture.Image")));
-            this.notificationPicture.Location = new System.Drawing.Point(203, 41);
+            this.notificationPicture.Location = new System.Drawing.Point(244, 46);
             this.notificationPicture.Name = "notificationPicture";
             this.notificationPicture.Size = new System.Drawing.Size(16, 16);
             this.notificationPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -174,7 +181,7 @@
             // pictureBox
             // 
             this.pictureBox.Image = global::disk_usage_ui.Properties.Resources.networkdrive7;
-            this.pictureBox.Location = new System.Drawing.Point(13, 2);
+            this.pictureBox.Location = new System.Drawing.Point(7, 7);
             this.pictureBox.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox.MaximumSize = new System.Drawing.Size(64, 64);
             this.pictureBox.MinimumSize = new System.Drawing.Size(48, 48);
@@ -183,13 +190,6 @@
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
-            // 
-            // notifyMI
-            // 
-            this.notifyMI.Name = "notifyMI";
-            this.notifyMI.Size = new System.Drawing.Size(223, 24);
-            this.notifyMI.Text = "Notifications";
-            this.notifyMI.Click += new System.EventHandler(this.notifyMI_Click);
             // 
             // DiskTile
             // 
@@ -203,10 +203,10 @@
             this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.pictureBox);
             this.Margin = new System.Windows.Forms.Padding(0);
-            this.MaximumSize = new System.Drawing.Size(230, 64);
-            this.MinimumSize = new System.Drawing.Size(230, 64);
+            this.MaximumSize = new System.Drawing.Size(270, 64);
+            this.MinimumSize = new System.Drawing.Size(270, 64);
             this.Name = "DiskTile";
-            this.Size = new System.Drawing.Size(230, 64);
+            this.Size = new System.Drawing.Size(270, 64);
             this.DoubleClick += new System.EventHandler(this.DiskTile_DoubleClick);
             this.tileContext.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.notificationPicture)).EndInit();

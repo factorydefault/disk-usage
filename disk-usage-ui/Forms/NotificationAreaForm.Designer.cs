@@ -31,8 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NotificationAreaForm));
             this.taskbarIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.taskbarContext = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.openButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.mainContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addPathTaskbarButton = new System.Windows.Forms.ToolStripMenuItem();
             this.editJsonButton = new System.Windows.Forms.ToolStripMenuItem();
             this.viewChartButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,14 +50,20 @@
             this.emptySpaceAddPathButton = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.chartButton = new System.Windows.Forms.Button();
             this.orderByCombo = new System.Windows.Forms.ComboBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.toolTipProvider = new System.Windows.Forms.ToolTip(this.components);
             this.notificationTimer = new System.Windows.Forms.Timer(this.components);
-            this.taskbarContext.SuspendLayout();
+            this.taskbarContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.exitTBMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.openTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsButton = new disk_usage_ui.NoFocusCueButton();
+            this.mainContextMenu.SuspendLayout();
             this.emptySpaceContext.SuspendLayout();
             this.tableLayout.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.taskbarContext.SuspendLayout();
             this.SuspendLayout();
             // 
             // taskbarIcon
@@ -73,11 +78,10 @@
             this.taskbarIcon.BalloonTipClicked += new System.EventHandler(this.taskbarIcon_BalloonTipClicked);
             this.taskbarIcon.Click += new System.EventHandler(this.taskbarIcon_Click);
             // 
-            // taskbarContext
+            // mainContextMenu
             // 
-            this.taskbarContext.ImageScalingSize = new System.Drawing.Size(18, 18);
-            this.taskbarContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openButton,
+            this.mainContextMenu.ImageScalingSize = new System.Drawing.Size(18, 18);
+            this.mainContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addPathTaskbarButton,
             this.editJsonButton,
             this.viewChartButton,
@@ -86,18 +90,10 @@
             this.toolStripSeparator2,
             this.aboutButton,
             this.exitButton});
-            this.taskbarContext.Name = "taskbarMenu";
-            this.taskbarContext.Size = new System.Drawing.Size(281, 227);
-            this.taskbarContext.Opening += new System.ComponentModel.CancelEventHandler(this.taskbarContext_Opening);
-            // 
-            // openButton
-            // 
-            this.openButton.Font = new System.Drawing.Font("Segoe UI", 9.163636F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.openButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.openButton.Name = "openButton";
-            this.openButton.Size = new System.Drawing.Size(280, 24);
-            this.openButton.Text = "&Open Disk Usage";
-            this.openButton.Click += new System.EventHandler(this.openButton_Click);
+            this.mainContextMenu.MinimumSize = new System.Drawing.Size(279, 16);
+            this.mainContextMenu.Name = "taskbarMenu";
+            this.mainContextMenu.Size = new System.Drawing.Size(281, 178);
+            this.mainContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.taskbarContext_Opening);
             // 
             // addPathTaskbarButton
             // 
@@ -215,7 +211,7 @@
             this.diskStack.MinimumSize = new System.Drawing.Size(257, 0);
             this.diskStack.Name = "diskStack";
             this.diskStack.Padding = new System.Windows.Forms.Padding(6, 3, 3, 3);
-            this.diskStack.Size = new System.Drawing.Size(257, 465);
+            this.diskStack.Size = new System.Drawing.Size(303, 449);
             this.diskStack.TabIndex = 3;
             this.diskStack.WrapContents = false;
             // 
@@ -242,57 +238,59 @@
             this.tableLayout.ColumnCount = 1;
             this.tableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayout.Controls.Add(this.diskStack, 0, 0);
-            this.tableLayout.Controls.Add(this.panel1, 0, 1);
+            this.tableLayout.Controls.Add(this.panel1, 0, 2);
+            this.tableLayout.Controls.Add(this.pictureBox1, 0, 1);
             this.tableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayout.Location = new System.Drawing.Point(0, 0);
             this.tableLayout.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayout.MinimumSize = new System.Drawing.Size(257, 0);
             this.tableLayout.Name = "tableLayout";
-            this.tableLayout.RowCount = 2;
+            this.tableLayout.RowCount = 3;
             this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayout.Size = new System.Drawing.Size(257, 497);
+            this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 13F));
+            this.tableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayout.Size = new System.Drawing.Size(303, 497);
             this.tableLayout.TabIndex = 4;
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.chartButton);
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(251)))));
+            this.panel1.Controls.Add(this.settingsButton);
             this.panel1.Controls.Add(this.orderByCombo);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 465);
+            this.panel1.Location = new System.Drawing.Point(0, 462);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.MinimumSize = new System.Drawing.Size(257, 32);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(257, 32);
+            this.panel1.Size = new System.Drawing.Size(303, 35);
             this.panel1.TabIndex = 5;
-            // 
-            // chartButton
-            // 
-            this.chartButton.Image = global::disk_usage_ui.Properties.Resources.KPI_16xLG;
-            this.chartButton.Location = new System.Drawing.Point(215, 4);
-            this.chartButton.Margin = new System.Windows.Forms.Padding(0);
-            this.chartButton.Name = "chartButton";
-            this.chartButton.Size = new System.Drawing.Size(39, 23);
-            this.chartButton.TabIndex = 5;
-            this.toolTipProvider.SetToolTip(this.chartButton, "View list as a Chart");
-            this.chartButton.UseVisualStyleBackColor = true;
-            this.chartButton.Click += new System.EventHandler(this.chartButton_Click);
             // 
             // orderByCombo
             // 
-            this.orderByCombo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
+            this.orderByCombo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(251)))));
             this.orderByCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.orderByCombo.Font = new System.Drawing.Font("Segoe UI", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.orderByCombo.FormattingEnabled = true;
             this.orderByCombo.Items.AddRange(new object[] {
             "Sort by Name (A-Z)"});
-            this.orderByCombo.Location = new System.Drawing.Point(3, 5);
+            this.orderByCombo.Location = new System.Drawing.Point(26, 5);
             this.orderByCombo.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             this.orderByCombo.Name = "orderByCombo";
             this.orderByCombo.Size = new System.Drawing.Size(209, 21);
             this.orderByCombo.TabIndex = 4;
             this.toolTipProvider.SetToolTip(this.orderByCombo, "Select Sorting Method");
             this.orderByCombo.SelectedIndexChanged += new System.EventHandler(this.orderByCombo_SelectedIndexChanged);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::disk_usage_ui.Properties.Resources.div;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 449);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(303, 13);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.TabIndex = 6;
+            this.pictureBox1.TabStop = false;
             // 
             // toolTipProvider
             // 
@@ -305,18 +303,53 @@
             this.notificationTimer.Interval = 10000;
             this.notificationTimer.Tick += new System.EventHandler(this.notificationTimer_Tick);
             // 
+            // taskbarContext
+            // 
+            this.taskbarContext.ImageScalingSize = new System.Drawing.Size(18, 18);
+            this.taskbarContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openTSMI,
+            this.exitTBMI});
+            this.taskbarContext.Name = "taskbarContext";
+            this.taskbarContext.Size = new System.Drawing.Size(170, 77);
+            // 
+            // exitTBMI
+            // 
+            this.exitTBMI.Name = "exitTBMI";
+            this.exitTBMI.Size = new System.Drawing.Size(169, 24);
+            this.exitTBMI.Text = "E&xit";
+            this.exitTBMI.Click += new System.EventHandler(this.exitTBMI_Click);
+            // 
+            // openTSMI
+            // 
+            this.openTSMI.Name = "openTSMI";
+            this.openTSMI.Size = new System.Drawing.Size(169, 24);
+            this.openTSMI.Text = "&Open";
+            this.openTSMI.Click += new System.EventHandler(this.openTSMI_Click);
+            // 
+            // settingsButton
+            // 
+            this.settingsButton.Image = global::disk_usage_ui.Properties.Resources.SettingsDropdown;
+            this.settingsButton.Location = new System.Drawing.Point(238, 3);
+            this.settingsButton.Margin = new System.Windows.Forms.Padding(0);
+            this.settingsButton.Name = "settingsButton";
+            this.settingsButton.Size = new System.Drawing.Size(32, 24);
+            this.settingsButton.TabIndex = 5;
+            this.toolTipProvider.SetToolTip(this.settingsButton, "Settings Menu");
+            this.settingsButton.UseVisualStyleBackColor = true;
+            this.settingsButton.Click += new System.EventHandler(this.settingsMainButton_Click);
+            // 
             // NotificationAreaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(257, 497);
+            this.ClientSize = new System.Drawing.Size(303, 497);
             this.ControlBox = false;
             this.Controls.Add(this.tableLayout);
             this.Font = new System.Drawing.Font("Segoe UI", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(275, 515);
-            this.MinimumSize = new System.Drawing.Size(275, 96);
+            this.MaximumSize = new System.Drawing.Size(321, 515);
+            this.MinimumSize = new System.Drawing.Size(321, 96);
             this.Name = "NotificationAreaForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
@@ -324,10 +357,13 @@
             this.TopMost = true;
             this.Deactivate += new System.EventHandler(this.FormDeactivate);
             this.Resize += new System.EventHandler(this.NotificationAreaForm_Resize);
-            this.taskbarContext.ResumeLayout(false);
+            this.mainContextMenu.ResumeLayout(false);
             this.emptySpaceContext.ResumeLayout(false);
             this.tableLayout.ResumeLayout(false);
+            this.tableLayout.PerformLayout();
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.taskbarContext.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -335,12 +371,11 @@
         #endregion
 
         private System.Windows.Forms.NotifyIcon taskbarIcon;
-        private System.Windows.Forms.ContextMenuStrip taskbarContext;
+        private System.Windows.Forms.ContextMenuStrip mainContextMenu;
         private System.Windows.Forms.ToolStripMenuItem exitButton;
-        private System.Windows.Forms.ToolStripMenuItem openButton;
         private System.Windows.Forms.FlowLayoutPanel diskStack;
         private System.Windows.Forms.TableLayoutPanel tableLayout;
-        private DiskTile diskTile5;
+        //private DiskTile diskTile5;
         private System.Windows.Forms.ContextMenuStrip emptySpaceContext;
         private System.Windows.Forms.ToolStripMenuItem emptySpaceAddPathButton;
         private System.Windows.Forms.ToolStripMenuItem addPathTaskbarButton;
@@ -350,7 +385,7 @@
         private System.Windows.Forms.ToolStripMenuItem viewChartButton;
         private System.Windows.Forms.ToolStripMenuItem aboutButton;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button chartButton;
+        private NoFocusCueButton settingsButton;
         private System.Windows.Forms.ToolTip toolTipProvider;
         private System.Windows.Forms.ToolStripMenuItem hideInaccessableItem;
         private System.Windows.Forms.Timer notificationTimer;
@@ -360,6 +395,10 @@
         private System.Windows.Forms.ToolStripMenuItem thirtyMI;
         private System.Windows.Forms.ToolStripMenuItem onehourMI;
         private System.Windows.Forms.ToolStripMenuItem fourhourMI;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ContextMenuStrip taskbarContext;
+        private System.Windows.Forms.ToolStripMenuItem openTSMI;
+        private System.Windows.Forms.ToolStripMenuItem exitTBMI;
     }
 }
 
