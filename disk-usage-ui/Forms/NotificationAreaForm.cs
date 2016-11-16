@@ -326,7 +326,7 @@ namespace disk_usage_ui
 
         void spawnChart()
         {
-            var chartDialog = new Forms.ChartDialogForm(core.Sorted(SelectedSorting));
+            var chartDialog = new Forms.ChartDialogForm(core, SelectedSorting); //(core.Sorted(SelectedSorting));
             chartDialog.Show();
         }
         
