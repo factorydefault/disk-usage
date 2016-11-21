@@ -13,6 +13,12 @@ namespace disk_usage_ui.UserControls
         PercentageFill
     }
 
+    public enum ChartOrientation
+    {
+        Horizontal,
+        Vertical,
+    }
+
     public partial class DiskChart : UserControl
     {
 
@@ -82,26 +88,49 @@ namespace disk_usage_ui.UserControls
 
         }
 
+        public ChartOrientation ChartOrientation { get; set; } = ChartOrientation.Horizontal;
+
+        SeriesChartType normalSeries
+        {
+            get
+            {
+                return (ChartOrientation == ChartOrientation.Horizontal) ? SeriesChartType.StackedBar : SeriesChartType.StackedColumn;
+            }
+        }
+
+        SeriesChartType percentageSeries
+        {
+            get
+            {
+                return (ChartOrientation == ChartOrientation.Horizontal) ? SeriesChartType.StackedBar100 : SeriesChartType.StackedColumn100;
+            }
+        }
+
+
         void DrawChart(IEnumerable<PathRecord> data)
         {
             var usedSeries = Chart.Series["UsedSpace"];
             var freeSeries = Chart.Series["FreeSpace"];
 
             bool isUsingCapacity = (Mode == ChartDisplayMode.Capacity);
+            bool isHorizontal = (ChartOrientation == ChartOrientation.Horizontal);
 
-            usedSeries.ChartType = (isUsingCapacity) ? SeriesChartType.StackedBar : SeriesChartType.StackedBar100;
-            freeSeries.ChartType = (isUsingCapacity) ? SeriesChartType.StackedBar : SeriesChartType.StackedBar100;
+            usedSeries.ChartType = (isUsingCapacity) ? normalSeries : percentageSeries;
+            freeSeries.ChartType = (isUsingCapacity) ? normalSeries : percentageSeries;
+
+            usedSeries.BackGradientStyle = isHorizontal ? GradientStyle.HorizontalCenter : GradientStyle.VerticalCenter;
+
+            Chart.ChartAreas[0].AxisX.LabelStyle.Angle = isHorizontal ? 0 : -60;
 
             SetAxisYTitle((isUsingCapacity) ? "Capacity (GB)" : "Percentage Fill");
 
             usedSeries.Points.Clear();
             freeSeries.Points.Clear();
 
-            var index = data.Count(); //for correct ordering
-
+            var index = isHorizontal? data.Count(): 0; //for correct ordering
             bool hideEmpty = Properties.Settings.Default.HideInaccessablePaths;
 
-            foreach(var pc in data)
+            foreach (var pc in data)
             {
                 if (hideEmpty && pc.Capacity.Bytes < 1) continue;
 
@@ -126,7 +155,8 @@ namespace disk_usage_ui.UserControls
                 freePoint.AxisLabel = pc.FriendlyName;
 
                 freeSeries.Points.Add(freePoint);
-                index--;
+
+                index = (isHorizontal) ? index - 1 : index + 1;
             }
         }
 

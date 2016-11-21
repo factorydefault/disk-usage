@@ -250,5 +250,27 @@ namespace disk_usage_ui.Forms
             updateChart();
 
         }
+
+        void chartTypeToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            horizontalBarsToolStripMenuItem.Checked =
+                (diskChart.ChartOrientation == UserControls.ChartOrientation.Horizontal);
+            
+            verticalBarsToolStripMenuItem.Checked =
+                 (diskChart.ChartOrientation == UserControls.ChartOrientation.Vertical);
+
+        }
+
+        void horizontalBarsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            diskChart.ChartOrientation = UserControls.ChartOrientation.Horizontal;
+            updateChart();
+        }
+
+        void verticalBarsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            diskChart.ChartOrientation = UserControls.ChartOrientation.Vertical;
+            updateChart();
+        }
     }
 }

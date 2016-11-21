@@ -33,6 +33,10 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.chartTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.horizontalBarsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.verticalBarsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortingCombo = new System.Windows.Forms.ToolStripComboBox();
             this.displayModeCombo = new System.Windows.Forms.ToolStripComboBox();
@@ -62,6 +66,8 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveImageToolStripMenuItem,
             this.toolStripSeparator1,
+            this.chartTypeToolStripMenuItem,
+            this.toolStripSeparator2,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(41, 25);
@@ -82,6 +88,35 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(206, 6);
             // 
+            // chartTypeToolStripMenuItem
+            // 
+            this.chartTypeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.horizontalBarsToolStripMenuItem,
+            this.verticalBarsToolStripMenuItem});
+            this.chartTypeToolStripMenuItem.Name = "chartTypeToolStripMenuItem";
+            this.chartTypeToolStripMenuItem.Size = new System.Drawing.Size(209, 24);
+            this.chartTypeToolStripMenuItem.Text = "Chart Type";
+            this.chartTypeToolStripMenuItem.DropDownOpening += new System.EventHandler(this.chartTypeToolStripMenuItem_DropDownOpening);
+            // 
+            // horizontalBarsToolStripMenuItem
+            // 
+            this.horizontalBarsToolStripMenuItem.Name = "horizontalBarsToolStripMenuItem";
+            this.horizontalBarsToolStripMenuItem.Size = new System.Drawing.Size(175, 24);
+            this.horizontalBarsToolStripMenuItem.Text = "Horizontal Bars";
+            this.horizontalBarsToolStripMenuItem.Click += new System.EventHandler(this.horizontalBarsToolStripMenuItem_Click);
+            // 
+            // verticalBarsToolStripMenuItem
+            // 
+            this.verticalBarsToolStripMenuItem.Name = "verticalBarsToolStripMenuItem";
+            this.verticalBarsToolStripMenuItem.Size = new System.Drawing.Size(175, 24);
+            this.verticalBarsToolStripMenuItem.Text = "Columns";
+            this.verticalBarsToolStripMenuItem.Click += new System.EventHandler(this.verticalBarsToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(206, 6);
+            // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
@@ -97,7 +132,7 @@
             this.sortingCombo.Font = new System.Drawing.Font("Segoe UI", 7.854546F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.sortingCombo.Name = "sortingCombo";
             this.sortingCombo.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.sortingCombo.Size = new System.Drawing.Size(204, 25);
+            this.sortingCombo.Size = new System.Drawing.Size(172, 25);
             this.sortingCombo.SelectedIndexChanged += new System.EventHandler(this.sortingCombo_SelectedIndexChanged);
             // 
             // displayModeCombo
@@ -110,7 +145,7 @@
             "Percentage Fill"});
             this.displayModeCombo.Name = "displayModeCombo";
             this.displayModeCombo.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.displayModeCombo.Size = new System.Drawing.Size(96, 25);
+            this.displayModeCombo.Size = new System.Drawing.Size(75, 25);
             this.displayModeCombo.SelectedIndexChanged += new System.EventHandler(this.displayModeCombo_SelectedIndexChanged);
             // 
             // seriesMI
@@ -165,5 +200,9 @@
         private System.Windows.Forms.ToolStripComboBox displayModeCombo;
         private System.Windows.Forms.ToolStripComboBox sortingCombo;
         private System.Windows.Forms.ToolStripMenuItem seriesMI;
+        private System.Windows.Forms.ToolStripMenuItem chartTypeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem horizontalBarsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem verticalBarsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }
