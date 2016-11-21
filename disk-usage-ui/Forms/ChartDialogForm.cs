@@ -78,8 +78,8 @@ namespace disk_usage_ui.Forms
 
         void updateChart()
         {
-            UserControls.ChartDisplayMode m = (UserControls.ChartDisplayMode)displayModeCombo.SelectedIndex;
-            SortingOption sorting = (SortingOption)sortingCombo.SelectedIndex;
+            var m = (UserControls.ChartDisplayMode)displayModeCombo.SelectedIndex;
+            var sorting = (SortingOption)sortingCombo.SelectedIndex;
 
             diskChart.SetChartOptions(m, sorting);
         }
@@ -210,7 +210,7 @@ namespace disk_usage_ui.Forms
                     Name = data.ShortcutName,
                     Checked = data.ShowOnChart,
                     Tag = data.Path,
-                    Text = data.FriendlyName,
+                    Text = data.FriendlyName
                 };
                 item.Click += seriesMIOptionClicked;
                 dropdown.Add(item);
@@ -237,7 +237,7 @@ namespace disk_usage_ui.Forms
 
         void seriesMIOptionClicked(object sender, EventArgs e)
         {
-            ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
+            var clickedItem = (ToolStripMenuItem)sender;
             foreach (var data in diskChart.PathsInSortedOrder)
             {
                 if ((string) clickedItem.Tag == data.Path)

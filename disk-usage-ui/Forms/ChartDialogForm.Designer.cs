@@ -36,8 +36,8 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortingCombo = new System.Windows.Forms.ToolStripComboBox();
             this.displayModeCombo = new System.Windows.Forms.ToolStripComboBox();
-            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.seriesMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.diskChart = new disk_usage_ui.UserControls.DiskChart();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -97,7 +97,7 @@
             this.sortingCombo.Font = new System.Drawing.Font("Segoe UI", 7.854546F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.sortingCombo.Name = "sortingCombo";
             this.sortingCombo.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.sortingCombo.Size = new System.Drawing.Size(220, 25);
+            this.sortingCombo.Size = new System.Drawing.Size(204, 25);
             this.sortingCombo.SelectedIndexChanged += new System.EventHandler(this.sortingCombo_SelectedIndexChanged);
             // 
             // displayModeCombo
@@ -110,14 +110,8 @@
             "Percentage Fill"});
             this.displayModeCombo.Name = "displayModeCombo";
             this.displayModeCombo.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.displayModeCombo.Size = new System.Drawing.Size(112, 25);
+            this.displayModeCombo.Size = new System.Drawing.Size(96, 25);
             this.displayModeCombo.SelectedIndexChanged += new System.EventHandler(this.displayModeCombo_SelectedIndexChanged);
-            // 
-            // saveFileDialog
-            // 
-            this.saveFileDialog.DefaultExt = "png";
-            this.saveFileDialog.Filter = "PNG Image|*.png";
-            this.saveFileDialog.Title = "Save Image";
             // 
             // seriesMI
             // 
@@ -125,6 +119,12 @@
             this.seriesMI.Size = new System.Drawing.Size(87, 25);
             this.seriesMI.Text = "Show/Hide";
             this.seriesMI.DropDownOpening += new System.EventHandler(this.seriesMI_DropDownOpening);
+            // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.DefaultExt = "png";
+            this.saveFileDialog.Filter = "PNG Image|*.png";
+            this.saveFileDialog.Title = "Save Image";
             // 
             // diskChart
             // 
