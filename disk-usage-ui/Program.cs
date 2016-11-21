@@ -6,7 +6,6 @@ namespace disk_usage_ui
 {
     static class Program
     {
-
         public static Theme Theme;
 
         /// <summary>
@@ -17,9 +16,7 @@ namespace disk_usage_ui
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            
-            Theme = Theming.ForVersion(Windows.Version()); //determine theme
+            Theme = Theming.ForCurrentOS();
 
 #if THEME
             // OVERRIDE

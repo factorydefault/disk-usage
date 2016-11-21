@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using disk_usage;
 
 namespace disk_usage_ui
 {
@@ -16,13 +17,18 @@ namespace disk_usage_ui
 
     public static class Theming
     {
-        public static Theme ForVersion(disk_usage.OSVersion version)
+        public static Theme ForCurrentOS()
+        {
+            return Windows.CurrentOSName().GetTheme();
+        }
+
+        public static Theme GetTheme(this OSName version)
         {
             switch (version)
             {
-                case disk_usage.OSVersion.Windows10:
+                case OSName.Windows10:
                     return new Windows10Theme();
-                case disk_usage.OSVersion.Windows8:
+                case OSName.Windows8:
                     return new Windows10Theme(); //lazy, not making an additional theme for win 8 at the moment
                 default:
                     return new Windows7Theme();

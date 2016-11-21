@@ -34,10 +34,11 @@
             this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.diskChart = new disk_usage_ui.UserControls.DiskChart();
-            this.displayModeCombo = new System.Windows.Forms.ToolStripComboBox();
             this.sortingCombo = new System.Windows.Forms.ToolStripComboBox();
+            this.displayModeCombo = new System.Windows.Forms.ToolStripComboBox();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.seriesMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.diskChart = new disk_usage_ui.UserControls.DiskChart();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,10 +49,11 @@
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.sortingCombo,
-            this.displayModeCombo});
+            this.displayModeCombo,
+            this.seriesMI});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(538, 29);
+            this.menuStrip.Size = new System.Drawing.Size(532, 29);
             this.menuStrip.TabIndex = 1;
             this.menuStrip.Text = "menuStrip";
             // 
@@ -88,19 +90,15 @@
             this.exitToolStripMenuItem.Text = "&Close";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // saveFileDialog
+            // sortingCombo
             // 
-            this.saveFileDialog.DefaultExt = "png";
-            this.saveFileDialog.Filter = "PNG Image|*.png";
-            this.saveFileDialog.Title = "Save Image";
-            // 
-            // diskChart
-            // 
-            this.diskChart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.diskChart.Location = new System.Drawing.Point(0, 29);
-            this.diskChart.Name = "diskChart";
-            this.diskChart.Size = new System.Drawing.Size(538, 228);
-            this.diskChart.TabIndex = 0;
+            this.sortingCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.sortingCombo.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
+            this.sortingCombo.Font = new System.Drawing.Font("Segoe UI", 7.854546F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.sortingCombo.Name = "sortingCombo";
+            this.sortingCombo.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.sortingCombo.Size = new System.Drawing.Size(220, 25);
+            this.sortingCombo.SelectedIndexChanged += new System.EventHandler(this.sortingCombo_SelectedIndexChanged);
             // 
             // displayModeCombo
             // 
@@ -112,29 +110,40 @@
             "Percentage Fill"});
             this.displayModeCombo.Name = "displayModeCombo";
             this.displayModeCombo.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.displayModeCombo.Size = new System.Drawing.Size(128, 25);
+            this.displayModeCombo.Size = new System.Drawing.Size(112, 25);
             this.displayModeCombo.SelectedIndexChanged += new System.EventHandler(this.displayModeCombo_SelectedIndexChanged);
             // 
-            // sortingCombo
+            // saveFileDialog
             // 
-            this.sortingCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.sortingCombo.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
-            this.sortingCombo.Font = new System.Drawing.Font("Segoe UI", 7.854546F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.sortingCombo.Name = "sortingCombo";
-            this.sortingCombo.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.sortingCombo.Size = new System.Drawing.Size(236, 25);
-            this.sortingCombo.SelectedIndexChanged += new System.EventHandler(this.sortingCombo_SelectedIndexChanged);
+            this.saveFileDialog.DefaultExt = "png";
+            this.saveFileDialog.Filter = "PNG Image|*.png";
+            this.saveFileDialog.Title = "Save Image";
+            // 
+            // seriesMI
+            // 
+            this.seriesMI.Name = "seriesMI";
+            this.seriesMI.Size = new System.Drawing.Size(87, 25);
+            this.seriesMI.Text = "Show/Hide";
+            this.seriesMI.DropDownOpening += new System.EventHandler(this.seriesMI_DropDownOpening);
+            // 
+            // diskChart
+            // 
+            this.diskChart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.diskChart.Location = new System.Drawing.Point(0, 29);
+            this.diskChart.Name = "diskChart";
+            this.diskChart.Size = new System.Drawing.Size(532, 228);
+            this.diskChart.TabIndex = 0;
             // 
             // ChartDialogForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(538, 257);
+            this.ClientSize = new System.Drawing.Size(532, 257);
             this.Controls.Add(this.diskChart);
             this.Controls.Add(this.menuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
-            this.MinimumSize = new System.Drawing.Size(425, 300);
+            this.MinimumSize = new System.Drawing.Size(550, 300);
             this.Name = "ChartDialogForm";
             this.Text = "Disk Usage Chart";
             this.menuStrip.ResumeLayout(false);
@@ -155,5 +164,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripComboBox displayModeCombo;
         private System.Windows.Forms.ToolStripComboBox sortingCombo;
+        private System.Windows.Forms.ToolStripMenuItem seriesMI;
     }
 }

@@ -39,6 +39,16 @@ namespace disk_usage_ui.UserControls
 
         DiskUsage dataStore { get; set; } //hold a reference to disk usage.
 
+        public IEnumerable<PathRecord> PathsInSortedOrder
+        {
+            get
+            {
+                return dataStore.Sorted(Sorting);
+            }
+        }
+
+
+
         SortingOption Sorting { get; set; }
 
         public void AssignData(DiskUsage data, SortingOption initialSorting)
@@ -53,14 +63,25 @@ namespace disk_usage_ui.UserControls
         {
             Sorting = sorting;
             Mode = mode;
-            DrawChart(dataStore.Sorted(Sorting));
+            DrawChart(PathsInSortedOrder);
         }
 
         void SetAxisYTitle(string text)
         {
             Chart.ChartAreas[0].AxisY.Title = text;
         } 
-          
+         
+        public IEnumerable<string> SeriesNames()
+        {
+            var usedSeries = Chart.Series["UsedSpace"];
+
+            foreach( var point in usedSeries.Points)
+            {
+                yield return point.AxisLabel;
+            }
+
+        }
+
         void DrawChart(IEnumerable<PathRecord> data)
         {
             var usedSeries = Chart.Series["UsedSpace"];
@@ -83,6 +104,8 @@ namespace disk_usage_ui.UserControls
             foreach(var pc in data)
             {
                 if (hideEmpty && pc.Capacity.Bytes < 1) continue;
+
+                if (!pc.ShowOnChart) continue;
 
                 var usedPoint = new DataPoint();
 

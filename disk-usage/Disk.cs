@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace disk_usage
@@ -17,6 +16,7 @@ namespace disk_usage
             FreeBytes = totalFreeBytes;
         }
 
+        [Obsolete]
         public void WriteToConsole()
         {
             Console.WriteLine("Bytes Available to User: {0,15:D}", AvailableBytes);

@@ -39,6 +39,8 @@ namespace disk_usage
             disk.RequestDiskInfo();
         }
 
+        public bool ShowOnChart { get; set; } = true;
+
         [JsonProperty]
         public string FriendlyName
         {
