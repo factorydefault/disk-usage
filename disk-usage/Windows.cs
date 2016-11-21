@@ -1,5 +1,4 @@
 ﻿using IWshRuntimeLibrary;
-using Shell32;
 using System;
 using System.Runtime.InteropServices;
 
@@ -7,22 +6,26 @@ namespace disk_usage
 {
     public static class Windows
     {
-        public static OSVersion Version()
+        public static OSName CurrentOSName()
         {
             OperatingSystem os = Environment.OSVersion;
             Version ver = os.Version;
+            return ver.Name();
+        }
 
-            switch ($"{ver.Major}.{ver.Minor}")
+        public static OSName Name(this Version version)
+        {
+            switch ($"{version.Major}.{version.Minor}")
             {
                 case "10.1":
-                    return OSVersion.Windows10;
+                    return OSName.Windows10;
                 case "6.2":
                 case "6.3":
-                    return OSVersion.Windows8; //it's not important to distinguish 8.0/8.1 here.
+                    return OSName.Windows8; //it's not important to distinguish 8.0/8.1 here.
                 case "6.1":
-                    return OSVersion.Windows7;
+                    return OSName.Windows7;
                 default:
-                    return OSVersion.Other;
+                    return OSName.Other;
             }
         }
 

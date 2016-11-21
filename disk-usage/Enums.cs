@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace disk_usage
 {
-    public enum OSVersion
+    public enum OSName
     {
         Windows10,
         Windows8,
@@ -67,7 +67,11 @@ namespace disk_usage
                 typeof(DescriptionAttribute),
                 false);
 
-            return (attributes.Length > 0) ? attributes[0].Description : value.ToString();
+            if (attributes.Length > 0)
+            {
+                return (!string.IsNullOrWhiteSpace(attributes[0].Description)) ? attributes[0].Description : value.ToString();
+            }
+            return value.ToString();
 
         }
     }

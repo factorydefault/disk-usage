@@ -55,9 +55,11 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DiskSpaceInformationTests.cs" />
+    <Compile Include="EnumsTests.cs" />
     <Compile Include="FormattingTests.cs" />
     <Compile Include="PathRecordTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WindowsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\disk-usage\disk-usage.csproj">
