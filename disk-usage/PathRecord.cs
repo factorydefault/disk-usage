@@ -86,6 +86,8 @@ namespace disk_usage
 
         public ByteSize Capacity => ByteSize.FromBytes(disk.Attributes.TotalBytes);
 
+        public bool HasZeroCapacity => Capacity.Bytes < 1;
+
         ulong bytesUsed => disk.Attributes.TotalBytes - disk.Attributes.FreeBytes;
 
         public int FillLevel => (int)Math.Round(disk.Attributes.PercentageFilled, 0);

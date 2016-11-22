@@ -132,7 +132,7 @@ namespace disk_usage_ui.UserControls
 
             foreach (var pc in data)
             {
-                if (hideEmpty && pc.Capacity.Bytes < 1) continue;
+                if (hideEmpty && pc.HasZeroCapacity) continue;
 
                 if (!pc.ShowOnChart) continue;
 

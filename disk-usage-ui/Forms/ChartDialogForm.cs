@@ -32,22 +32,7 @@ namespace disk_usage_ui.Forms
             {
                 diskChart.AssignData(dataStore, initialSort);
 
-                try
-                {
-                    sortingCombo.Items.Clear();
-
-                    foreach (SortingOption option in Enum.GetValues(typeof(SortingOption)))
-                    {
-                        sortingCombo.Items.Add(option.GetDescription());
-                    }
-
-                    sortingCombo.SelectedIndex = (int)initialSort;
-                }
-                catch (Exception)
-                {
-                    sortingCombo.SelectedIndex = 0;
-                }
-
+                sortingCombo.AddEnumDescriptionItems(new SortingOption(), (int)initialSort);
             }
 
             displayModeCombo.SelectedIndex = 0;
@@ -203,7 +188,7 @@ namespace disk_usage_ui.Forms
             
             foreach (var data in diskChart.PathsInSortedOrder)
             {
-                if (hideEmpty && data.Capacity.Bytes < 1) continue;
+                if (hideEmpty && data.HasZeroCapacity) continue;
 
                 var item = new ToolStripMenuItem
                 {

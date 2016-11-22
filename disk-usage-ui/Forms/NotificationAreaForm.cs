@@ -30,23 +30,7 @@ namespace disk_usage_ui
 
             HideForm(core.SettingsFileWasGenerated);
 
-            try
-            {
-                orderByCombo.Items.Clear();
-                                
-                foreach (SortingOption option in Enum.GetValues(typeof(SortingOption)))
-                {
-                    orderByCombo.Items.Add(option.GetDescription());
-                }
-
-                int index = UISettings.Default.ComboIndex;
-
-                orderByCombo.SelectedIndex = index;
-            }
-            catch (Exception)
-            {
-                orderByCombo.SelectedIndex = 0;
-            }
+            orderByCombo.AddEnumDescriptionItems(new SortingOption(), ComboIndex);
 
             //do an update now
             core.RequestUpdateFromAll();
@@ -113,6 +97,32 @@ namespace disk_usage_ui
 
         }
 
+        int ComboIndex
+        {
+            get
+            {
+                return UISettings.Default.ComboIndex;
+            }
+            set
+            {
+                UISettings.Default.ComboIndex = value;
+                UISettings.Default.Save();
+            }
+        }
+
+        bool HideInaccessablePaths
+        {
+            get
+            {
+                return UISettings.Default.HideInaccessablePaths;
+            }
+            set
+            {
+                UISettings.Default.HideInaccessablePaths = value;
+                UISettings.Default.Save();
+            }
+        }
+
 
         void RebuildUserInterface()
         {
@@ -122,7 +132,7 @@ namespace disk_usage_ui
 
             var sortedCollection = core.Sorted(SelectedSorting);
 
-            int collectionCount = (UISettings.Default.HideInaccessablePaths) ? sortedCollection.Count(pr => pr.Capacity.Bytes > 0) : sortedCollection.Count();
+            int collectionCount = (HideInaccessablePaths) ? sortedCollection.Count(pr => pr.Capacity.Bytes > 0) : sortedCollection.Count();
 
             int diskCount = (collectionCount < MAX_ITEM_LIST_COUNT) ? collectionCount : MAX_ITEM_LIST_COUNT;
 
@@ -288,12 +298,13 @@ namespace disk_usage_ui
             }
         }
 
+
+
         void orderByCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
             {
-                UISettings.Default.ComboIndex = orderByCombo.SelectedIndex;
-                UISettings.Default.Save();
+                ComboIndex = orderByCombo.SelectedIndex;
             }
             catch (Exception)
             {
@@ -357,8 +368,7 @@ namespace disk_usage_ui
                 notificationsMI.Image = Properties.Resources.ic_notifications_off_black_18dp;
             }
 
-
-            hideInaccessableItem.Checked = UISettings.Default.HideInaccessablePaths;
+            hideInaccessableItem.Checked = HideInaccessablePaths;
         }
 
         void aboutButton_Click(object sender, EventArgs e)
@@ -374,9 +384,8 @@ namespace disk_usage_ui
 
         void hideInaccessableItem_Click(object sender, EventArgs e)
         {
-            UISettings.Default.HideInaccessablePaths = !UISettings.Default.HideInaccessablePaths; //toggle
-            hideInaccessableItem.Checked = UISettings.Default.HideInaccessablePaths;
-            UISettings.Default.Save();
+            HideInaccessablePaths = !HideInaccessablePaths; //toggle
+            hideInaccessableItem.Checked = HideInaccessablePaths;
             RebuildUserInterface();
 
         }
@@ -534,19 +543,5 @@ namespace disk_usage_ui
         }
     }
 
-    public class NoFocusCueButton : Button
-    {
-        public NoFocusCueButton()
-        {
-            SetStyle(ControlStyles.Selectable, false);
-        }
 
-        protected override bool ShowFocusCues
-        {
-            get
-            {
-                return false;
-            }
-        }
-    }
 }

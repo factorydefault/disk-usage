@@ -155,7 +155,7 @@ namespace disk_usage_ui
 
             detailLabel.Text = $"{pathRecord.FreeSpace.ExplorerLabel()} free of {pathRecord.Capacity.ExplorerLabel()}";
 
-            if (pathRecord.Capacity.Bytes < 1) //edge case where path has not been found
+            if (pathRecord.HasZeroCapacity) //edge case where path has not been found
             {
                 SetAsNotFound();
             }
