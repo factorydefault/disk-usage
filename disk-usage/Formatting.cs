@@ -4,7 +4,7 @@ namespace disk_usage
 {
     public static class Formatting
     {
-        static double EPSILON => 1e-9;
+        static double Epsilon => 1e-9;
 
         public static string Ellipsis(this string str, int length = 10)
         {
@@ -18,27 +18,23 @@ namespace disk_usage
         {
             if (size.Bytes < 1) return string.Empty;
 
-            if (size.TeraBytes >= 1.0) return size.ToString("#.##"); //2dp
-            if (size.GigaBytes >= 1.0) return size.ToString("#.#"); //1dp
-            return size.ToString("#"); //0dp
+            return size.TeraBytes >= 1.0 ? size.ToString("#.##") : size.ToString(size.GigaBytes >= 1.0 ? "#.#" : "#");
         }
 
         public static double Clamp(this double value, double min = 0, double max = 100)
         {
             //edge case
-            if (System.Math.Abs(min - max) < EPSILON) return min;
+            if (System.Math.Abs(min - max) < Epsilon) return min;
 
             if (min > max) //flip
             {
-                double temp = max;
+                var temp = max;
                 max = min;
                 min = temp;
             }
 
             if (value > max) return max;
-            if (value < min) return min;
-            return value;
-
+            return value < min ? min : value;
         }
     }
 }

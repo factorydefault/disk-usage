@@ -22,11 +22,7 @@ namespace disk_usage_ui
             }
             catch (Exception ex) when (ex is System.IO.FileNotFoundException || ex is ArgumentException)
             {
-                MessageBox.Show("The directory could not be found, a shortcut cannot be created.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception)
-            {
-                throw;
+                MessageBox.Show(@"The directory could not be found, a shortcut cannot be created.", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return false;
         }

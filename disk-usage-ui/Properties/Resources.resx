@@ -181,4 +181,16 @@
   <data name="filter_16xLG" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\filter_16xlg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="AboutForm_Header" xml:space="preserve">
+    <value>
+External Libraries:
+
+</value>
+  </data>
+  <data name="ChartDialogForm_SavedPathMsg" xml:space="preserve">
+    <value>Saved {0}</value>
+  </data>
+  <data name="DiskTile_UpdateUserInterface+0_free_of_1" xml:space="preserve">
+    <value>{0} free of {1}</value>
+  </data>
 </root>

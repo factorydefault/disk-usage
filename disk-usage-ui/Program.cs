@@ -1,12 +1,12 @@
-﻿using disk_usage;
-using System;
+﻿using System;
 using System.Windows.Forms;
+using disk_usage_ui.Forms;
 
 namespace disk_usage_ui
 {
-    static class Program
+    internal static class Program
     {
-        public static Theme Theme;
+        public static ITheme Theme;
 
         /// <summary>
         /// The main entry point for the application.
@@ -16,7 +16,7 @@ namespace disk_usage_ui
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Theme = Theming.ForCurrentOS();
+            Theme = Theming.ForCurrentOs();
 
 #if THEME
             // OVERRIDE

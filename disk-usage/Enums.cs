@@ -2,11 +2,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Reflection;
 
 namespace disk_usage
 {
-    public enum OSName
+    public enum OsName
     {
         Windows10,
         Windows8,
@@ -18,7 +17,7 @@ namespace disk_usage
     {
         Local,
         Remote,
-        OS,
+        Os,
         Unknown
     }
 

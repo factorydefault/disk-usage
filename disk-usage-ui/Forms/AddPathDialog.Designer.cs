@@ -1,4 +1,6 @@
-﻿namespace disk_usage_ui
+﻿using disk_usage_ui.UserControls;
+
+namespace disk_usage_ui.Forms
 {
     partial class AddPathDialog
     {
@@ -40,7 +42,7 @@
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.mainPanel = new System.Windows.Forms.Panel();
             this.notificationsCheck = new System.Windows.Forms.CheckBox();
-            this.exampleTile = new disk_usage_ui.DiskTile();
+            this.exampleTile = new DiskTile();
             this.mainPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,7 +73,7 @@
             this.labelTextBox.Name = "labelTextBox";
             this.labelTextBox.Size = new System.Drawing.Size(214, 20);
             this.labelTextBox.TabIndex = 2;
-            this.labelTextBox.TextChanged += new System.EventHandler(this.dialogTextChanged);
+            this.labelTextBox.TextChanged += new System.EventHandler(this.DialogTextChanged);
             // 
             // pathTextBox
             // 
@@ -80,7 +82,7 @@
             this.pathTextBox.Name = "pathTextBox";
             this.pathTextBox.Size = new System.Drawing.Size(214, 20);
             this.pathTextBox.TabIndex = 3;
-            this.pathTextBox.TextChanged += new System.EventHandler(this.dialogTextChanged);
+            this.pathTextBox.TextChanged += new System.EventHandler(this.DialogTextChanged);
             this.pathTextBox.DragDrop += new System.Windows.Forms.DragEventHandler(this.DragDropEvent);
             this.pathTextBox.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragEnterEvent);
             this.pathTextBox.DoubleClick += new System.EventHandler(this.pathTextBox_DoubleClick);
@@ -184,7 +186,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Add New Path";
-            this.Load += new System.EventHandler(this.load);
+            this.Load += new System.EventHandler(this.OnLoad);
             this.mainPanel.ResumeLayout(false);
             this.mainPanel.PerformLayout();
             this.ResumeLayout(false);

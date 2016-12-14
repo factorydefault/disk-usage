@@ -61,6 +61,18 @@ namespace disk_usage_ui.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 
+        ///External Libraries:
+        ///
+        ///.
+        /// </summary>
+        internal static string AboutForm_Header {
+            get {
+                return ResourceManager.GetString("AboutForm_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap action_add_16xLG {
@@ -77,6 +89,24 @@ namespace disk_usage_ui.Properties {
             get {
                 object obj = ResourceManager.GetObject("action_Cancel_16xLG", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saved {0}.
+        /// </summary>
+        internal static string ChartDialogForm_SavedPathMsg {
+            get {
+                return ResourceManager.GetString("ChartDialogForm_SavedPathMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} free of {1}.
+        /// </summary>
+        internal static string DiskTile_UpdateUserInterface_0_free_of_1 {
+            get {
+                return ResourceManager.GetString("DiskTile_UpdateUserInterface+0_free_of_1", resourceCulture);
             }
         }
         

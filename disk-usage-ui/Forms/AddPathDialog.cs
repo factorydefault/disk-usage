@@ -1,21 +1,22 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace disk_usage_ui
+namespace disk_usage_ui.Forms
 {
     public partial class AddPathDialog : Form
     {
         public string InitialPath { get; set; } = "C:\\";
 
-        public disk_usage.PathRecord NewComputer { get; private set; }
+        public disk_usage.PathRecord NewComputer { get; }
 
         public AddPathDialog()
         {
             InitializeComponent();
             NewComputer = new disk_usage.PathRecord();
             notificationsCheck.Checked = NewComputer.Notifications;
-            updateUserInterface();
+            UpdateUserInterface();
             DialogResult = DialogResult.Cancel;
             NewComputer.DiskInfoUpdated += NewComputer_DiskInfoUpdated;
         }
@@ -31,9 +32,9 @@ namespace disk_usage_ui
             Close();
         }
 
-        void dialogTextChanged(object sender, EventArgs e)
+        void DialogTextChanged(object sender, EventArgs e)
         {
-            updateUserInterface();    
+            UpdateUserInterface();    
         }
 
 
@@ -43,12 +44,12 @@ namespace disk_usage_ui
             {
                 if (disk_usage.PathRecord.LocalRegex.IsMatch(path)) 
                 {
-                    Console.WriteLine("Valid Local");
+                    Console.WriteLine(@"Valid Local");
                     return true;
                 }
-                if (disk_usage.PathRecord.UNCNamedRegex.IsMatch(path))
+                if (disk_usage.PathRecord.UncNamedRegex.IsMatch(path))
                 {
-                    Console.WriteLine("Valid UNC");
+                    Console.WriteLine(@"Valid UNC");
                     return true;
                 }
 
@@ -57,25 +58,25 @@ namespace disk_usage_ui
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"PathExists error: {ex.Message}");
+                Console.WriteLine($@"PathExists error: {ex.Message}");
             }
             return false;
 
 
         }
 
-        string sanitisePath(string input)
+        static string SanitisePath(string input)
         {
-            var result = System.IO.Path.GetInvalidPathChars().Aggregate(input, (current, c) => current.Replace(c.ToString(), string.Empty)).Trim();
+            var result = Path.GetInvalidPathChars().Aggregate(input, (current, c) => current.Replace(c.ToString(), string.Empty)).Trim();
             return result.Replace('/', '\\');
         }
 
 
-        void updateUserInterface()
+        void UpdateUserInterface()
         {
             NewComputer.FriendlyName = labelTextBox.Text;
 
-            var typedPath = sanitisePath(pathTextBox.Text);
+            var typedPath = SanitisePath(pathTextBox.Text);
 
             NewComputer.Path = typedPath;
 
@@ -109,7 +110,7 @@ namespace disk_usage_ui
             Close();
         }
 
-        void load(object sender, EventArgs e)
+        void OnLoad(object sender, EventArgs e)
         {
             pathTextBox.Text = InitialPath;
             exampleTile.Interactive = false;
@@ -121,15 +122,9 @@ namespace disk_usage_ui
 
             if (dr == DialogResult.OK)
             {
-                if(!folderBrowserDialog.SelectedPath.EndsWith("\\", StringComparison.Ordinal))
-                {
-                    pathTextBox.Text = $"{folderBrowserDialog.SelectedPath}\\";
-                }
-                else
-                {
-                    pathTextBox.Text = folderBrowserDialog.SelectedPath;
-                }
-                
+                pathTextBox.Text = !folderBrowserDialog.SelectedPath.EndsWith("\\", StringComparison.Ordinal)
+                    ? $"{folderBrowserDialog.SelectedPath}\\" 
+                    : folderBrowserDialog.SelectedPath;
             }
 
 
@@ -137,25 +132,20 @@ namespace disk_usage_ui
 
         void DragEnterEvent(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                e.Effect = DragDropEffects.Copy;
-            }
-            else
-            {
-                e.Effect = DragDropEffects.None;
-            }
-
-
+            e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) 
+                ? DragDropEffects.Copy 
+                : DragDropEffects.None;
         }
 
-        void ProcessDragDrop(string[] FileList)
+        void ProcessDragDrop(string[] fileList)
         {
             try
             {
-                if (FileList.Count() > 0)
+                if (fileList.Length > 0)
                 {
-                    string path = FileList.FirstOrDefault();
+                    string path = fileList.FirstOrDefault();
+
+                    if (path == null) return;
 
                     Console.WriteLine(path);
 
@@ -164,17 +154,15 @@ namespace disk_usage_ui
                         pathTextBox.Text = path;
                         return;
                     }
-
-                    System.IO.FileAttributes attr = System.IO.File.GetAttributes(path);
-
-                    if (attr.HasFlag(System.IO.FileAttributes.Directory))
+                    
+                    if (File.GetAttributes(path).HasFlag(FileAttributes.Directory))
                     {
-                        pathTextBox.Text = sanitisePath(path);
+                        pathTextBox.Text = SanitisePath(path);
                     }
                     else
                     {
-                        System.IO.FileInfo fi = new System.IO.FileInfo(FileList.FirstOrDefault());
-                        pathTextBox.Text = sanitisePath(fi.Directory.FullName);
+                        var fi = new FileInfo(fileList.First());
+                        if (fi.Directory != null) pathTextBox.Text = SanitisePath(fi.Directory.FullName);
                     }
 
                 }
@@ -189,9 +177,9 @@ namespace disk_usage_ui
 
         void DragDropEvent(object sender, DragEventArgs e)
         {
-            string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            var fileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
 
-            ProcessDragDrop(FileList);
+            ProcessDragDrop(fileList);
         }
 
         void notificationsCheck_CheckedChanged(object sender, EventArgs e)

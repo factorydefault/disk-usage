@@ -18,7 +18,7 @@ namespace disk_usage_ui.Forms
 
         void driveLabelTextBox_TextChanged(object sender, EventArgs e)
         {
-            setFormTitle();
+            SetFormTitle();
         }
 
         void PropertiesForm_Load(object sender, EventArgs e)
@@ -31,10 +31,10 @@ namespace disk_usage_ui.Forms
         public void ProvideData(PathRecord record)
         {
             _record = record;
-            UpdateUI();
+            UpdateUi();
         }
 
-        void UpdateUI()
+        void UpdateUi()
         {
             driveLabelTextBox.Text = _record.FriendlyName;
             locationLabel.Text = _record.Path;
@@ -56,22 +56,17 @@ namespace disk_usage_ui.Forms
             notificationsCheckBox.Checked = _record.Notifications;
             highlightCheckBox.Checked = _record.Highlight;
 
-            setFormTitle();
+            SetFormTitle();
 
         }
 
         string formattedBytes(ByteSize size) => $"{size.Bytes:#,0} bytes";
 
-        void setFormTitle()
+        void SetFormTitle()
         {
-            if (string.IsNullOrWhiteSpace(driveLabelTextBox.Text))
-            {
-                Text = $"{_record.Path.Trim().Ellipsis(22)} Properties";
-            }
-            else
-            {
-                Text = $"{driveLabelTextBox.Text.Trim().Ellipsis(22)} Properties";
-            }
+            Text = string.IsNullOrWhiteSpace(driveLabelTextBox.Text) 
+                ? $"{_record.Path.Trim().Ellipsis(22)} Properties" 
+                : $"{driveLabelTextBox.Text.Trim().Ellipsis(22)} Properties";
         }
                 
         string DiskTypeString
@@ -84,7 +79,7 @@ namespace disk_usage_ui.Forms
                         return "Local / Mapped Drive";
                     case PathLocation.Remote:
                         return "Network Drive";
-                    case PathLocation.OS:
+                    case PathLocation.Os:
                         return "OS Drive";
                     default:
                         return "Unknown";
@@ -94,12 +89,16 @@ namespace disk_usage_ui.Forms
 
         void updatePieChart(double percentageUsed)
         {
-            double percentageClamped = percentageUsed.Clamp(0, 100);
+            double percentageClamped = percentageUsed.Clamp();
 
             try
             {
-                pieChart.Series.FirstOrDefault().Points[0].SetValueY(percentageClamped);
-                pieChart.Series.FirstOrDefault().Points[1].SetValueY(100 - percentageClamped);
+                var firstOrDefault = pieChart.Series.FirstOrDefault();
+                if (firstOrDefault != null)
+                {
+                    firstOrDefault.Points[0].SetValueY(percentageClamped);
+                    firstOrDefault.Points[1].SetValueY(100 - percentageClamped);
+                }
             }
             catch (Exception ex)
             {

@@ -21,19 +21,17 @@ namespace disk_usage_ui.UserControls
 
     public partial class DiskChart : UserControl
     {
-
-        Color lowDiskSpaceColor => Color.Red;
-        Color lowDiskSpaceColorSecondary => Color.FromArgb(255, 128, 128);
+        static Color LowDiskSpaceColor => Color.Red;
+        static Color LowDiskSpaceColorSecondary => Color.FromArgb(255, 128, 128);
 
         public DiskChart()
         {
             InitializeComponent();
 
-            if (Program.Theme != null)
-            {
-                Chart.Series["UsedSpace"].Color = Program.Theme.ChartUsedSpace;
-                Chart.Series["UsedSpace"].BackSecondaryColor = Program.Theme.ChartUsedSpaceSecondary;
-            }
+            if (Program.Theme == null) return;
+
+            Chart.Series["UsedSpace"].Color = Program.Theme.ChartUsedSpace;
+            Chart.Series["UsedSpace"].BackSecondaryColor = Program.Theme.ChartUsedSpaceSecondary;
         }
 
         ChartDisplayMode Mode { get; set; } = ChartDisplayMode.Capacity;
@@ -43,23 +41,15 @@ namespace disk_usage_ui.UserControls
             Chart.SaveImage(imageFileName, format);
         }
 
-        DiskUsage dataStore { get; set; } //hold a reference to disk usage.
+        DiskUsage DataStore { get; set; } //hold a reference to disk usage.
 
-        public IEnumerable<PathRecord> PathsInSortedOrder
-        {
-            get
-            {
-                return dataStore.Sorted(Sorting);
-            }
-        }
-
-
+        public IEnumerable<PathRecord> PathsInSortedOrder => DataStore.Sorted(Sorting);
 
         SortingOption Sorting { get; set; }
 
         public void AssignData(DiskUsage data, SortingOption initialSorting)
         {
-            dataStore = data;
+            DataStore = data;
             Sorting = initialSorting;
 
             SetChartOptions(Mode, Sorting);
@@ -90,21 +80,9 @@ namespace disk_usage_ui.UserControls
 
         public ChartOrientation ChartOrientation { get; set; } = ChartOrientation.Horizontal;
 
-        SeriesChartType normalSeries
-        {
-            get
-            {
-                return (ChartOrientation == ChartOrientation.Horizontal) ? SeriesChartType.StackedBar : SeriesChartType.StackedColumn;
-            }
-        }
+        SeriesChartType NormalSeries => (ChartOrientation == ChartOrientation.Horizontal) ? SeriesChartType.StackedBar : SeriesChartType.StackedColumn;
 
-        SeriesChartType percentageSeries
-        {
-            get
-            {
-                return (ChartOrientation == ChartOrientation.Horizontal) ? SeriesChartType.StackedBar100 : SeriesChartType.StackedColumn100;
-            }
-        }
+        SeriesChartType PercentageSeries => (ChartOrientation == ChartOrientation.Horizontal) ? SeriesChartType.StackedBar100 : SeriesChartType.StackedColumn100;
 
 
         void DrawChart(IEnumerable<PathRecord> data)
@@ -115,8 +93,8 @@ namespace disk_usage_ui.UserControls
             bool isUsingCapacity = (Mode == ChartDisplayMode.Capacity);
             bool isHorizontal = (ChartOrientation == ChartOrientation.Horizontal);
 
-            usedSeries.ChartType = (isUsingCapacity) ? normalSeries : percentageSeries;
-            freeSeries.ChartType = (isUsingCapacity) ? normalSeries : percentageSeries;
+            usedSeries.ChartType = (isUsingCapacity) ? NormalSeries : PercentageSeries;
+            freeSeries.ChartType = (isUsingCapacity) ? NormalSeries : PercentageSeries;
 
             usedSeries.BackGradientStyle = isHorizontal ? GradientStyle.HorizontalCenter : GradientStyle.VerticalCenter;
 
@@ -127,10 +105,12 @@ namespace disk_usage_ui.UserControls
             usedSeries.Points.Clear();
             freeSeries.Points.Clear();
 
-            var index = isHorizontal? data.Count(): 0; //for correct ordering
+            var pathRecords = data as PathRecord[] ?? data.ToArray();
+
+            var index = isHorizontal? pathRecords.Count(): 0; //for correct ordering
             bool hideEmpty = Properties.Settings.Default.HideInaccessablePaths;
 
-            foreach (var pc in data)
+            foreach (var pc in pathRecords)
             {
                 if (hideEmpty && pc.HasZeroCapacity) continue;
 
@@ -143,8 +123,8 @@ namespace disk_usage_ui.UserControls
 
                 if (pc.HasLowDiskSpace)
                 {
-                    usedPoint.Color = lowDiskSpaceColor;
-                    usedPoint.BackSecondaryColor = lowDiskSpaceColorSecondary;
+                    usedPoint.Color = LowDiskSpaceColor;
+                    usedPoint.BackSecondaryColor = LowDiskSpaceColorSecondary;
                 }
 
                 usedSeries.Points.Add(usedPoint);

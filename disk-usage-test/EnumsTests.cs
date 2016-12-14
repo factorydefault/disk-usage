@@ -1,7 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using disk_usage;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using scm = System.ComponentModel;
 
-namespace disk_usage.Tests
+namespace disk_usage_test
 {
     [TestClass]
     public class EnumsTests

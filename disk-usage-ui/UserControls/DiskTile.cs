@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms;
 using System.Runtime.InteropServices;
-
-using ProgressBarState = disk_usage.ProgressBarState;
+using System.Windows.Forms;
 using disk_usage;
+using disk_usage_ui.Properties;
+using ProgressBarState = disk_usage.ProgressBarState;
 
-namespace disk_usage_ui
+namespace disk_usage_ui.UserControls
 {
     public partial class DiskTile : UserControl
     {
@@ -39,7 +39,7 @@ namespace disk_usage_ui
             }
         }
 
-        public string path = "";
+        public string Path = "";
 
         public DiskTile()
         {
@@ -59,14 +59,7 @@ namespace disk_usage_ui
         {
             if(string.IsNullOrWhiteSpace(overrideLabel))
             {
-                if (_recordReference != null && ! string.IsNullOrWhiteSpace(_recordReference.FriendlyName))
-                {
-                    nameLabel.Text = $"{_recordReference.FriendlyName}";
-                }
-                else
-                {
-                    nameLabel.Text = "Specify a Path";
-                }
+                nameLabel.Text = !string.IsNullOrWhiteSpace(_recordReference?.FriendlyName) ? $"{_recordReference.FriendlyName}" : "Specify a Path";
             }
             else
             {
@@ -89,7 +82,7 @@ namespace disk_usage_ui
             switch (location)
             {
                 case PathLocation.Local:
-                case PathLocation.OS:
+                case PathLocation.Os:
                     detailLabel.Text = "Path not found";
                     break;
                 case PathLocation.Remote:
@@ -100,7 +93,7 @@ namespace disk_usage_ui
                     break;
             }
 
-            Visible &= (!Properties.Settings.Default.HideInaccessablePaths || !Interactive);
+            Visible &= (!Settings.Default.HideInaccessablePaths || !Interactive);
 
         }
 
@@ -116,9 +109,9 @@ namespace disk_usage_ui
 
             PathRecord pathRecord = _recordReference;
 
-            nameLabel.Text = $"{pathRecord.FriendlyName}";
+            nameLabel.Text = $@"{pathRecord.FriendlyName}";
 
-            path = pathRecord.Path;
+            Path = pathRecord.Path;
 
             pictureBox.Visible = true;
             notificationPicture.Visible = false;
@@ -130,8 +123,8 @@ namespace disk_usage_ui
                 case PathLocation.Local:
                     pictureBox.Image = Program.Theme.LocalDiskImage;
                     break;
-                case PathLocation.OS:
-                    pictureBox.Image = Program.Theme.OSDiskImage;
+                case PathLocation.Os:
+                    pictureBox.Image = Program.Theme.OsDiskImage;
                     break;
                 default:
                     pictureBox.Image = Program.Theme.NetworkDiskImage;
@@ -153,7 +146,7 @@ namespace disk_usage_ui
 
             usageBar.Value = pathRecord.FillLevel;
 
-            detailLabel.Text = $"{pathRecord.FreeSpace.ExplorerLabel()} free of {pathRecord.Capacity.ExplorerLabel()}";
+            detailLabel.Text = string.Format(Resources.DiskTile_UpdateUserInterface_0_free_of_1, pathRecord.FreeSpace.ExplorerLabel(), pathRecord.Capacity.ExplorerLabel());
 
             if (pathRecord.HasZeroCapacity) //edge case where path has not been found
             {
@@ -167,14 +160,9 @@ namespace disk_usage_ui
 
         void UpdateNotificationPicture(PathRecord pathRecord)
         {
-            if (pathRecord.Notifications)
-            {
-                notificationPicture.Image = Properties.Resources.ic_notifications_black_18dp;
-            }
-            else
-            {
-                notificationPicture.Image = Properties.Resources.ic_notifications_off_black_18dp;
-            }
+            notificationPicture.Image = pathRecord.Notifications 
+                ? Properties.Resources.ic_notifications_black_18dp 
+                : Properties.Resources.ic_notifications_off_black_18dp;
         }
 
         PathRecord _recordReference;
@@ -223,14 +211,14 @@ namespace disk_usage_ui
 
         void OpenFolder()
         {
-            Tools.OpenDirectory(path);
+            Tools.OpenDirectory(Path);
         }
 
         void clipboardButton_Click(object sender, EventArgs e)
         {
             try
             {
-                Clipboard.SetText(path);
+                Clipboard.SetText(Path);
             }
             catch (Exception ex)
             { 
@@ -282,14 +270,7 @@ namespace disk_usage_ui
         {
             e.Cancel |= !Interactive;
 
-            if (_recordReference != null)
-            {
-                openFolderButton.Text = $"{_recordReference.Path.Ellipsis(20)} ({_recordReference.FillLevel:##0}%)";
-            }
-            else
-            {
-                openFolderButton.Text = "&Open";
-            }
+            openFolderButton.Text = _recordReference != null ? $"{_recordReference.Path.Ellipsis(20)} ({_recordReference.FillLevel:##0}%)" : "&Open";
 
             SetupNotificationContextItem();
 
@@ -299,43 +280,39 @@ namespace disk_usage_ui
         {
             if (_recordReference.Notifications)
             {
-                notifyMI.Image = Properties.Resources.ic_notifications_black_18dp;
-                notifyMI.Text = "Notifications: Enabled";
+                notifyMI.Image = Resources.ic_notifications_black_18dp;
+                notifyMI.Text = @"Notifications: Enabled";
             }
             else
             {
-                notifyMI.Image = Properties.Resources.ic_notifications_off_black_18dp;
-                notifyMI.Text = "Notifications: Disabled";
+                notifyMI.Image = Resources.ic_notifications_off_black_18dp;
+                notifyMI.Text = @"Notifications: Disabled";
             }
         }
 
         void nameLabel_MouseEnter(object sender, EventArgs e)
         {
-            if (ShowPathOnHover)
-            {
-                nameLabelHoverStore = nameLabel.Text;
-                System.Diagnostics.Debug.Print($"saving: {nameLabelHoverStore}");
+            if (!ShowPathOnHover) return;
 
-                nameLabelHoverText = $"{path}";
-                nameLabel.Text = nameLabelHoverText;
-            }
+            NameLabelHoverStore = nameLabel.Text;
+            System.Diagnostics.Debug.Print($"saving: {NameLabelHoverStore}");
+
+            NameLabelHoverText = $"{Path}";
+            nameLabel.Text = NameLabelHoverText;
         }
 
         void nameLabel_MouseLeave(object sender, EventArgs e)
         {
             //if text hasn't been changed in the meantime
-            if (ShowPathOnHover && nameLabel.Text == nameLabelHoverText)
-            {
-                System.Diagnostics.Debug.Print($"restoring: {nameLabelHoverStore}");
-                nameLabel.Text = nameLabelHoverStore;
-            }
+            if (!ShowPathOnHover || nameLabel.Text != NameLabelHoverText) return;
 
-
+            System.Diagnostics.Debug.Print($"restoring: {NameLabelHoverStore}");
+            nameLabel.Text = NameLabelHoverStore;
         }
 
 
-        string nameLabelHoverStore { get; set; }
-        string nameLabelHoverText { get; set; }
+        string NameLabelHoverStore { get; set; }
+        string NameLabelHoverText { get; set; }
 
         void notificationPicture_Click(object sender, EventArgs e)
         {
@@ -364,7 +341,7 @@ namespace disk_usage_ui
     public static class ModifyProgressBarColor
     {
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
-        static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr w, IntPtr l);
+        static extern IntPtr SendMessage(IntPtr hWnd, uint msg, IntPtr w, IntPtr l);
         static void SetState(this ProgressBar pBar, int state)
         {
             SendMessage(pBar.Handle, 1040, (IntPtr)state, IntPtr.Zero);

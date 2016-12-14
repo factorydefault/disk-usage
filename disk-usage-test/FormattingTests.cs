@@ -1,35 +1,35 @@
 ﻿using disk_usage;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace disk_usage.Tests
+namespace disk_usage_test
 {
     [TestClass]
     public class FormattingTests
     {
         [TestMethod]
-        public void ExplorerLabelTestMB()
+        public void ExplorerLabelTestMb()
         {
             var input = ByteSizeLib.ByteSize.FromMegaBytes(120.321);
-            var expected = "120 MB";
-            var result = Formatting.ExplorerLabel(input);
+            const string expected = "120 MB";
+            var result = input.ExplorerLabel();
             Assert.AreEqual(expected, result);
         }
 
         [TestMethod]
-        public void ExplorerLabelTestGB()
+        public void ExplorerLabelTestGb()
         {
             var input = ByteSizeLib.ByteSize.FromGigaBytes(120.321);
-            var expected = "120.3 GB";
-            var result = Formatting.ExplorerLabel(input);
+            const string expected = "120.3 GB";
+            var result = input.ExplorerLabel();
             Assert.AreEqual(expected, result);
         }
 
         [TestMethod]
-        public void ExplorerLabelTestTB()
+        public void ExplorerLabelTestTb()
         {
             var input = ByteSizeLib.ByteSize.FromTeraBytes(1.328);
-            var expected = "1.33 TB";
-            var result = Formatting.ExplorerLabel(input);
+            const string expected = "1.33 TB";
+            var result = input.ExplorerLabel();
             Assert.AreEqual(expected, result);
         }
 
@@ -37,8 +37,8 @@ namespace disk_usage.Tests
         public void ExplorerLabelTestEmpty()
         {
             var input = ByteSizeLib.ByteSize.FromBytes(0);
-            var expected = "";
-            var result = Formatting.ExplorerLabel(input);
+            const string expected = "";
+            var result = input.ExplorerLabel();
             Assert.AreEqual(expected, result);
         }
 
@@ -46,9 +46,9 @@ namespace disk_usage.Tests
         public void EllipsisTest()
         {
             //arrange
-            var input = "A long string was found in the woods";
+            const string input = "A long string was found in the woods";
 
-            var expected = "A long string was found...";
+            const string expected = "A long string was found...";
 
             //act
             var result = input.Ellipsis(23);
@@ -62,9 +62,9 @@ namespace disk_usage.Tests
         public void EllipsisTestNegative()
         {
             //arrange
-            var input = "A long string was found in the woods";
+            const string input = "A long string was found in the woods";
 
-            var expected = "A long string was found...";
+            const string expected = "A long string was found...";
 
             //act
             var result = input.Ellipsis(-23);
@@ -77,9 +77,9 @@ namespace disk_usage.Tests
         public void EllipsisTestZero()
         {
             //arrange
-            var input = "A long string was found in the woods";
+            const string input = "A long string was found in the woods";
 
-            var expected = "...";
+            const string expected = "...";
 
             //act
             var result = input.Ellipsis(0);
@@ -92,9 +92,9 @@ namespace disk_usage.Tests
         public void EllipsisTestEmptyString()
         {
             //arrange
-            var input = "";
+            const string input = "";
 
-            var expected = "";
+            const string expected = "";
 
             //act
             var result = input.Ellipsis();
@@ -113,7 +113,7 @@ namespace disk_usage.Tests
         [TestMethod]
         public void ClampTest()
         {
-            var result = Formatting.Clamp(6, 0, 100);
+            var result = Formatting.Clamp(6);
             Assert.AreEqual(6, result);
         }
 
@@ -121,14 +121,14 @@ namespace disk_usage.Tests
         [TestMethod]
         public void ClampTestOver()
         {
-            var result = Formatting.Clamp(106, 0, 100);
+            var result = Formatting.Clamp(106);
             Assert.AreEqual(100, result);
         }
 
         [TestMethod]
         public void ClampTestUnder()
         {
-            var result = Formatting.Clamp(6, 50, 100);
+            var result = Formatting.Clamp(6, 50);
             Assert.AreEqual(50, result);
         }
 

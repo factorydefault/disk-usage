@@ -9,11 +9,11 @@ namespace disk_usage
 {
     public class DiskUsage
     {
-        const string DATA_FOLDER = "disk_usage_data";
-        const string PATHS_FILE = "paths.json";
-        const Newtonsoft.Json.Formatting SETTINGS_FORMAT = Newtonsoft.Json.Formatting.Indented;
+        const string DataFolder = "disk_usage_data";
+        const string PathsFile = "paths.json";
+        const Newtonsoft.Json.Formatting SettingsFormat = Newtonsoft.Json.Formatting.Indented;
 
-        public bool SettingsFileWasGenerated { get; private set; } = false;
+        public bool SettingsFileWasGenerated { get; private set; }
 
         public DiskUsage()
         {
@@ -26,7 +26,7 @@ namespace disk_usage
             get
             {
                 var localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-                return $"{localAppData}\\{DATA_FOLDER}\\{PATHS_FILE}";
+                return $"{localAppData}\\{DataFolder}\\{PathsFile}";
             }
         }
 
@@ -52,6 +52,7 @@ namespace disk_usage
             Paths.Clear();
             Debug.Print("Creating json settings file with defaults");
             var result = AddPathToList(Windows.InstallDirectory, $"OSDisk ({Windows.InstallDirectory})");
+            Console.WriteLine($"{result}");
 
             Directory.CreateDirectory(SettingsDirectory);
 
@@ -70,7 +71,7 @@ namespace disk_usage
 
                 using (StreamWriter file = File.CreateText(SettingsFileLocation))
                 {
-                    var serializer = new JsonSerializer { Formatting = SETTINGS_FORMAT };
+                    var serializer = new JsonSerializer { Formatting = SettingsFormat };
                     serializer.Serialize(file, Paths);
                 }
                 Debug.Print("saved!");
@@ -104,13 +105,7 @@ namespace disk_usage
                 Debug.Print($"Unable to read settings file: {ex.Message}");
                 Paths = new List<PathRecord>();
             }
-            catch (Exception)
-            {
-                throw;
-            }
         }
-
-        List<PathRecord> _pathList;
 
         public struct OperationResult
         {
@@ -118,11 +113,11 @@ namespace disk_usage
             public string Message { get; private set; }
 
 
-            OperationResult(bool result, string message = "")
-            {
-                Success = result;
-                Message = message;
-            }
+            //OperationResult(bool result, string message = "")
+            //{
+            //    Success = result;
+            //    Message = message;
+            //}
 
             public static OperationResult Response(bool result, string message = "")
             {
@@ -131,24 +126,23 @@ namespace disk_usage
 
             public override string ToString()
             {
-                string resultdesc = Success ? "Success" : "Failure";
-                string message = !string.IsNullOrWhiteSpace(Message) ? $": {Message}" : string.Empty;
+                var resultdesc = Success ? "Success" : "Failure";
+                var message = !string.IsNullOrWhiteSpace(Message) ? $": {Message}" : string.Empty;
                 return $"{resultdesc}{message}";
             }
         }
 
         public OperationResult AddPathToList(PathRecord computer)
         {
-            foreach(var existing in _pathList)
+            foreach(var existing in Paths)
             {
-                if (existing.Path == computer.Path)
-                {
-                    Debug.Print($"Path {computer.Path} cannot be added as it already exists with the label {existing.FriendlyName}.");
-                    return OperationResult.Response(false, $"Path {computer.Path} cannot be added as it already exists with the label {existing.FriendlyName}.");
-                }
+                if (existing.Path != computer.Path) continue;
+
+                Debug.Print($"Path {computer.Path} cannot be added as it already exists with the label {existing.FriendlyName}.");
+                return OperationResult.Response(false, $"Path {computer.Path} cannot be added as it already exists with the label {existing.FriendlyName}.");
             }
 
-            _pathList.Add(computer);
+            Paths.Add(computer);
             return OperationResult.Response(true);
         }
 
@@ -157,18 +151,8 @@ namespace disk_usage
             return AddPathToList(PathRecord.Create(path, friendlyName));
         }
 
-        public List<PathRecord> Paths
-        {
-            get
-            {
-                return _pathList;
-            }
-            private set
-            {
-                _pathList = value;
-            }
-        }
-        
+        public List<PathRecord> Paths { get; private set; }
+
         public IEnumerable<PathRecord> Sorted(SortingOption sorting)
         {
             switch (sorting)
@@ -201,23 +185,24 @@ namespace disk_usage
 
         public void RemovePathFromList(string path)
         {
-            bool recurring = false;
-
-            foreach (var paths in _pathList)
+            while (true)
             {
-                if (paths.Path == path)
+                var recurring = false;
+
+                foreach (var paths in Paths)
                 {
-                    _pathList.Remove(paths);
+                    if (paths.Path != path) continue;
+                    Paths.Remove(paths);
                     recurring = true;
                     break;
                 }
+                if (recurring) continue;
+                break;
             }
-            if (recurring) RemovePathFromList(path);
         }
-
     }
-    
-    static class TaskExtensions
+
+    internal static class TaskExtensions
     {
 #pragma warning disable RECS0154 // Parameter is never used
                                 /// <summary>

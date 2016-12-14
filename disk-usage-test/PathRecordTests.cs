@@ -1,7 +1,7 @@
 ﻿using disk_usage;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace disk_usage.Tests
+namespace disk_usage_test
 {
     [TestClass]
     public class PathRecordTests
@@ -9,53 +9,48 @@ namespace disk_usage.Tests
         [TestMethod]
         public void LocalRegexTest()
         {
-            var input = "C:\\";
-            var expected = true;
+            const string input = "C:\\";
             var result = PathRecord.LocalRegex.IsMatch(input);
 
-            Assert.AreEqual(expected, result);
+            Assert.AreEqual(true, result);
         }
 
         [TestMethod]
         public void LocalRegexTestFail()
         {
-            var input = "\\\\Server\\Share\\";
-            var expected = false;
+            const string input = "\\\\Server\\Share\\";
             var result = PathRecord.LocalRegex.IsMatch(input);
 
-            Assert.AreEqual(expected, result);
+            Assert.AreEqual(false, result);
         }
 
         [TestMethod]
         public void NetworkRegexTest()
         {
-            var input = "\\\\Server\\Share\\";
-            var expected = true;
-            var result = PathRecord.UNCNamedRegex.IsMatch(input);
+            const string input = "\\\\Server\\Share\\";
+            var result = PathRecord.UncNamedRegex.IsMatch(input);
 
-            Assert.AreEqual(expected, result);
+            Assert.AreEqual(true, result);
         }
 
         [TestMethod]
         public void NetworkRegexTestFail()
         {
 
-            var input = "C:\\";
-            var expected = false;
-            var result = PathRecord.UNCNamedRegex.IsMatch(input);
+            const string input = "C:\\";
+            var result = PathRecord.UncNamedRegex.IsMatch(input);
 
-            Assert.AreEqual(expected, result);
+            Assert.AreEqual(false, result);
         }
 
         [TestMethod]
-        public void NetworkRegexIP()
+        public void NetworkRegexIp()
         {
 
-            var input = "\\\\0.0.0.0\\Share\\";
-            var expected = true;
-            var result = PathRecord.UNCNamedRegex.IsMatch(input);
+            const string input = "\\\\0.0.0.0\\Share\\";
+            var result = PathRecord.UncNamedRegex.IsMatch(input);
 
-            Assert.AreEqual(expected, result);
+            Assert.AreEqual(true, result);
         }
 
         [TestMethod]
@@ -88,8 +83,11 @@ namespace disk_usage.Tests
         [TestMethod]
         public void PathRecordShortcut4()
         {
-            var pr = new PathRecord { Path = "\\\\192.169.10.1\\Share\\Share 2\\" };
-            pr.FriendlyName = "Te*stin|g:Inv?alid\\Chars.<Text>";
+            var pr = new PathRecord
+            {
+                Path = "\\\\192.169.10.1\\Share\\Share 2\\",
+                FriendlyName = "Te*stin|g:Inv?alid\\Chars.<Text>"
+            };
             var result = pr.ShortcutName;
 
             Assert.AreEqual("TestingInvalid Chars_Text", result);

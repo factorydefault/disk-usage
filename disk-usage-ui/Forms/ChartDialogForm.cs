@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using ImageFormat = System.Windows.Forms.DataVisualization.Charting.ChartImageFormat;
 using disk_usage;
+using disk_usage_ui.Properties;
 
 namespace disk_usage_ui.Forms
 {
@@ -14,7 +15,7 @@ namespace disk_usage_ui.Forms
         }
 
         [Obsolete("Use other constructor instead", true)]
-        public ChartDialogForm(IEnumerable<disk_usage.PathRecord> collection)
+        public ChartDialogForm(IEnumerable<PathRecord> collection)
         {
             InitializeComponent();
 
@@ -57,11 +58,11 @@ namespace disk_usage_ui.Forms
             if (dialogResult == DialogResult.OK)
             {
                 diskChart.SaveImage(saveFileDialog.FileName, ImageFormat.Png);
-                MessageBox.Show($"Saved {saveFileDialog.FileName}");
+                MessageBox.Show(string.Format(Resources.ChartDialogForm_SavedPathMsg, saveFileDialog.FileName));
             }
         }
 
-        void updateChart()
+        void UpdateChart()
         {
             var m = (UserControls.ChartDisplayMode)displayModeCombo.SelectedIndex;
             var sorting = (SortingOption)sortingCombo.SelectedIndex;
@@ -72,62 +73,62 @@ namespace disk_usage_ui.Forms
 
         private void displayModeCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            updateChart();
+            UpdateChart();
         }
 
         private void sortingCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            updateChart();
+            UpdateChart();
         }
 
-        ToolStripMenuItem showAllItem()
+        ToolStripMenuItem ShowAllItem()
         {
-            var showAllMI = new ToolStripMenuItem
+            var showAllMi = new ToolStripMenuItem
             {
                 Name = "showAll",
-                Text = "Show All"
+                Text = @"Show All"
             };
-            showAllMI.Click += showAllClicked;
-            return showAllMI;
+            showAllMi.Click += ShowAllClicked;
+            return showAllMi;
         }
 
-        ToolStripMenuItem hideAllItem()
+        ToolStripMenuItem HideAllItem()
         {
-            var hideAllMI = new ToolStripMenuItem
+            var hideAllMi = new ToolStripMenuItem
             {
                 Name = "hideAll",
-                Text = "Hide All"
+                Text = @"Hide All"
             };
-            hideAllMI.Click += hideAllClicked;
-            return hideAllMI;
+            hideAllMi.Click += HideAllClicked;
+            return hideAllMi;
         }
 
-        ToolStripMenuItem filterMenu()
+        ToolStripMenuItem FilterMenu()
         {
-            var filterMI = new ToolStripMenuItem
+            var filterMi = new ToolStripMenuItem
             {
                 Name = "filterMenu",
-                Text = "Filters",
-                Image = Properties.Resources.filter_16xLG
+                Text = @"Filters",
+                Image = Resources.filter_16xLG
             };
 
             var lowDiskSpace = new ToolStripMenuItem("With low disk space (>90% fill)");
             lowDiskSpace.Click += LowDiskSpace_Click;
-            filterMI.DropDownItems.Add(lowDiskSpace);
+            filterMi.DropDownItems.Add(lowDiskSpace);
 
-            var lowGBFree = new ToolStripMenuItem("Less than 200 GB remaining");
-            lowGBFree.Click += LowGBFree_Click;
-            filterMI.DropDownItems.Add(lowGBFree);
+            var lowGbFree = new ToolStripMenuItem("Less than 200 GB remaining");
+            lowGbFree.Click += LowGBFree_Click;
+            filterMi.DropDownItems.Add(lowGbFree);
 
             var localdisks = new ToolStripMenuItem("Local / Mapped disks");
             localdisks.Click += Localdisks_Click;
-            filterMI.DropDownItems.Add(localdisks);
+            filterMi.DropDownItems.Add(localdisks);
 
             var networkdisks = new ToolStripMenuItem("Network Shares");
             networkdisks.Click += Networkdisks_Click;
-            filterMI.DropDownItems.Add(networkdisks);
+            filterMi.DropDownItems.Add(networkdisks);
 
-            return filterMI;
+            return filterMi;
         }
 
         void Networkdisks_Click(object sender, EventArgs e)
@@ -137,7 +138,7 @@ namespace disk_usage_ui.Forms
                 if (!data.ShowOnChart) continue;
                 data.ShowOnChart = data.Location() == PathLocation.Remote;
             }
-            updateChart();
+            UpdateChart();
         }
 
         void Localdisks_Click(object sender, EventArgs e)
@@ -146,9 +147,9 @@ namespace disk_usage_ui.Forms
             {
                 if (!data.ShowOnChart) continue;
                 var location = data.Location();
-                data.ShowOnChart = (location == PathLocation.Local || location == PathLocation.OS);
+                data.ShowOnChart = (location == PathLocation.Local || location == PathLocation.Os);
             }
-            updateChart();
+            UpdateChart();
         }
 
         void LowGBFree_Click(object sender, EventArgs e)
@@ -158,7 +159,7 @@ namespace disk_usage_ui.Forms
                 if (!data.ShowOnChart) continue;
                 data.ShowOnChart = data.FreeSpace.GigaBytes < 200.0; 
             }
-            updateChart();
+            UpdateChart();
         }
 
         void LowDiskSpace_Click(object sender, EventArgs e)
@@ -168,19 +169,19 @@ namespace disk_usage_ui.Forms
                 if (!data.ShowOnChart) continue;
                 data.ShowOnChart = data.HasLowDiskSpace;
             }
-            updateChart();
+            UpdateChart();
         }
 
         void seriesMI_DropDownOpening(object sender, EventArgs e)
         {
             seriesMI.DropDownItems.Clear();
-            bool hideEmpty = Properties.Settings.Default.HideInaccessablePaths;
+            var hideEmpty = Settings.Default.HideInaccessablePaths;
 
             var dropdown = seriesMI.DropDownItems;
 
-            dropdown.Add(showAllItem());
-            dropdown.Add(hideAllItem());
-            dropdown.Add(filterMenu());
+            dropdown.Add(ShowAllItem());
+            dropdown.Add(HideAllItem());
+            dropdown.Add(FilterMenu());
             var sep = new ToolStripSeparator();
 
 
@@ -197,30 +198,30 @@ namespace disk_usage_ui.Forms
                     Tag = data.Path,
                     Text = data.FriendlyName
                 };
-                item.Click += seriesMIOptionClicked;
+                item.Click += SeriesMiOptionClicked;
                 dropdown.Add(item);
             }
         }
 
-        void showAllClicked(object sender, EventArgs e)
+        void ShowAllClicked(object sender, EventArgs e)
         {
             foreach (var data in diskChart.PathsInSortedOrder)
             { 
                 data.ShowOnChart = true;
             }
-            updateChart();
+            UpdateChart();
         }
 
-        void hideAllClicked(object sender, EventArgs e)
+        void HideAllClicked(object sender, EventArgs e)
         {
             foreach (var data in diskChart.PathsInSortedOrder)
             {
                     data.ShowOnChart = false;
             }
-            updateChart();
+            UpdateChart();
         }
 
-        void seriesMIOptionClicked(object sender, EventArgs e)
+        void SeriesMiOptionClicked(object sender, EventArgs e)
         {
             var clickedItem = (ToolStripMenuItem)sender;
             foreach (var data in diskChart.PathsInSortedOrder)
@@ -232,7 +233,7 @@ namespace disk_usage_ui.Forms
                 }
             }
 
-            updateChart();
+            UpdateChart();
 
         }
 
@@ -249,13 +250,13 @@ namespace disk_usage_ui.Forms
         void horizontalBarsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             diskChart.ChartOrientation = UserControls.ChartOrientation.Horizontal;
-            updateChart();
+            UpdateChart();
         }
 
         void verticalBarsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             diskChart.ChartOrientation = UserControls.ChartOrientation.Vertical;
-            updateChart();
+            UpdateChart();
         }
     }
 }

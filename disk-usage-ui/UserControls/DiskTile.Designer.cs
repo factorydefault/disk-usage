@@ -1,4 +1,4 @@
-﻿namespace disk_usage_ui
+﻿namespace disk_usage_ui.UserControls
 {
     partial class DiskTile
     {

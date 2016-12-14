@@ -11,15 +11,15 @@ namespace disk_usage
     public class PathRecord
     {
         // As per https://blogs.msdn.microsoft.com/oldnewthing/20101117-00/?p=12263/
-        public const int LOW_DISK_SPACE_PERCENTAGE = 90;
+        public const int LowDiskSpacePercentage = 90;
 
-        readonly Disk disk;
+        readonly Disk _disk;
 
         public PathRecord()
         {
             FriendlyName = "";
-            disk = new Disk();
-            disk.DiskInfoUpdated += Disk_DiskInfoUpdated;
+            _disk = new Disk();
+            _disk.DiskInfoUpdated += Disk_DiskInfoUpdated;
         }
 
         public event EventHandler<EventArgs> DiskInfoUpdated;
@@ -31,12 +31,12 @@ namespace disk_usage
 
         public void RequestDiskInfoAsync()
         {
-            disk.RequestDiskInfoAsync().Forget();
+            _disk.RequestDiskInfoAsync().Forget();
         }
 
         public void RequestDiskInfo()
         {
-            disk.RequestDiskInfo();
+            _disk.RequestDiskInfo();
         }
 
         public bool ShowOnChart { get; set; } = true;
@@ -72,29 +72,29 @@ namespace disk_usage
         {
             get
             {
-                return disk.Path;
+                return _disk.Path;
             }
             set
             {
-                disk.Path = value;
+                _disk.Path = value;
             }
         }
 
-        public ByteSize FreeSpace => ByteSize.FromBytes(disk.Attributes.FreeBytes);
+        public ByteSize FreeSpace => ByteSize.FromBytes(_disk.Attributes.FreeBytes);
 
-        public ByteSize UsedSpace => ByteSize.FromBytes(bytesUsed);
+        public ByteSize UsedSpace => ByteSize.FromBytes(BytesUsed);
 
-        public ByteSize Capacity => ByteSize.FromBytes(disk.Attributes.TotalBytes);
+        public ByteSize Capacity => ByteSize.FromBytes(_disk.Attributes.TotalBytes);
 
         public bool HasZeroCapacity => Capacity.Bytes < 1;
 
-        ulong bytesUsed => disk.Attributes.TotalBytes - disk.Attributes.FreeBytes;
+        ulong BytesUsed => _disk.Attributes.TotalBytes - _disk.Attributes.FreeBytes;
 
-        public int FillLevel => (int)Math.Round(disk.Attributes.PercentageFilled, 0);
+        public int FillLevel => (int)Math.Round(_disk.Attributes.PercentageFilled, 0);
 
-        public double FillPercentageDbl => disk.Attributes.PercentageFilled;
+        public double FillPercentageDbl => _disk.Attributes.PercentageFilled;
 
-        public bool HasLowDiskSpace => FillLevel > LOW_DISK_SPACE_PERCENTAGE;
+        public bool HasLowDiskSpace => FillLevel > LowDiskSpacePercentage;
         
         public static PathRecord Create(string path, string name = "")
         {
@@ -105,7 +105,7 @@ namespace disk_usage
 
         public static Regex LocalRootRegex => new Regex(@"^([a-zA-Z]):\\");
 
-        public static Regex UNCNamedRegex => new Regex(@"^\\\\([^\\]+\\)(?:([^\\\n]+\\)+)$");
+        public static Regex UncNamedRegex => new Regex(@"^\\\\([^\\]+\\)(?:([^\\\n]+\\)+)$");
 
 
         public PathLocation Location()
@@ -115,18 +115,12 @@ namespace disk_usage
             if (match.Success || LocalRootRegex.IsMatch(Path))
             {
                 string drive = $"{match.Groups[1].Value}:\\";
-                return (drive == Windows.InstallDirectory) ? PathLocation.OS : PathLocation.Local;
+                return (drive == Windows.InstallDirectory) ? PathLocation.Os : PathLocation.Local;
             }
             return PathLocation.Remote;
         }
 
-        public bool ShouldNotify
-        {
-            get
-            {
-                return Notifications && Capacity.Bytes > 0;
-            }
-        }
+        public bool ShouldNotify => Notifications && Capacity.Bytes > 0;
 
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         [DefaultValue(false)]
