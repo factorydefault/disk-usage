@@ -35,8 +35,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ByteSizeLib, Version=1.2.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\disk-usage\packages\ByteSize.1.2.2\lib\net45\ByteSizeLib.dll</HintPath>
+    <Reference Include="ByteSizeLib, Version=1.2.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\disk-usage\packages\ByteSize.1.2.4\lib\net45\ByteSizeLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
