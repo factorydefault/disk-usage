@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -137,39 +138,37 @@ namespace disk_usage_ui.Forms
                 : DragDropEffects.None;
         }
 
-        void ProcessDragDrop(string[] fileList)
+        void ProcessDragDrop(IReadOnlyCollection<string> fileList)
         {
             try
             {
-                if (fileList.Length > 0)
+                if (fileList.Count < 1) return;
+
+                string path = fileList.FirstOrDefault();
+
+                if (path == null) return;
+
+                Console.WriteLine(path);
+
+                if (disk_usage.PathRecord.LocalRegex.IsMatch(path))
                 {
-                    string path = fileList.FirstOrDefault();
-
-                    if (path == null) return;
-
-                    Console.WriteLine(path);
-
-                    if (disk_usage.PathRecord.LocalRegex.IsMatch(path))
-                    {
-                        pathTextBox.Text = path;
-                        return;
-                    }
+                    pathTextBox.Text = path;
+                    return;
+                }
                     
-                    if (File.GetAttributes(path).HasFlag(FileAttributes.Directory))
-                    {
-                        pathTextBox.Text = SanitisePath(path);
-                    }
-                    else
-                    {
-                        var fi = new FileInfo(fileList.First());
-                        if (fi.Directory != null) pathTextBox.Text = SanitisePath(fi.Directory.FullName);
-                    }
-
+                if (File.GetAttributes(path).HasFlag(FileAttributes.Directory))
+                {
+                    pathTextBox.Text = SanitisePath(path);
+                }
+                else
+                {
+                    var fi = new FileInfo(fileList.First());
+                    if (fi.Directory != null) pathTextBox.Text = SanitisePath(fi.Directory.FullName);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                Console.WriteLine(ex);
                 throw;
             }
         }
@@ -177,7 +176,7 @@ namespace disk_usage_ui.Forms
 
         void DragDropEvent(object sender, DragEventArgs e)
         {
-            var fileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            string[] fileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
 
             ProcessDragDrop(fileList);
         }

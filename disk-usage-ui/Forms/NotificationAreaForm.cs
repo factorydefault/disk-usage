@@ -81,21 +81,18 @@ namespace disk_usage_ui.Forms
         
         void ClearStackControls()
         {
-            if (diskStack.Controls.Count > 0)
-            {
-                for (var index = diskStack.Controls.Count - 1; index >= 0; index--)
-                {
-                    var c = (DiskTile)diskStack.Controls[index];
-                    c.UnsubscribeToEvents();
-                    c.RemoveRequested -= RemovePathUsingTileObject;
-                    c.AddNewPath -= AddNewPath;
-                    c.PropertiesChanged -= TilePropertiesChanged;
-                    diskStack.Controls.Remove(c);
-                    c.Dispose();
-                }
-            }
-                        
+            if (diskStack.Controls.Count < 1) return;
 
+            for (int index = diskStack.Controls.Count - 1; index >= 0; index--)
+            {
+                var c = (DiskTile)diskStack.Controls[index];
+                c.UnsubscribeToEvents();
+                c.RemoveRequested -= RemovePathUsingTileObject;
+                c.AddNewPath -= AddNewPath;
+                c.PropertiesChanged -= TilePropertiesChanged;
+                diskStack.Controls.Remove(c);
+                c.Dispose();
+            }
         }
 
         static int ComboIndex
@@ -131,11 +128,11 @@ namespace disk_usage_ui.Forms
 
             ClearStackControls();
 
-            var sortedCollection = _core.Sorted(SelectedSorting);
+            IEnumerable<PathRecord> sortedCollection = _core.Sorted(SelectedSorting);
 
-            var pathRecords = sortedCollection as IList<PathRecord> ?? sortedCollection.ToList();
+            IList<PathRecord> pathRecords = sortedCollection as IList<PathRecord> ?? sortedCollection.ToList();
 
-            var collectionCount = (HideInaccessablePaths) 
+            int collectionCount = (HideInaccessablePaths) 
                 ? pathRecords.Count(pr => pr.Capacity.Bytes > 0) 
                 : pathRecords.Count;
 
@@ -172,7 +169,7 @@ namespace disk_usage_ui.Forms
             SaveChanges();
         }
 
-        public void SetFixedFormSize(int width, int height)
+        void SetFixedFormSize(int width, int height)
         {
             var newSize = new Size(width, height);
             MinimumSize = newSize;
@@ -180,7 +177,7 @@ namespace disk_usage_ui.Forms
             Size = newSize;
         }
 
-        public void HideForm(bool notify = false)
+        void HideForm(bool notify = false)
         {
             Hide();
             Visible = false;
@@ -192,7 +189,7 @@ namespace disk_usage_ui.Forms
             }
         }
 
-        public void PositionForm()
+        void PositionForm()
         {
             var workingArea = Screen.GetWorkingArea(this);
 
@@ -223,8 +220,9 @@ namespace disk_usage_ui.Forms
                     ToggleForm();
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 throw;
             }
         }
@@ -245,7 +243,7 @@ namespace disk_usage_ui.Forms
 
                 if (!addPathOperation.Success)
                 {
-                    MessageBox.Show(addPathOperation.Message, "Unable to add path");
+                    MessageBox.Show(addPathOperation.Message, @"Unable to add path");
                 }
                 RebuildUserInterface();
                 SaveChanges();
@@ -258,18 +256,16 @@ namespace disk_usage_ui.Forms
             {
                 var tile = (DiskTile)sender;
 
-                var dr = MessageBox.Show($"Are you sure you would like to remove \"{tile.Path}\"?","Remove Path",MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
+                var dr = MessageBox.Show($@"Are you sure you would like to remove ""{tile.Path}""?",@"Remove Path",MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
                 Debug.Print(tile.Path);
 
-                if (dr == DialogResult.Yes)
-                {
-                    _core.RemovePathFromList(tile.Path);
+                if (dr != DialogResult.Yes) return;
 
-                    tile.Visible = false;
-                    SaveChanges();
-                    RebuildUserInterface();
-                }
- 
+                _core.RemovePathFromList(tile.Path);
+
+                tile.Visible = false;
+                SaveChanges();
+                RebuildUserInterface();
             }
             catch (Exception ex)
             {
@@ -310,15 +306,15 @@ namespace disk_usage_ui.Forms
             {
                 ComboIndex = orderByCombo.SelectedIndex;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                Console.WriteLine(ex);
                 throw;
             }
             RebuildUserInterface();
         }
 
-        public SortingOption SelectedSorting
+        SortingOption SelectedSorting
         {
             get
             {
@@ -397,7 +393,7 @@ namespace disk_usage_ui.Forms
         
         DateTime NotificationTime { get; set; }
 
-        public DateTime GetNextNotification()
+        static DateTime GetNextNotification()
         {
             var result = DateTime.Now.AddMinutes(UISettings.Default.Frequency);
 

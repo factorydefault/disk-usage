@@ -16,7 +16,7 @@ namespace disk_usage_ui
 
                 Windows.CreateShortcut(record.Path, shortcutLocation);
 
-                if (notify) MessageBox.Show($"A shortcut to \"{record.Path}\" was placed on your Desktop.");
+                if (notify) MessageBox.Show($@"A shortcut to ""{record.Path}"" was placed on your Desktop.");
 
                 return true;
             }

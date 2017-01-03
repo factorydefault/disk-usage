@@ -13,7 +13,7 @@ namespace disk_usage_ui
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show($"Cannot open \"{path}\", it may be inaccessible or invalid.","Unable to open path");
+                System.Windows.Forms.MessageBox.Show($@"Cannot open ""{path}"", it may be inaccessible or invalid.",@"Unable to open path");
             }
         }
 

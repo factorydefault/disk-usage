@@ -51,9 +51,9 @@ namespace disk_usage_ui.UserControls
             }
         }
 
-        public bool Interactive { get; set; } = true;
+        public bool Interactive { private get; set; } = true;
 
-        public bool ShowPathOnHover { get; set; } = false;
+        public bool ShowPathOnHover { private get; set; }
 
         public void SetAsNotFound(string overrideLabel = "")
         {
@@ -75,7 +75,7 @@ namespace disk_usage_ui.UserControls
             //Console.WriteLine($"Setting progress bar not found, value {usageBar.Value}");
             usageBar.SetState(ProgressBarState.Error);
 
-            PathLocation location = _recordReference?.Location() ?? PathLocation.Unknown;
+            var location = _recordReference?.Location() ?? PathLocation.Unknown;
 
             notificationPicture.Visible = false;
 
@@ -83,10 +83,13 @@ namespace disk_usage_ui.UserControls
             {
                 case PathLocation.Local:
                 case PathLocation.Os:
-                    detailLabel.Text = "Path not found";
+                    detailLabel.Text = @"Path not found";
                     break;
                 case PathLocation.Remote:
-                    detailLabel.Text = "Path not available";
+                    detailLabel.Text = @"Path not available";
+                    break;
+                case PathLocation.Unknown:
+                    detailLabel.Text = "";
                     break;
                 default:
                     detailLabel.Text = "";
@@ -103,11 +106,11 @@ namespace disk_usage_ui.UserControls
             UpdateUserInterface();
         }
 
-        public void UpdateUserInterface() //disk_usage.PathRecord pathRecord)
+        void UpdateUserInterface() //disk_usage.PathRecord pathRecord)
         {
             Visible = true;
 
-            PathRecord pathRecord = _recordReference;
+            var pathRecord = _recordReference;
 
             nameLabel.Text = $@"{pathRecord.FriendlyName}";
 
@@ -161,8 +164,8 @@ namespace disk_usage_ui.UserControls
         void UpdateNotificationPicture(PathRecord pathRecord)
         {
             notificationPicture.Image = pathRecord.Notifications 
-                ? Properties.Resources.ic_notifications_black_18dp 
-                : Properties.Resources.ic_notifications_off_black_18dp;
+                ? Resources.ic_notifications_black_18dp 
+                : Resources.ic_notifications_off_black_18dp;
         }
 
         PathRecord _recordReference;
@@ -255,8 +258,9 @@ namespace disk_usage_ui.UserControls
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 throw;
             }
         }
@@ -342,6 +346,7 @@ namespace disk_usage_ui.UserControls
     {
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
         static extern IntPtr SendMessage(IntPtr hWnd, uint msg, IntPtr w, IntPtr l);
+        // ReSharper disable once SuggestBaseTypeForParameter
         static void SetState(this ProgressBar pBar, int state)
         {
             SendMessage(pBar.Handle, 1040, (IntPtr)state, IntPtr.Zero);
