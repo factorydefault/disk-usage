@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using ByteSizeLib;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace disk_usage
 {
@@ -29,10 +30,18 @@ namespace disk_usage
             DiskInfoUpdated?.Invoke(this, new EventArgs()); //pass up event
         }
 
-        public void RequestDiskInfoAsync()
+        public DiskAttributes DiskAttributes
         {
-            _disk.RequestDiskInfoAsync().Forget();
+            get { return _disk.Attributes; }
+            set { _disk.Attributes = value; }
         }
+
+        public Task RequestInfoTask => _disk.RequestDiskInfoAsync();
+
+        //public void RequestDiskInfoAsync()
+        //{
+        //    RequestInfoTask.FireAndForget();
+        //}
 
         public void RequestDiskInfo()
         {

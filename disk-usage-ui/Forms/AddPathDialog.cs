@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
+using disk_usage;
+
 namespace disk_usage_ui.Forms
 {
     public partial class AddPathDialog : Form
@@ -87,14 +89,16 @@ namespace disk_usage_ui.Forms
             {
                 System.Diagnostics.Debug.Print("Path valid.");
                 
-                NewComputer.RequestDiskInfoAsync();
+                //NewComputer.RequestDiskInfoAsync();
+                NewComputer.RequestInfoTask.FireAndForget();
                 acceptButton.Enabled = true;
             }
             else if(PathHasValidForm(typedPathWithBackslash)) //lenient to missing backslash
             {
                 System.Diagnostics.Debug.Print("Missing backslash added.");
                 NewComputer.Path = typedPathWithBackslash;
-                NewComputer.RequestDiskInfoAsync();
+                //NewComputer.RequestDiskInfoAsync();
+                NewComputer.RequestInfoTask.FireAndForget();
                 acceptButton.Enabled = true;
             }
             else

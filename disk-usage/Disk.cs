@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace disk_usage
@@ -16,12 +17,13 @@ namespace disk_usage
             FreeBytes = totalFreeBytes;
         }
 
-        [Obsolete]
-        public void WriteToConsole()
+        public string AsStringMessage()
         {
-            Console.WriteLine("Bytes Available to User: {0,15:D}", AvailableBytes);
-            Console.WriteLine("Total Bytes: {0,15:D}", TotalBytes);
-            Console.WriteLine("Free Bytes: {0,15:D}", FreeBytes);
+            var sb = new StringBuilder();
+            sb.AppendLine($"Bytes Available to User: {AvailableBytes,15:D}");
+            sb.AppendLine($"Total Bytes: {TotalBytes,15:D}");
+            sb.AppendLine($"Free Bytes: {FreeBytes,15:D}");
+            return sb.ToString();
         }
 
         public double PercentageFree => (TotalBytes > 0) ? (FreeBytes / (double)TotalBytes) * 100.0 : 0;
@@ -37,7 +39,7 @@ namespace disk_usage
 
         public string Path { get; set; }
 
-        public DiskAttributes Attributes { get; private set; } = new DiskAttributes(0, 0, 0);
+        public DiskAttributes Attributes { get; set; } = new DiskAttributes(0, 0, 0);
 
         public async Task RequestDiskInfoAsync()
         {

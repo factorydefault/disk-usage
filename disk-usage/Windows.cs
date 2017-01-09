@@ -66,7 +66,7 @@ namespace disk_usage
         /// <param name="arguments">Command line arguments</param>
         /// <param name="hotKey">Shortcut hot key as a string, for example "Ctrl+F"</param>
         /// <param name="workingDirectory">"Start in" shorcut parameter</param>
-        public static void CreateShortcut(string targetPath, string shortcutFile, string description,
+        static void CreateShortcut(string targetPath, string shortcutFile, string description,
            string arguments, string hotKey, string workingDirectory)
         {
             if (string.IsNullOrEmpty(targetPath))

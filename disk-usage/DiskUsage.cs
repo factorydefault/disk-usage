@@ -15,10 +15,13 @@ namespace disk_usage
 
         public bool SettingsFileWasGenerated { get; private set; }
 
-        public DiskUsage()
+        readonly bool _saveToDisk;
+
+        public DiskUsage(bool saveToDisk = true)
         {
             Paths = new List<PathRecord>();
-            ReadOrCreateSettingsFile(); 
+            _saveToDisk = saveToDisk;
+            if (_saveToDisk) ReadOrCreateSettingsFile(); 
         }
 
         public string SettingsFileLocation
@@ -63,6 +66,7 @@ namespace disk_usage
 
         public OperationResult SaveSettingsFile()
         {
+            if (!_saveToDisk) OperationResult.Response(false,"Settings file disabled");
             try
             {
                 Debug.Print("trying to save");
@@ -89,7 +93,8 @@ namespace disk_usage
         {
             foreach(var path in Paths)
             {
-                path.RequestDiskInfoAsync();
+                //path.RequestDiskInfoAsync();
+                path.RequestInfoTask.FireAndForget();
             }
         }
 
@@ -189,9 +194,8 @@ namespace disk_usage
             {
                 var recurring = false;
 
-                foreach (var paths in Paths)
+                foreach (var paths in Paths.Where(paths => paths.Path == path))
                 {
-                    if (paths.Path != path) continue;
                     Paths.Remove(paths);
                     recurring = true;
                     break;
@@ -202,7 +206,7 @@ namespace disk_usage
         }
     }
 
-    internal static class TaskExtensions
+    public static class TaskExtensions
     {
 #pragma warning disable RECS0154 // Parameter is never used
                                 /// <summary>
@@ -210,7 +214,7 @@ namespace disk_usage
                                 /// https://msdn.microsoft.com/en-us/library/microsoft.visualstudio.threading.tplextensions.forget.aspx
                                 /// </summary>
                                 /// <param name="task"></param>
-        public static void Forget(this System.Threading.Tasks.Task task)
+        public static void FireAndForget(this System.Threading.Tasks.Task task)
         {
         }
 #pragma warning restore RECS0154 // Parameter is never used
